@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-lg-10">
+  </div>
+  <div class=" col-lg-2">
+    <%=link_to crear_rol_path, class: "btn btn-primary btn-block" do%>
+      <i class="fas fa-plus"></i> Agregar Rol
+    <%end%>
+  </div>
+</div>
+<br/>
+<div class="table-responsive">
+<table class="table table-bordered dataTable"  width="100%" cellspacing="0">
+  <thead>
+    <tr>
+    	<th># Control</th>
+      <th>Rol</th>
+      <th>Descripcion</th>
+      <th>Activo</th>
+      <th>Editar</th>
+    </tr>
+  </thead>
+  <tbody>
+  	<%@rol.each do |item|%>
+  		<tr>
+  			<td><%= item.id%></td>
+	      <td><%= item.nombre%></td>
+	      <td><%= item.descripcion%></td>
+	      <td class="text-center "><%if item.activo = true %><i class="fas fa-check-square bg-success"><%else%><i class="fas fa-square bg-danger"><%end%></td>
+	      <td class="text-center ">
+	      	<%= link_to edit_rol_path(item), class: "btn btn-success btn-circle" do%>
+	      		<i class="fas fa-edit"></i>
+	      	<%end%>
+          <%= link_to delete_rol_path(item), method: :delete, class: 'btn btn-danger  btn-circle',data: { confirm:'¿Estas Seguro de eliminar este rol?'}  do %>
+	      		<i class="fas fa-trash"></i>
+	      	<%end%>
+	      </td>
+    	</tr>
+    <%end%>
+  </tbody>
+</table>
+</div>
