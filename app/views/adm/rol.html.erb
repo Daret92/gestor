@@ -25,7 +25,7 @@
   			<td><%= item.id%></td>
 	      <td><%= item.nombre%></td>
 	      <td><%= item.descripcion%></td>
-	      <td class="text-center "><%if item.activo = true %><i class="fas fa-check-square bg-success"><%else%><i class="fas fa-square bg-danger"><%end%></td>
+	      <td class="text-center "><%if item.activo == true %><i class="fas fa-check-square"><%else%><i class="fas fa-square"><%end%></td>
 	      <td class="text-center ">
 	      	<%= link_to edit_rol_path(item), class: "btn btn-success btn-circle" do%>
 	      		<i class="fas fa-edit"></i>

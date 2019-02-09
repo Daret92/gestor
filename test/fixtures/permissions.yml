@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: permissions
+#
+#  id         :integer          not null, primary key
+#  title      :string
+#  active     :boolean
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  rol: one
+  title: MyString
+  active: false
+
+two:
+  rol: two
+  title: MyString
+  active: false

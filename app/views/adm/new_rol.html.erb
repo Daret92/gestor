@@ -2,13 +2,40 @@
   <div class="col-md-2"></div>
   <div class="col-md-8">
     <div class="card" style="padding: 25px;">
-      <%= form_for @rol, url:{action:"create_rol"} do |f| %>
+      <%= simple_form_for @rol, url:{action:"create_rol"} do |f| %>
         <div class="form-group">
           <%= f.text_field :nombre, autofocus: true, class: "form-control form-control-user",placeholder:"Nombre del Rol"%>
         </div>
 
         <div class="form-group">
           <%= f.text_field :descripcion, autofocus: true, class: "form-control form-control-user",placeholder:"Descripcion del Rol"%>
+        </div>
+        <div class="form-group">
+          <div class="custom-control custom-checkbox small">
+            <%= f.check_box :activo, class: "custom-control-input" %>
+            <%= f.label :activo %>
+          </div>
+        </div>
+        <div class="form-group">
+          <%= link_to_add_row("Agregar Permisos", f,:permissions, class: "btn btn-primary")%>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>
+                  Pagina
+                </th>
+                <th>
+                  Ver
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody class="fields">
+              <%= f.simple_fields_for :permissions do |build|%>
+                <%= render 'permission', f: build %>
+              <%end%>    
+            </tbody>
+          </table>
           
         </div>
 

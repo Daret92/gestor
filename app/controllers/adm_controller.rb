@@ -7,11 +7,11 @@ class AdmController < ApplicationController
   
   def new_rol
   	@rol = Rol.new
+  	@rol.permissions.build
   end
   
   def edit_rol
-  	vars = ApplicationRecord.descendants.collect { |type| type.name }
-  	puts vars
+  	@rol.permissions.build
   end
 	def update_rol
 	  respond_to do |format|
@@ -24,6 +24,7 @@ class AdmController < ApplicationController
 	end
 
   def create_rol
+  	raise 
   	@rol = Rol.new(rol_params)
     respond_to do |format|
       if @rol.save
@@ -52,6 +53,7 @@ class AdmController < ApplicationController
     end
   # Never trust parameters from the scary internet, only allow the white list through.
   def rol_params
-    params.require(:rol).permit(:nombre, :descripcion, :activo)
+    #params.require(:rol).permit(:nombre, :descripcion, :activo, permission_attributes:[:id,:nombre,:activo])
+    params.require(:rol).permit(:nombre, :descripcion, :activo, permissions_attributes: Permission.attribute_names.map(&:to_sym).push(:_destroy))
   end
 end

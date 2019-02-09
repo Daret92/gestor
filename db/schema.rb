@@ -12,11 +12,33 @@
 
 ActiveRecord::Schema.define(version: 2019_02_07_223239) do
 
+  create_table "permissions", force: :cascade do |t|
+    t.string "title"
+    t.boolean "active"
+    t.integer "rol_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["rol_id"], name: "index_permissions_on_rol_id"
+  end
+
+  create_table "rols", force: :cascade do |t|
+    t.string "nombre"
+    t.string "descripcion"
+    t.integer "permission_id"
+    t.boolean "activo"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["permission_id"], name: "index_rols_on_permission_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
+    t.integer "rol_id"
+    t.integer "users_id"
+    t.boolean "super_user", default: false
     t.string "alias"
     t.string "nombre"
     t.string "apellido"
@@ -31,6 +53,8 @@ ActiveRecord::Schema.define(version: 2019_02_07_223239) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["rol_id"], name: "index_users_on_rol_id"
+    t.index ["users_id"], name: "index_users_on_users_id"
   end
 
 end

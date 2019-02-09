@@ -7,6 +7,9 @@
 #  encrypted_password     :string           default(""), not null
 #  reset_password_token   :string
 #  reset_password_sent_at :datetime
+#  rol_id                 :integer
+#  users_id               :integer
+#  super_user             :boolean          default(FALSE)
 #  alias                  :string
 #  nombre                 :string
 #  apellido               :string
