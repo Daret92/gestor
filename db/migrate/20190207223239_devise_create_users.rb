@@ -19,7 +19,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :apellido
       t.string :auth_token
       t.boolean :activo
-      t.attachment :avatar
+      #t.attachment :avatar
 
       ## Rememberable
       t.datetime :remember_created_at

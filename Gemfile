@@ -35,7 +35,7 @@ gem 'bootstrap', '~> 4.2.1'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'jquery-datatables'
 gem 'devise'
-gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
+#gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'annotate'
 gem 'simple_form'
 # Use Capistrano for deployment

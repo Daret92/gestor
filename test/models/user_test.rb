@@ -15,10 +15,6 @@
 #  apellido               :string
 #  auth_token             :string
 #  activo                 :boolean
-#  avatar_file_name       :string
-#  avatar_content_type    :string
-#  avatar_file_size       :bigint
-#  avatar_updated_at      :datetime
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null
