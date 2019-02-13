@@ -18,22 +18,33 @@
           <span>Dashboard</span>
         <%end%>
       </li>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adm" aria-expanded="true" aria-controls="adm">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Administracion</span>
-        </a>
-        <div id="adm" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-          <div class="bg-white collapse-inner rounded">
-            <%= link_to roles_path, class: "collapse-item" do%>
-              <i class="fas fa-users-cog"></i><span> Roles</span>
-            <%end%>
-            <%= link_to usuarios_path, class: "collapse-item" do%>
-              <i class="fas fa-user-plus"></i> <span>Usuarios</span>
-            <%end%>
+      <% if @permissions_user.include?('User') or @permissions_user.include?('Rol') or @permissions_user.include?('Equipo') or @permissions_user == "super_user"%>
+        <li class="nav-item">
+          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adm" aria-expanded="true" aria-controls="adm">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Administracion</span>
+          </a>
+          <div id="adm" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+            <div class="bg-white collapse-inner rounded">
+              <% if @permissions_user.include?('Rol') or @permissions_user.include?("super_user")%>
+                <%= link_to roles_path, class: "collapse-item" do%>
+                  <i class="fas fa-users-cog"></i><span> Roles</span>
+                <%end%>
+              <%end%>
+              <% if @permissions_user.include?('User') or @permissions_user.include?("super_user")%>
+                <%= link_to usuarios_path, class: "collapse-item" do%>
+                  <i class="fas fa-user-plus"></i> <span>Usuarios</span>
+                <%end%>
+              <%end%>
+              <% if @permissions_user.include?('Equipo') or @permissions_user.include?("super_user")%>
+                <%= link_to equipo_path, class: "collapse-item" do%>
+                  <i class="fas fa-object-group "></i> <span>Equipos de Trabajo</span>
+                <%end%>
+              <%end%>
+            </div>
           </div>
-        </div>
-      </li>
+        </li>
+      <%end%>
       
       <!-- Divider -->
       <hr class="sidebar-divider">

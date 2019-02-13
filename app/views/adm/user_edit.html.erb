@@ -1,0 +1,97 @@
+<h2>Nuevo Usuario</h2>
+<%= simple_form_for @user, url:{action:"user_update"}, id: @user do |f| %>
+<input type="hidden" name="id" value="<%=@user.id%>">
+	<div class="row">
+		<div class="col-lg-6 col-md-12">
+			<div class="card" style="padding: 15px;">
+				<div class="form-group">
+					<%=f.text_field :alias, class: "form-control form-control-user", placeholder:"Alias"%>
+				</div>
+				<div class="form-group">
+					<%=f.email_field :email, class: "form-control form-control-user", placeholder:"Correo Electronico"%>
+				</div>
+				<div class="form-group text-center">
+					<%= link_to edit_password_path(@user.id), class: "btn btn-danger" do%>
+						Por seguridad Cambiar Contraseña aqui
+					<%end%>
+    			</div>
+			</div>
+		</div>
+		<div class="col-lg-6 col-md-12">
+			<div class="card" style="padding: 15px;">
+				<div class="form-group">
+					<div class="row">
+						<div class="col-md-4">
+							<%= image_tag @user.avatar.url, style: "width:100%;"%>
+						</div>
+						<div class="col-md-8">
+							<div class="form-group">
+								<div class="row">
+									<div class="col-md-12">
+										<%=f.file_field :avatar, class: "form-control form-control-user", placeholder:"Avatar"%>
+										<br/>
+									</div>
+									<div class="col-md-12">
+										<div class="row">
+											<div class="col-lg-1 col-sm-1 col-md-1">
+												<%=f.check_box :activo%>
+											</div>
+											<div class="col-lg-9 col-sm-9 col-md-9">
+												activo
+											</div>
+										</div>
+									</div>
+								</div>
+								<br/>
+								<div class="form-group">
+									<%=f.text_field :nombre, class: "form-control form-control-user", placeholder:"Nombre(s) del Usuario"%>
+								</div>
+								<div class="form-group">
+									<%=f.text_field :apellido, class: "form-control form-control-user", placeholder:"Apellido(s)"%>
+								</div>
+							</div>		
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="card" style="padding: 15px;">
+				<div class="responsive">
+					<table class="table">
+						<thead>
+							<tr>
+								<th>
+									Elegir Rol
+								</th>
+								<th></th>
+								<th>
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							<% @rols.each do |item|%>
+							<tr>
+								<td><%= item.nombre%></td>
+								<td><small><%=item.descripcion%></small></td>
+								<td><%= f.radio_button(:rol_id,item.id)%></td>
+							</tr>
+							<%end%>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<br/>
+	<div class="row">
+		<div class="col-lg-12 col-md-12">
+			<div class="card" style="padding: 15px;">
+				<%= f.submit "Actualizar Perfil", class: "btn btn-primary" %>
+			</div>
+		</div>
+	</div>
+<%end%>

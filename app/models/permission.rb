@@ -5,6 +5,7 @@
 #  id         :integer          not null, primary key
 #  title      :string
 #  active     :boolean
+#  rol_id     :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

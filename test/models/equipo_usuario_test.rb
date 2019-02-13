@@ -1,18 +1,18 @@
 # == Schema Information
 #
-# Table name: permissions
+# Table name: equipo_usuarios
 #
 #  id         :integer          not null, primary key
-#  title      :string
-#  active     :boolean
-#  rol_id     :integer
+#  user_id    :integer
+#  activo     :boolean
+#  equipo_id  :integer
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
 
 require 'test_helper'
 
-class PermissionTest < ActiveSupport::TestCase
+class EquipoUsuarioTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

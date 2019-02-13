@@ -20,19 +20,41 @@
 //= require_tree .
 //= require serviceworker-companion
 document.addEventListener("turbolinks:load", function() {
+  
   $('form').on('click', '.remove_record',function(event){
     $(this).prev('input[type=hidden]').val('1');
     $(this).closest('tr').hide();
     return event.preventDefault();
   });
   $('form').on('click', '.add_fields',function(event){
+    var ultimo = $('.fields').find('tr').find('.selecciones option:selected');
+    
+    if(ultimo.val() != 'Seleccionar pagina'){
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'),'g');
+    var algo = $('.fields').find('tr').find('.selecciones option:selected');
+    algo_ar = []
+    $.each(algo, function(a,e){
+      algo_ar.push(e.text);
+    });
+
     $('.fields').append($(this).data('fields').replace(regexp,time));
-    return event.preventDefault();
-  });
+    $.each(algo_ar,function(e,a){
+      if(a !='Seleccionar pagina'){
+        $('.fields').find('tr').last().find('.selecciones option[value=' + a + ']').hide();    
+      }      
+    });
+      
+    //$(this).find("").hide();
+
+      return event.preventDefault();
+    }else{
+      alert('Ingresa una pagina valida')
+    }
+  }) ;
   "use strict"; // Start of use strict
+  
   $('.dataTable').DataTable();
   // Toggle the side navigation
   $("#sidebarToggle, #sidebarToggleTop").on('click', function(e) {

@@ -1,6 +1,6 @@
 <tr>
 	<td>
-		<%=f.input :title, label: false%>
+		<%=f.select(:title, options_for_select(@permisos,f.object.title),{include_blank: "Seleccionar pagina"},{class: 'form-control selecciones'})%>
 	</td>
 	<td>
 		<%=f.check_box :active, label: false%>
@@ -13,3 +13,4 @@
 		<%end%>
 	</td>
 </tr>
+						
