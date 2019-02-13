@@ -15,6 +15,9 @@
 						Por seguridad Cambiar Contraseña aqui
 					<%end%>
     			</div>
+    			<div class="form-group">
+					<%=f.select(:users_id, options_for_select(User.all().collect{|titulo| [titulo.nombre,titulo.id]},f.object.users_id),{include_blank: "Seleccionar un Superior"},{class: 'form-control'})%>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-6 col-md-12">

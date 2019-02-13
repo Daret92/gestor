@@ -17,6 +17,9 @@
               <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "form-control form-control-user",placeholder:"Repite Tu Contraseña" %>
             </div>
           </div>
+          		<div class="form-group">
+					<%=f.select(:users_id, options_for_select(User.where(super_user:false).collect{|titulo| [titulo.nombre,titulo.id]},f.object.users_id),{include_blank: "Seleccionar un Superior"},{class: 'form-control'})%>
+				</div>
 			</div>
 		</div>
 		<div class="col-lg-6 col-md-12">

@@ -66,7 +66,6 @@ class AdmController < ApplicationController
 
   def user_create
     @user = User.new(user_params)
-    @user.users_id = current_user.id
     respond_to do |format|
        if @user.save
         format.html { redirect_to usuarios_path, notice: 'Article was successfully created.' }
@@ -178,6 +177,6 @@ class AdmController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:nombre,:apellido,:email,:encrypted_password,:password,:password_confirmation,:rol_id,:alias,:activo,:avatar)
+    params.require(:user).permit(:nombre,:apellido,:email,:encrypted_password,:password,:password_confirmation,:rol_id,:users_id,:alias,:activo,:avatar)
   end
 end
