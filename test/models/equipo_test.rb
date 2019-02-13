@@ -4,6 +4,7 @@
 #
 #  id                :integer          not null, primary key
 #  equipo_usuario_id :integer
+#  user_id           :integer
 #  nombre            :string
 #  activo            :boolean
 #  created_at        :datetime         not null

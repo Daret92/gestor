@@ -4,6 +4,7 @@
 #
 #  id                :integer          not null, primary key
 #  equipo_usuario_id :integer
+#  user_id           :integer
 #  nombre            :string
 #  activo            :boolean
 #  created_at        :datetime         not null
@@ -11,6 +12,7 @@
 #
 
 class Equipo < ApplicationRecord
+  belongs_to :user
   has_many :equipo_usuario, dependent: :destroy
   accepts_nested_attributes_for :equipo_usuario, allow_destroy: true, reject_if: lambda {|attributes| attributes['user_id'].blank?}
 end

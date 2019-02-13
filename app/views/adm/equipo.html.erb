@@ -13,7 +13,8 @@
   <thead>
     <tr>
     	<th># Control</th>
-      <th>Equipo</th>
+      <th>Encargado</th>
+      <th>Equipo / Departamento</th>
       <th>Activo</th>
       <th>Editar</th>
     </tr>
@@ -22,6 +23,7 @@
   	<%@equipo.each do |item|%>
   		<tr>
   			<td><%= item.id%></td>
+        <td><%= item.user.nombre%></td>
 	      <td><%= item.nombre%></td>
 	      <td class="text-center "><%if item.activo == true %><i class="fas fa-check-square"><%else%><i class="fas fa-square"><%end%></td>
 	      <td class="text-center ">

@@ -5,8 +5,17 @@
 		<div class="card" style="padding: 25px;">
 			<%= simple_form_for @equipo, url:{action:"equipo_update"} do |f| %>
 			<input type="hidden" name="id" value='<%=@equipo.id%>'>
-			<div class="form-group">
-				<%= f.text_field :nombre, class: "form-control", placeholder: "Nombre del equipo de Trabajo"%>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="form-group">
+						<%=f.select(:user_id, options_for_select(User.all().collect{|titulo| [titulo.nombre,titulo.id]},@equipo.user_id),{include_blank: "Seleccionar al jefe de equipo"},{class: 'form-control'})%>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="form-group">
+						<%= f.text_field :nombre, class: "form-control", placeholder: "Nombre del equipo de Trabajo"%>
+					</div>
+				</div>
 			</div>
 			<div class="form-group">
 				<div class="row">

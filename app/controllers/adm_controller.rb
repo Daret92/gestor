@@ -166,7 +166,7 @@ class AdmController < ApplicationController
     end
   end
   def grup_params
-    params.require(:equipo).permit(:nombre,:activo, equipo_usuario_attributes: EquipoUsuario.attribute_names.map(&:to_sym).push(:_destroy))
+    params.require(:equipo).permit(:nombre,:activo,:user_id, equipo_usuario_attributes: EquipoUsuario.attribute_names.map(&:to_sym).push(:_destroy))
   end
   # Never trust parameters from the scary internet, only allow the white list through.
   def password
