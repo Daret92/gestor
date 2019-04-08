@@ -1,0 +1,14 @@
+<tr style="padding: 2px;">
+	<td style="padding: 2px;">
+		<%= f.text_field :cantidad, class: "form-control", required: true%>
+	</td>
+	<td style="padding: 2px;">
+		<%= f.text_field :descripcion, class: "form-control", required: true%>
+	</td>
+	<td class="text-center">
+		<%= f.input_field :_destroy, as: :hidden%>
+		<%= link_to '#', class: "remove_record btn btn-danger  btn-circle" do%>
+			<i class="fas fa-trash"></i>
+		<%end%>
+	</td>
+</tr>

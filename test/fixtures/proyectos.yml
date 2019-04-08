@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: proyectos
+#
+#  id          :integer          not null, primary key
+#  titulo      :string
+#  estado      :string
+#  inicio      :date
+#  fin         :date
+#  descripcion :string
+#  user_id     :integer
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titulo: MyString
+  estado: MyString
+  inicio: 2019-03-26
+  fin: 2019-03-26
+  descripcion: MyString
+  user: one
+
+two:
+  titulo: MyString
+  estado: MyString
+  inicio: 2019-03-26
+  fin: 2019-03-26
+  descripcion: MyString
+  user: two

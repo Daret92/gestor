@@ -1,0 +1,39 @@
+<div class="w-100 text-center">
+<%= link_to registries_path , class: "btn btn-warning" do%>
+  <i class="fa fa-list-ol"></i> Listado
+<%end%>
+ | 
+<%= link_to root_path , class: "btn btn-primary" do%>
+    <i class="fa fa-home"></i> Ir a Inicio
+<%end%>
+</div>
+
+
+<p id="notice"><%= notice %></p>
+<div class="card" style="padding: 25px">
+  <p>
+    <strong>Proyecto:</strong>
+    <%= @registry.proyecto.titulo %>
+  </p>
+
+  <p>
+    <strong>Titulo:</strong>
+    <%= @registry.titulo %>
+  </p>
+
+  <p>
+    <strong>Descripcion:</strong>
+    <%= @registry.descripcion %>
+  </p>
+
+  <p>
+    <strong>Resultado:</strong>
+    <%= @registry.resultado %>
+  </p>
+
+  <p>
+    <strong>Finalizado:</strong>
+    <% if @registry.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%>
+  </p>
+</div>
+<br/>

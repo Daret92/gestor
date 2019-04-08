@@ -6,12 +6,13 @@ class AdmController < ApplicationController
   end
   
   def new_rol
+    Rails.application.eager_load!
   	@rol = Rol.new
   	@rol.permissions.build
     @permisos_all = ApplicationRecord.descendants.collect { |type| type.name }
     @permisos = []
     @permisos_all.each do |item|
-      if item != "Permission"
+      if !["Permission", "EquipoUsuario"].include?(item)
         @permisos.append(item)
       end      
     end
@@ -52,7 +53,8 @@ class AdmController < ApplicationController
  #Termina roles
  #usuarios
   def user
-    @users = User.where(users_id:current_user.id)
+    
+    @users = User.where(super_user:false)
   end
   
   def user_new
@@ -177,6 +179,6 @@ class AdmController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:nombre,:apellido,:email,:encrypted_password,:password,:password_confirmation,:rol_id,:users_id,:alias,:activo,:avatar)
+    params.require(:user).permit(:nombre,:token_msj,:apellido,:email,:encrypted_password,:password,:password_confirmation,:rol_id,:users_id,:alias,:activo,:avatar)
   end
 end

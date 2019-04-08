@@ -7,7 +7,7 @@
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
-						<%=f.select(:user_id, options_for_select(User.all().collect{|titulo| [titulo.nombre,titulo.id]}),{include_blank: "Seleccionar al jefe de equipo"},{class: 'form-control'})%>
+						<%=f.select(:user_id, options_for_select(User.where(activo:true).collect{|titulo| [titulo.nombre,titulo.id]}),{include_blank: "Seleccionar al jefe de equipo"},{class: 'form-control'})%>
 					</div>
 				</div>
 				<div class="col-md-6">

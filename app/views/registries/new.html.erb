@@ -1,0 +1,18 @@
+<h1>New Registry</h1>
+
+<%= render 'form', registry: @registry %>
+
+
+<br/>
+<div class="row">
+	<div class="col-md-2">
+		<%= link_to registries_path, class: "btn btn-warning" do%>
+    		<i class="fa fa-list-ol"></i> Listado
+  		<%end%>
+	</div>
+	<div class="col-md-2">
+		<%= link_to root_path, class: "btn btn-info" do %>
+      		<i class="fas fa-home"></i> Ir a Inicio
+   		<% end %>
+	</div>
+</div>

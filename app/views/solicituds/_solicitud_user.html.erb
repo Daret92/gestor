@@ -1,0 +1,17 @@
+<tr style="padding: 0px;">
+	<td style="padding: 2px;">
+		<%=f.select :user_id,User.where(activo:true,super_user:false).collect{|item| [EquipoUser(item),item.id,{'data-tokens'=>EquipoUser(item)}] },{prompt:"Selecciona un Usuario"},{class: "form-control selectpicker", 'data-live-search': true, required: true} %>
+	</td>
+	<td style="padding: 2px;">
+		<%= f.input_field :_destroy, as: :hidden%>
+		<%= link_to '#', class: "remove_record btn btn-danger  btn-circle" do%>
+			<i class="fas fa-trash"></i>
+		<%end%>
+	</td>
+</tr>
+<script type="text/javascript">
+	$(function () {
+		$('select').selectpicker();
+	});
+</script>
+

@@ -1,4 +1,4 @@
-    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+    <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion toggled" id="accordionSidebar">
 
       <!-- Sidebar - Brand -->
       <%=link_to root_path ,class: "sidebar-brand d-flex align-items-center justify-content-center" do %>
@@ -8,32 +8,29 @@
         <div class="sidebar-brand-text mx-3">SB Admin <sup>2</div>
       <%end%>
       
-      
-
-      <!-- Divider -->
       <hr class="sidebar-divider my-0">
       <li class="nav-item active">
         <%= link_to root_path, class: "nav-link" do%>
           <i class="fas fa-home"></i>
-          <span>Dashboard</span>
+          <span>Inicio</span>
         <%end%>
       </li>
       <% if @permissions_user.include?('User') or @permissions_user.include?('Rol') or @permissions_user.include?('Equipo') or @permissions_user == "super_user"%>
         <li class="nav-item">
-          <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#adm" aria-expanded="true" aria-controls="adm">
+          <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#adm" aria-expanded="true" aria-controls="adm">
             <i class="fas fa-fw fa-cog"></i>
             <span>Administracion</span>
           </a>
           <div id="adm" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white collapse-inner rounded">
-              <% if @permissions_user.include?('Rol') or @permissions_user.include?("super_user")%>
-                <%= link_to roles_path, class: "collapse-item" do%>
-                  <i class="fas fa-users-cog"></i><span> Roles</span>
-                <%end%>
-              <%end%>
               <% if @permissions_user.include?('User') or @permissions_user.include?("super_user")%>
                 <%= link_to usuarios_path, class: "collapse-item" do%>
                   <i class="fas fa-user-plus"></i> <span>Usuarios</span>
+                <%end%>
+              <%end%>
+              <% if @permissions_user.include?('Rol') or @permissions_user.include?("super_user")%>
+                <%= link_to roles_path, class: "collapse-item" do%>
+                  <i class="fas fa-users-cog"></i><span> Roles</span>
                 <%end%>
               <%end%>
               <% if @permissions_user.include?('Equipo') or @permissions_user.include?("super_user")%>
@@ -45,91 +42,83 @@
           </div>
         </li>
       <%end%>
-      
-      <!-- Divider -->
-      <hr class="sidebar-divider">
+      <%if @permissions_user.include?('Proyecto')or @permissions_user == "super_user"%>
+      <li class="nav-item">
+        <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#proyecto" aria-expanded="true" aria-controls="proyecto">
+          <i class="fas fa-city "></i>
+          <span>Proyectos</span>
+        </a>
+        <div id="proyecto" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <%= link_to proyectos_path, class: "collapse-item" do%>
+              <i class="fas fa-object-group "></i> <span>Proyectos</span>
+            <%end%>
+          </div>
+        </div>
+      </li>
+      <%end%>
 
+      <hr class="sidebar-divider no_margin">
+      <div class="sidebar-heading">
+        Diario
+      </div>
+      <li class="nav-item">
+        <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#registro" aria-expanded="true" aria-controls="registro">
+          <i class="fas fa-layer-group "></i>
+          <span>Registro / Tareas</span>
+        </a>
+        <div id="registro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+          <div class="bg-white py-2 collapse-inner rounded">
+            <%= link_to registries_path, class: "collapse-item" do%>
+              <i class="fas fa-folder-plus "></i> <span>Registros Diario</span>
+            <%end%>
+            <%= link_to registries_path, class: "collapse-item" do%>
+              <i class="fas fa-folder-plus "></i> <span>Tareas</span>
+            <%end%>
+          </div>
+        </div>
+      </li>
+      <!-- Divider -->
+      <hr class="sidebar-divider no_margin">
       <!-- Heading -->
       <div class="sidebar-heading">
-        Interface
+        Solicitudes
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
-          <i class="fas fa-fw fa-cog"></i>
-          <span>Components</span>
+        <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#solicitudes" aria-expanded="true" aria-controls="solicitudes">
+          <i class="fas fa-network-wired"></i>
+          <span>Solicitudes</span>
         </a>
-        <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
+        <div id="solicitudes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Components:</h6>
-            <a class="collapse-item" href="buttons.html">Buttons</a>
-            <a class="collapse-item" href="cards.html">Cards</a>
+            <%= link_to solicituds_path, class: "collapse-item" do%>
+              <i class="fas fa-object-group "></i> <span>Listado de Solicitudes</span>
+            <%end%>
           </div>
         </div>
       </li>
-
+      <%if @permissions_user.include?('Objetivo')%>
       <!-- Nav Item - Utilities Collapse Menu -->
       <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-fw fa-wrench"></i>
-          <span>Utilities</span>
+        <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#collapseUtilities" aria-expanded="true" aria-controls="collapseUtilities">
+          <i class="fas fa-eye"></i>
+          <span>Objetivos</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Custom Utilities:</h6>
-            <a class="collapse-item" href="utilities-color.html">Colors</a>
-            <a class="collapse-item" href="utilities-border.html">Borders</a>
-            <a class="collapse-item" href="utilities-animation.html">Animations</a>
-            <a class="collapse-item" href="utilities-other.html">Other</a>
+            <a class="collapse-item" href="utilities-color.html">Registrar Avance</a>
+            <a class="collapse-item" href="utilities-border.html">Mis Objetivos</a>
+            <a class="collapse-item" href="utilities-animation.html">Historial</a>
           </div>
         </div>
       </li>
 
+      <hr class="sidebar-divider no_margin">
+      <%end%>
       <!-- Divider -->
-      <hr class="sidebar-divider">
-
-      <!-- Heading -->
-      <div class="sidebar-heading">
-        Addons
-      </div>
-
-      <!-- Nav Item - Pages Collapse Menu -->
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePages" aria-expanded="true" aria-controls="collapsePages">
-          <i class="fas fa-fw fa-folder"></i>
-          <span>Pages</span>
-        </a>
-        <div id="collapsePages" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Login Screens:</h6>
-            <a class="collapse-item" href="login.html">Login</a>
-            <a class="collapse-item" href="register.html">Register</a>
-            <a class="collapse-item" href="forgot-password.html">Forgot Password</a>
-            <div class="collapse-divider"></div>
-            <h6 class="collapse-header">Other Pages:</h6>
-            <a class="collapse-item" href="404.html">404 Page</a>
-            <a class="collapse-item" href="blank.html">Blank Page</a>
-          </div>
-        </div>
-      </li>
-
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="charts.html">
-          <i class="fas fa-fw fa-chart-area"></i>
-          <span>Charts</span></a>
-      </li>
-
-      <!-- Nav Item - Tables -->
-      <li class="nav-item">
-        <a class="nav-link" href="tables.html">
-          <i class="fas fa-fw fa-table"></i>
-          <span>Tables</span></a>
-      </li>
-
-      <!-- Divider -->
-      <hr class="sidebar-divider d-none d-md-block">
+      <hr class="sidebar-divider d-none d-md-block no_margin">
 
       <!-- Sidebar Toggler (Sidebar) -->
       <div class="text-center d-none d-md-inline">

@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+<div class="card" style="padding: 25px;">
+<p>
+  <strong>Titulo:</strong>
+  <%= @proyecto.titulo %>
+</p>
+
+<p>
+  <strong>Estado:</strong>
+  <%= @proyecto.estado %>
+</p>
+
+<p>
+  <strong>Inicio:</strong>
+  <%= @proyecto.inicio %>
+</p>
+
+<p>
+  <strong>Fin:</strong>
+  <%= @proyecto.fin %>
+</p>
+
+<p>
+  <strong>Descripcion:</strong>
+  <%= @proyecto.descripcion %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @proyecto.user.email %>
+</p>
+
+<%= link_to 'Edit', edit_proyecto_path(@proyecto) %> |
+<%= link_to 'Back', proyectos_path %>
+</div>

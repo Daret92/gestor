@@ -15,6 +15,7 @@
 #  apellido               :string
 #  auth_token             :string
 #  activo                 :boolean
+#  token_msj              :string
 #  remember_created_at    :datetime
 #  created_at             :datetime         not null
 #  updated_at             :datetime         not null

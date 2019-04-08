@@ -1,0 +1,15 @@
+# == Schema Information
+#
+# Table name: solicitud_users
+#
+#  id           :integer          not null, primary key
+#  solicitud_id :integer
+#  user_id      :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+class SolicitudUser < ApplicationRecord
+  belongs_to :solicitud, optional: true
+  belongs_to :user, optional: true
+end

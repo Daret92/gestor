@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: materials
+#
+#  id           :integer          not null, primary key
+#  cantidad     :string
+#  material     :string
+#  descripcion  :string
+#  autorizado   :boolean
+#  entregado    :boolean
+#  solicitud_id :integer
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cantidad: MyString
+  material: MyString
+  descripcion: MyString
+  autorizado: false
+  entregado: false
+  solicitud: one
+
+two:
+  cantidad: MyString
+  material: MyString
+  descripcion: MyString
+  autorizado: false
+  entregado: false
+  solicitud: two

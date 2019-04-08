@@ -19,6 +19,7 @@ class DeviseCreateUsers < ActiveRecord::Migration[5.2]
       t.string :apellido
       t.string :auth_token
       t.boolean :activo
+      t.string :token_msj
       #t.attachment :avatar
 
       ## Rememberable

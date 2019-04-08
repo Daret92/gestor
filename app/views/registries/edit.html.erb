@@ -1,0 +1,11 @@
+<h1>Editing Registry</h1>
+
+<%= render 'form', registry: @registry %>
+
+<%= link_to @registry , class: "btn btn-info" do%>
+    Ver
+<%end%>
+ |
+<%= link_to registries_path , class: "btn btn-warning" do%>
+    <i class="fa fa-arrow-left"></i> Regresar
+<%end%>

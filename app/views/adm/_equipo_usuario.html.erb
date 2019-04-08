@@ -1,6 +1,6 @@
 <tr>
 	<td>
-		<%=f.select(:user_id, options_for_select(User.all().collect{|titulo| [titulo.nombre,titulo.id]},f.object.user_id),{include_blank: "Seleccionar un usuario"},{class: 'form-control'})%>
+		<%=f.select(:user_id, options_for_select(User.where(activo:true).collect{|titulo| [titulo.nombre,titulo.id]},f.object.user_id),{include_blank: "Seleccionar un usuario"},{class: 'form-control'})%>
 	</td>
 	<td>
 		<%=f.check_box :activo, label: false%>

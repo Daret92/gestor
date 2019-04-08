@@ -1,0 +1,55 @@
+<%= simple_form_for(@registry, remote: true) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <diV class="card" style="padding: 25px;">
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :proyecto%>
+        <%=f.select :proyecto_id,Proyecto.where(estado:'1').collect{|item| [item.titulo,item.id,{'data-tokens'=>item.titulo}] },{prompt:"Selecciona un Proyecto"},{class: "form-control selectpicker", 'data-live-search': true}%>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :titulo%>
+        <%= f.text_field :titulo, class: "form-control" %>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-6">
+        <%= f.label :descripcion%>
+        <%= f.text_area :descripcion, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <%= f.label :resultado%>
+        <%= f.text_area :resultado, class: "form-control" %>
+      </div>
+    </div>
+    <br/>
+  </div>
+</diV>
+<br/>
+  <div class="form-actions w-100 text-center">
+    <%= f.submit "Ingresar Registro", class: "btn btn-primary", remote: true%>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(document).on('ready',function(){
+    $('#new_registry').on ('ajax:complete', complete)
+
+    function complete(event, data) {
+      console.log(data);
+      location.reload(); 
+    }
+
+    $('#new_registry').on ('ajax:error', errors)
+
+    function errors(event, data) {
+      console.log(data)
+      location.reload(); 
+    }
+
+    $('select').selectpicker();
+
+  });
+  
+</script>

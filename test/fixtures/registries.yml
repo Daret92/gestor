@@ -1,0 +1,32 @@
+# == Schema Information
+#
+# Table name: registries
+#
+#  id          :integer          not null, primary key
+#  proyecto_id :integer
+#  user_id     :integer
+#  titulo      :string
+#  descripcion :string
+#  resultado   :string
+#  finalizado  :boolean
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  proyecto: one
+  user: one
+  titulo: MyString
+  descripcion: MyString
+  resultado: MyString
+  finalizado: false
+
+two:
+  proyecto: two
+  user: two
+  titulo: MyString
+  descripcion: MyString
+  resultado: MyString
+  finalizado: false

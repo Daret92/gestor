@@ -40,9 +40,11 @@ gem 'annotate'
 gem 'simple_form'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'bootstrap-select-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
+
+gem 'telegram-bot'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

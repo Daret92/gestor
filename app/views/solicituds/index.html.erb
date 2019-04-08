@@ -1,0 +1,53 @@
+<div class="float-right">
+<%= link_to 'Nueva Solicitud', new_solicitud_path, class: "btn btn-primary" %>
+</div>
+<h1>Solicituds</h1>
+<div class="table-responsive" style="font-size: 80%">
+  <table class="responsive nowrap table" id="dttb-solicituds" data-sort="true">
+    <thead>
+      <tr  class="text-center">
+        <th>Folio</th>
+        <th>Proyecto</th>
+        <th class="text-center"><i class="fas fa-eye"></i></th>
+        <th class="text-center"><i class="fas fa-user-friends"></i></th>
+        <th><i class="fas fa-shapes"></i></th>
+        <th><i class="fas fa-hand-holding-usd"></i></th>
+        <th><i class="fas fa-car-alt"></i></th>
+        <th><i class="fas fa-broom"></i></th>
+        <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"></th>
+      </tr>
+    </thead>
+    <tbody style="padding: 0px;">
+      <%@solicituds.each do |items|%>
+        <tr style="padding: 0px;" class="text-center <% if items.estado == '1'%><%elsif items.estado == '2'%> bg-success <%elsif  items.estado == '3'%> bg-primary <%elsif items.estado == '4'%>bg-danger<%end%>">
+          <td style="padding: 2px"><%=items.id%></td>
+          <td style="padding: 2px"><%=items.proyecto.titulo%></td>
+          <td style="padding: 2px"><%=items.observaciones%></td>
+          <td style="padding: 2px"><%=items.user.email%></td>
+          <td style="padding: 2px"><%=items.materials.count%></td>
+          <td style="padding: 2px"><%=items.viaticos.count%></td>
+          <td style="padding: 2px"><%=items.vehiculos.count%></td>
+          <td style="padding: 2px"><%=items.otro.count%></td>
+          <td style="padding: 2px">
+            <div class="dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Acciones
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%= link_to 'Estado', items , class:"dropdown-item"%>
+                <%if items.estado == "1" && items.user == current_user%>
+                  <%= link_to 'Editar', edit_solicitud_path(items), class:"dropdown-item" %>
+                <%end%>
+                <%if items.estado == "1"%>
+                  <%= link_to 'Cancelar', items, method: :delete, class:"dropdown-item",data: { confirm: 'Are you sure?' } %>
+                <% end%>
+              </div>
+            </div>
+          </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
+
+<br>

@@ -14,13 +14,85 @@
 //= require jquery_ujs
 //= require popper
 //= require bootstrap
+//= require bootstrap-select
 //= require activestorage
 //= require turbolinks
 //= require datatables
 //= require_tree .
 //= require serviceworker-companion
-document.addEventListener("turbolinks:load", function() {
+
+$( document ).on('turbolinks:load', function() {
   
+
+  $('.radios').on('click',function(){
+    var id = $(this).data('id')
+    $.ajax({
+      method: "GET",
+      url: '/update_materials',
+      data: { ids: id},
+      success: function(data){
+      }
+      });
+  });
+  $('.radiosv').on('click',function(){
+    var id = $(this).data('id')
+    $.ajax({
+      method: "GET",
+      url: '/validate_materials',
+      data: { ids: id},
+      success: function(data){
+      }
+      });
+  });
+  
+
+  $('.radioViaticos').on('click',function(){
+    var id = $(this).data('id')
+    $.ajax({
+      method: "GET",
+      url: '/update_viaticos',
+      data: { ids: id},
+      success: function(data){
+      }
+      });
+  });
+
+  $('.auth_solicitud').on('click',function(){
+    var id = $(this).data('solicitud')
+    $.ajax({
+      method: "GET",
+      url: '/authSolicitud',
+      data: { ids: id},
+      success: function(data){
+        location.reload();
+      }
+      });
+  });
+
+  $('.auth_cancel').on('click',function(){
+    var id = $(this).data('solicitud')
+    $.ajax({
+      method: "GET",
+      url: '/cancSolicitud',
+      data: { ids: id},
+      success: function(data){
+        location.reload(); 
+      }
+      });
+  });
+$('.fin_solicitud').on('click',function(){
+    var id = $(this).data('solicitud')
+    $.ajax({
+      method: "GET",
+      url: '/finSolicitud',
+      data: { ids: id},
+      success: function(data){
+        location.reload();
+      }
+      });
+  });
+
+
   $('form').on('click', '.remove_record',function(event){
     $(this).prev('input[type=hidden]').val('1');
     $(this).closest('tr').hide();
@@ -53,6 +125,48 @@ document.addEventListener("turbolinks:load", function() {
       alert('Ingresa una pagina valida')
     }
   }) ;
+
+
+
+  $('form').on('click', '.add_users',function(event){
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'),'g');
+    console.log($(this).data('field'));
+    $('.fields_users').append($(this).data('field').replace(regexp,time));
+    return event.preventDefault();
+  }) ;
+
+  $('form').on('click', '.add_vehiculo',function(event){
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'),'g');
+    console.log($(this).data('field'));
+    $('.fields_vehiculo').append($(this).data('fieldv').replace(regexp,time));
+    return event.preventDefault();
+  });
+
+  $('form').on('click', '.add_viatico',function(event){
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'),'g');
+    console.log($(this).data('field'));
+    $('.fields_viatico').append($(this).data('fieldvi').replace(regexp,time));
+    return event.preventDefault();
+  }) ;
+  
+$('form').on('click', '.add_otro',function(event){
+    var regexp, time;
+    time = new Date().getTime();
+    regexp = new RegExp($(this).data('id'),'g');
+    console.log($(this).data('field'));
+    $('.fields_otro').append($(this).data('fieldo').replace(regexp,time));
+    return event.preventDefault();
+  }) ;
+
+
+
+
   "use strict"; // Start of use strict
   
   $('.dataTable').DataTable();

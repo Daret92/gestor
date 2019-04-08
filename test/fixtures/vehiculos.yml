@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: vehiculos
+#
+#  id           :integer          not null, primary key
+#  solicitud_id :integer
+#  vehiculo     :string
+#  descripcion  :string
+#  devuelto     :boolean
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  solicitud: one
+  vehiculo: MyString
+  descripcion: MyString
+  devuelto: false
+
+two:
+  solicitud: two
+  vehiculo: MyString
+  descripcion: MyString
+  devuelto: false

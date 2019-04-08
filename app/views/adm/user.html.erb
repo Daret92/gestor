@@ -24,7 +24,7 @@
   		<tr>
 	      <td><%= item.nombre%> <%= item.apellido%></td>
         <td><%= item.email%></td>
-        <td><%= Rol.where(id:item.rol_id).first().nombre%></td>
+        <td><%if item.rol_id%><%= Rol.where(id:item.rol_id).first().nombre%><%elsif item.super_user%>SuperUsuario<%else%>No cuenta con rol definido<%end%></td>
 	      <td class="text-center "><%if item.activo == true %><i class="fas fa-check-square"><%else%><i class="fas fa-square"><%end%></td>
 	      <td class="text-center ">
 	      	<%= link_to user_edit_path(item), class: "btn btn-success btn-circle" do%>

@@ -1,0 +1,150 @@
+<%= simple_form_for(@solicitud) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <br/>
+  <div class="row rows_margin">
+    <div class="col-md-6">
+      <div class="card" style="padding: 25px; font-size: 70%!important">
+      <%= f.label :proyecto%>
+         <%=f.select :proyecto_id,Proyecto.where(estado:'1').collect{|item| [item.titulo,item.id,{'data-tokens'=>item.titulo}] },{prompt:"Selecciona un Proyecto"},{class: "form-control selectpicker", 'data-live-search': true}%>
+        <hr/>
+        <%= f.label :observaciones, required: true%>
+        <%= f.text_area :observaciones,input_html:{class: "form-control"} %>
+        <br/>
+      </div>
+    </div>
+
+    <div class="col-md-6 card">
+      <h5>Involucrados en la solicitud</h5>
+      <%if @edit!=true%>
+        <div style="padding: 15px; width: 100%">
+          <%= link_to_add_user("Agregar usuarios",f,:solicitud_users, class: "btn btn-primary btn-xs w-100")%>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Remover</th>
+            </tr>
+          </thead>
+          <tbody class="fields_users">
+            <%= f.simple_fields_for :solicitud_users do |build|%>
+              <%= render 'solicitud_user', f: build %>
+            <%end%>  
+          </tbody>
+        </table>
+      <%else%>
+        <div class="row">
+           <div class="col-md-6" style="font-size: 80%"><i class='fas fa-chess-king'></i> Encargado de Departamento</div>
+           <div class="col-md-6" style="font-size: 80%"><i class='fas fa-chess-pawn'></i> Pertenece a Departamento</div>
+        </div>
+        <ul style="padding-top: 10px;">
+        <%@solicitud.solicitud_users.each do |items|%>
+          <li><%=items.user.email%> <%=getTeam(items.user)%></li>
+        <%end%>
+      </ul>
+      <%end%>
+    </div>
+  </div>
+  <br/>
+  <div class="row rows_margin">
+    <div class="col-md-12" style="padding-right: 0px;">
+      <div class="card">
+        <div style="padding: 15px; width: 100%">
+          <%= link_to_add_row("Agregar Material", f,:materials, class: "btn btn-primary")%>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th> Cantidad </th>
+              <th> Material </th>
+              <th> Descripcion </th>
+              <th> Remover </th>
+            </tr>
+          </thead>
+          <tbody class="fields">
+            <%= f.simple_fields_for :materials do |build|%>
+              <%= render 'material', f: build %>
+            <%end%>    
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br/>
+
+  <div class="row rows_margin">
+    <div class="col-md-6" style="padding-right: 0px;">
+      <div class="card">
+        <div style="padding: 15px; width: 100%">
+          <%= link_to_add_otro("Agregar Otro / Varios", f,:otro, class: "btn btn-primary")%>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th> Descripcion </th>
+              <th> Remover </th>
+            </tr>
+          </thead>
+          <tbody class="fields_otro">
+            <%= f.simple_fields_for :otro do |build|%>
+              <%= render 'otro', f: build %>
+            <%end%>    
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-6" style="padding-right: 0px;">
+      <div class="card">
+        <div style="padding: 15px; width: 100%">
+          <%= link_to_add_viatico("Agregar viatico", f,:viaticos, class: "btn btn-primary")%>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th> Cantidad </th>
+              <th> Descripcion </th>
+              <th> Remover </th>
+            </tr>
+          </thead>
+          <tbody class="fields_viatico">
+            <%= f.simple_fields_for :viaticos do |build|%>
+              <%= render 'viatico', f: build %>
+            <%end%>    
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col-md-12" style="padding-right: 0px;">
+      <br/>
+      <div class="card">
+        <div style="padding: 15px; width: 100%">
+          <%= link_to_add_vehiculo("Agregar vehiculo", f,:vehiculos, class: "btn btn-primary")%>
+        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <th> Vehiculo </th>
+              <th> Descripcion </th>
+              <th> Remover </th>
+            </tr>
+          </thead>
+          <tbody class="fields_vehiculo">
+            <%= f.simple_fields_for :vehiculos do |build|%>
+              <%= render 'vehiculo', f: build %>
+            <%end%>    
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <br/>
+  <div class="form-actions text-center">
+    <%= f.submit "Actualizar Solicitud", class: "btn btn-primary btn-lg" %>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(function () {
+    $('select').selectpicker();
+  });
+</script>

@@ -1,0 +1,12 @@
+<h1>Editar Solicitud</h1>
+
+<%= render 'form', solicitud: @solicitud %>
+
+<%= link_to @solicitud , class: "btn btn-info" do%>
+    Ver
+<%end%>
+|
+<%= link_to solicituds_path , class: "btn btn-warning" do%>
+    <i class="fa fa-arrow-left"></i> Regresar
+<%end%>
+

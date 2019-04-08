@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  resources :registries
+  resources :solicituds
+  resources :proyectos
   #Roles
   get 'roles',to:"adm#rol", as: "roles"
   get 'crear_rol',to:'adm#new_rol', as: "crear_rol"
@@ -23,6 +26,16 @@ Rails.application.routes.draw do
   delete 'equipo_delete/:id', to: 'adm#equipo_delete', as: "equipo_delete"
   patch 'equipo_update', to: 'adm#equipo_update'
   
+
+  get '/update_materials', to: 'solicituds#update_materials', :defaults => {:format => 'json'}
+  get '/update_viaticos', to: 'solicituds#update_viaticos', :defaults => {:format => 'json'}
+  get '/validate_materials', to: 'solicituds#validate_materials', :defaults => {:format => 'json'}
+  get '/authSolicitud', to: 'solicituds#authSolicitud'
+  get '/finSolicitud', to: 'solicituds#finSolicitud'
+  get '/cancSolicitud', to: 'solicituds#cancSolicitud'
+
+
+
   authenticated :user do
     root 'dasboard#index'
   end

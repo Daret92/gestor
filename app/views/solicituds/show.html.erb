@@ -1,0 +1,262 @@
+<p id="notice"><%= notice %></p>
+
+<div class="w-100 text-center">
+  <%= link_to solicituds_path , class: "btn btn-warning" do%>
+      <i class="fa fa-list-ol"></i> Listado Solicitudes
+  <%end%>
+    <% if @solicitud.estado == "1" %>
+    | 
+      <%= link_to edit_solicitud_path(@solicitud) , class: "btn btn-success" do%>
+        <i class="fas fa-edit"></i> Actualizar Solicitud
+      <%end%>
+    <%end%>
+   | 
+  <%= link_to root_path, class: "btn btn-info" do %>
+    <i class="fas fa-home"></i> Ir a Inicio
+  <% end %>
+</div>
+<br/>
+<div class="row" style="padding: 10px;">
+  <div class="col-md-7" style="padding-left: 0px" >
+    <div class="card" style="padding: 25px;">
+      <div class="card-body">
+        <div class="card-title w-100">
+          <span class="bg bg-info w-25 text-white" style="padding: 2px; padding-left:10px; padding-right: 10px;border-radius: 2px">Folio<%= @solicitud.id%></span>
+        </div>
+        <h5>    
+          Solicitud realizada por <%= @solicitud.user.nombre%>, para el proyecto <%= @solicitud.proyecto.titulo%>
+        </h5>
+        <br/>
+        <h6 class="card-subtitle mb-2 text-muted">
+          <%= @solicitud.observaciones%>
+        </h6>
+        <br/>
+        <h6 class="card-subtitle text-muted">
+          <% if @solicitud.estado == "1"%>
+            <h3>
+              <span class="bg bg-info text-white" style="padding: 2px; padding-left: 15px; padding-right: 15px; border-radius: 3px;">Solicitud Abierta</span>
+            </h3>
+          <% elsif @solicitud.estado == "2"%>
+            <h3>
+              <span class="bg bg-success text-white" style="padding: 2px; padding-left: 15px; padding-right: 15px; border-radius: 3px;">Solicitud Validada</span>
+            </h3>
+          <% elsif @solicitud.estado == "3"%>
+            <h3>
+              <span class="bg bg-primary text-white" style="padding: 2px; padding-left: 15px; padding-right: 15px; border-radius: 3px;">Solicitud Entregada</span>
+            </h3>
+          <% elsif @solicitud.estado == "4"%>
+            <h3>
+              <span class="bg bg-warning text-white" style="padding: 2px; padding-left: 15px; padding-right: 15px; border-radius: 3px;">Solicitud Cancelada</span>
+            </h3>
+          <%end%>
+        </h6>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-5 card">
+    <div style="padding: 5px;">
+      <div class="card-body" style="width: 100%">
+        <div class="card-title">
+          <h6>Usuarios Involucrados</h6>
+        </div>
+        <div class="card-body w-100">
+          <% @solicitud.solicitud_users.each do |item|%>
+            <%=EquipoUser(item.user)%>
+          <%end%>
+        </div>      
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="padding: 10px;">
+  <div class="col-md-12" style="padding: 0px">
+    <div class="card">
+      <div class="card-body">
+        <div class="card-title">
+          <h5>Materiales</h5>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">Cantidad</th>
+                  <th class="text-center">Material</th>
+                  <th class="text-center">Descripcion</th>
+                  <% if @solicitud.estado == "1"  and @solicitud.user.users_id == current_user.id%>
+                    <th class="text-center">Autorizar</th>
+                  <%end%>
+                  <% if @solicitud.estado == "2" %>
+                    <th class="text-center">Entregado</th>
+                  <% end %>
+                  <%if @solicitud.estado =="3"%>
+                  <th class="text-center">Entregado</th>
+                  <%end%>
+                </tr>
+              </thead>
+              <tbody>
+                <% @solicitud.materials.each do |sitem|%>
+                  <tr>
+                    <td class="text-center" style="width: 20%"><%=sitem.cantidad%></td>
+                    <td class="text-center" style="width: 20%"><%=sitem.material%></td>
+                    <td class="text-center" style="width: 20%"><%=sitem.descripcion%></td>
+                    <% if @solicitud.estado == "1" and @solicitud.user.users_id == current_user.id %>
+                    <td class="text-center" style="width: 20%">
+                      <input class="radios" data-id="<%=sitem.id%>" type="checkbox" <% if sitem.autorizado%> checked <%end%>>
+                    </td>
+                    <%end%>
+                    <% if @solicitud.estado == "2" %>
+                    <td class="text-center" style="width: 20%">
+                      <%if sitem.autorizado and @solicitudes_arr.include?(current_user.id)%>
+                        <input type="checkbox" class="radiosv" data-id="<%=sitem.id%>" <% if sitem.entregado%> checked <%end%>>
+                      <%else%>
+                        <i class="fas fa-times"></i>
+                      <%end%>
+                    </td>
+                    <%end%>
+                    <%if @solicitud.estado =="3"%>
+                      <td class="text-center"><%if sitem.entregado %><i class="fas fa-check"><%else%><i class="fas fa-times"></i><%end%></td>
+                    <%end%>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="padding: 10px;">
+  <div class="col-md-12 card" style="padding: 25px;">
+    <div class="card-body">
+      <div class="card-title">
+        <h5>Vehiculos</h5>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Vehiculo</th>
+              <th class="text-center">Descripcion</th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <% @solicitud.vehiculos.each do |item| %>
+              <tr>
+                <td class="text-center"><%= item.vehiculo%></td>
+                <td class="text-center"><%= item.descripcion%></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row" style="padding: 10px;">
+  <div class="col-md-12 card" style="padding: 25px;">
+    <div class="card-body">
+      <div class="card-title">
+        <h5>Viaticos</h5>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Cantidad</th>
+              <th class="text-center">Descripcion</th>
+              <%if @solicitud.estado =="1" and @solicitud.user.users_id == current_user.id%>
+                <th class="text-center">Autorizar</th>
+              <%end%>
+              <%if @solicitud.estado =="2"%>
+                <th class="text-center">Estado</th>
+              <%end%>
+            </tr>
+          </thead>
+          <tbody>
+            <% @solicitud.viaticos.each do |item| %>
+              <tr>
+                <td class="text-center"><%= item.cantidad%></td>
+                <td class="text-center"><%= item.descripcion%></td>
+                <%if @solicitud.estado =="1" and @solicitud.user.users_id == current_user.id%>
+                  <td class="text-center"><input type="checkbox" class="radioViaticos" data-id="<%=item.id%>"<% if item.autorizada%> checked <%end%>></td>
+                <%end%>
+                <%if @solicitud.estado =="2"%>
+                  <td class="text-center"><%if item.autorizada %><i class="fas fa-check"><%else%><i class="fas fa-times"></i><%end%></td>
+                <%end%>
+                <%if @solicitud.estado =="3"%>
+                  <td class="text-center"><%if item.autorizada %><i class="fas fa-check"><%else%><i class="fas fa-times"></i><%end%></td>
+                <%end%>
+                
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row" style="padding: 10px;">
+  <div class="col-md-12 card" style="padding: 25px;">
+    <div class="card-body">
+      <div class="card-title">
+        <h5>Otros</h5>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th class="text-center">Descripcion</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @solicitud.otro.each do |item| %>
+              <tr>
+                <td class="text-center"><%= item.descripcion%></td>
+              </tr>
+            <%end%>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-3">
+  </div>
+  <div class="col-md-6">
+    <div class="row">
+        <% if @solicitud.estado == "1" and @solicitud.user.users_id == current_user.id%>
+          <div class="col-md-6 text-center">
+            <span class="btn btn-success btn-lg auth_solicitud" data-solicitud='<%=@solicitud.id%>'>Autorizar Solicitud</span>
+          </div>
+        <%end%>
+        <%if @solicitud.estado == "2" and @solicitudes_arr.include?(current_user.id)%>
+          <div class="col-md-12 text-center">            
+            <span class="btn btn-success btn-lg fin_solicitud" data-solicitud='<%=@solicitud.id%>'>Finalizar Solicitud</span>
+          </div>
+        <%end%>
+        <%if @solicitud.estado == "3"%>
+          <div class="col-md-12 text-center">
+            <h3>Solicitud Finalizada <%=@solicitud.updated_at.to_formatted_s(:long)%></h3>
+          </div>
+        <%end%>
+        <%if @solicitud.estado == "4"%>
+          <div class="col-md-12 text-center">
+            <h3>Solicitud Cancelada <%=@solicitud.updated_at.to_formatted_s(:long)%></h3>
+          </div>
+        <%end%>
+        <% if @solicitud.estado == "1" and @solicitud.user.users_id == current_user.id%>
+          <div class="col-md-6 text-center">
+            <span class="btn btn-danger btn-lg auth_cancel"  data-solicitud='<%=@solicitud.id%>'>Cancelar Solicitud</span>
+          </div>
+        <%end%>
+      </div>
+    </div>
+  <div class="col-md-3">
+  </div>
+</div>

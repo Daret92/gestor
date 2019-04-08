@@ -6,6 +6,6 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 Rol.create(nombre:"Gerente",descripcion:"Todos los permisos", activo:true)
-Rol.create(nombre:"Supervisor",descripcion:"Permisos de supervisor", activo:true)
+Rol.create(nombre:"JefeDepartamento",descripcion:"Permisos de JefeDepartamento", activo:true)
 Rol.create(nombre:"Empleado",descripcion:"Permisos Limitados", activo:true)
-User.create(nombre:"SuperUser", apellido: "", alias:"Adm",super_user: true, activo:true,email:'admin@tuperfil.com',password: 'Dareth1992')
+User.create(nombre:"SuperUser", apellido: "SuperUser", alias:"Adm",super_user: true, activo:true,email:'admin@tuperfil.com',password: 'Dareth1992', token_msj:340614248)
