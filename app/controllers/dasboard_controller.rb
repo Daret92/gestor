@@ -7,10 +7,16 @@ class DasboardController < ApplicationController
     else  
       rol =  current_user.rol.nombre
       if rol == "JefeDepartamento"
-        usuarios = User.where(users_id:current_user.id)
-        @solicitudes = Solicitud.where(user:usuarios.ids,estado:"1")
+        userSol = SolicitudUser.where(user: current_user)
+        ids = []
+        if userSol.size > 0
+          userSol.each do |item|
+            ids.append(item.solicitud_id)
+          end
+        end
+        @solicitudes = Solicitud.find(ids)
       else
-        @solicitudes = Solicitud.where(user:current_user,estado:"1")
+        @solicitudes = Solicitud.where(user:current_user)
       end
     end
   end
