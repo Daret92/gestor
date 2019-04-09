@@ -1,6 +1,6 @@
 class RegistriesController < ApplicationController
   before_action :set_registry, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /registries
   # GET /registries.json
   def index

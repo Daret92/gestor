@@ -1,6 +1,6 @@
 class SolicitudsController < ApplicationController
   before_action :set_solicitud, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   # GET /solicituds
   # GET /solicituds.json
   def index

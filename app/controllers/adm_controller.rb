@@ -1,5 +1,6 @@
 class AdmController < ApplicationController
 	before_action :set_rol, only: [:edit_rol, :update_rol, :delete_rol]
+  before_action :authenticate_user!
   #roles
   def rol
   	@rol = Rol.all()
