@@ -61,14 +61,14 @@
         </div>
         <div class="card-body w-100">
           <% @solicitud.solicitud_users.each do |item|%>
-            <%=EquipoUser(item.user)%>
+            <%=EquipoUser(item.user)%><br/>
           <%end%>
         </div>      
       </div>
     </div>
   </div>
 </div>
-
+<%if @solicitud.materials.size > 0%>
 <div class="row" style="padding: 10px;">
   <div class="col-md-12" style="padding: 0px">
     <div class="card">
@@ -128,6 +128,8 @@
     </div>
   </div>
 </div>
+<%end%>
+<%if @solicitud.vehiculos.size > 0 %>
 <div class="row" style="padding: 10px;">
   <div class="col-md-12 card" style="padding: 25px;">
     <div class="card-body">
@@ -156,6 +158,8 @@
     </div>
   </div>
 </div>
+<%end%>
+<%if @solicitud.viaticos.size > 0%>
 <div class="row" style="padding: 10px;">
   <div class="col-md-12 card" style="padding: 25px;">
     <div class="card-body">
@@ -199,7 +203,7 @@
     </div>
   </div>
 </div>
-
+<%if @solicitud.otro.size > 0 %>
 <div class="row" style="padding: 10px;">
   <div class="col-md-12 card" style="padding: 25px;">
     <div class="card-body">
@@ -225,6 +229,7 @@
     </div>
   </div>
 </div>
+<%end%>
 <div class="row">
   <div class="col-md-3">
   </div>
