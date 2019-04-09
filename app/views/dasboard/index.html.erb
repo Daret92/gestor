@@ -121,6 +121,33 @@
 		</table>
 	</div>
 </div>
+<br/>
+<div class="row" style="padding: 25px;">
+	<div class="col-md-3 card" >
+		<div class="row" style="height: 70px;" >
+			<div class="col-md-5 text-center"><h1><%=Solicitud.where(user:current_user,estado:"1").count%></h1></div>
+			<div class="col-md-7"><h3>Sin Autorizar</h3></div>
+		</div>
+	</div>
+	<div class="col-md-3 card">
+		<div class="row" style="height: 70px;">
+			<div class="col-md-5 text-center bg-success text-white"><h1><%=Solicitud.where(user:current_user,estado:"2").count%></h1></div>
+			<div class="col-md-7"><h3>Autorizadas</h3></div>
+		</div>
+	</div>
+	<div class="col-md-3 card">
+		<div class="row" style="height: 70px;">
+			<div class="col-md-5 text-center bg-primary text-white"><h1><%=Solicitud.where(user:current_user,estado:"3").count%></h1></div>
+			<div class="col-md-7"><h3>Finalizadas</h3></div>
+		</div>
+	</div>
+	<div class="col-md-3 card ">
+		<div class="row" style="height: 70px;">
+			<div class="col-md-5 text-center bg-danger text-white"><h1><%=Solicitud.where(user:current_user,estado:"4").count%></h1></div>
+			<div class="col-md-7"><h3>Canceladas</h3></div>
+		</div>
+	</div>
+</div>
 <%=render 'modal_registro'%>
 
 

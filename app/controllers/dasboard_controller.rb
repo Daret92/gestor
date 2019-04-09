@@ -4,6 +4,7 @@ class DasboardController < ApplicationController
   	@lastRegistry = Registry.where(user:current_user).limit(5)
   	if current_user.super_user or current_user.rol.nombre == "Gerente"
       @solicitudes = Solicitud.where(estado:"1")
+      @all_solicitudes = Solicitud.all()
     else  
       rol =  current_user.rol.nombre
       if rol == "JefeDepartamento"
@@ -14,9 +15,9 @@ class DasboardController < ApplicationController
             ids.append(item.solicitud_id)
           end
         end
-        @solicitudes = Solicitud.find(ids)
+        @solicitudes = Solicitud.where(id:ids,estado:"1")
       else
-        @solicitudes = Solicitud.where(user:current_user)
+        @solicitudes = Solicitud.where(user:current_user,estado:"1")
       end
     end
   end

@@ -21,7 +21,6 @@ class SolicitudsController < ApplicationController
         @solicituds = Solicitud.where(user:current_user)
       end
     end
-
   end
 
   # GET /solicituds/1
