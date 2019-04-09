@@ -29,7 +29,7 @@ class SolicitudsController < ApplicationController
   def show
     @solicitudes_arr = []
     @solicitud.solicitud_users.each do |item|
-      if item != @solicitud.user
+      if item.user_id != @solicitud.user.id
         @solicitudes_arr.push(item.user_id)
       end
     end
