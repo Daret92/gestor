@@ -1,0 +1,2 @@
+class Cvehiculo < ApplicationRecord
+end

@@ -38,6 +38,11 @@
                   <i class="fas fa-object-group "></i> <span>Equipos de Trabajo</span>
                 <%end%>
               <%end%>
+              <% if @permissions_user.include?('cvehiculos') or @permissions_user.include?("super_user")%>
+                <%= link_to cvehiculos_path, class: "collapse-item" do%>
+                  <i class="fas fa-car "></i> <span>Catalogo de Vehiculos</span>
+                <%end%>
+              <%end%>
             </div>
           </div>
         </li>

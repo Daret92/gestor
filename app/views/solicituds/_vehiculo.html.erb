@@ -1,6 +1,6 @@
 <tr style="padding: 2px;">
 	<td style="padding: 2px;">
-		<%= f.text_field :vehiculo, class: "form-control", required: true%>
+		<%=f.select :vehiculo,Cvehiculo.where(activo:true).collect{|item| [item.titulo,item.titulo,{'data-tokens'=>item.titulo}] },{prompt:"Selecciona un Vehiculo"},{class: "form-control selectpicker", 'data-live-search': true, required: true} %>
 	</td>
 	<td style="padding: 2px;">
 		<%= f.text_field :descripcion, class: "form-control", required: true%>
@@ -12,3 +12,8 @@
 		<%end%>
 	</td>
 </tr>
+<script type="text/javascript">
+	$(function () {
+		$('select').selectpicker();
+	});
+</script>

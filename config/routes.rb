@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :cvehiculos
   resources :registries
   resources :solicituds
   resources :proyectos

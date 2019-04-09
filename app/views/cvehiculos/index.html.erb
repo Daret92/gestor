@@ -1,0 +1,40 @@
+<h1>Catalogo de Vehiculos</h1>
+<div class="float-right">
+<%= link_to 'Nuevo Vehiculo', new_cvehiculo_path , class: "btn btn-primary"%>
+</div>
+
+<table class="responsive nowrap table table-hover" id="dttb-cvehiculos" data-sort="true">
+  <thead>
+    <tr>
+      <th>Titulo</th>
+      <th>Descripcion</th>
+      <th>Activo</th>
+      <th data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"></th>
+    </tr>
+  </thead>
+  <tbody>
+  	<%@cvehiculos.each do |item|%>
+  	<tr>
+  		<td><%=item.titulo%></td>
+  		<td><%=item.descripcion%></td>
+  		<td><% if item.activo%><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%></td>
+  		<td>
+  			<div class="dropdown">
+              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Acciones
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <%= link_to 'Mostrar', item , class:"dropdown-item"%>                
+                <%= link_to 'Editar', edit_cvehiculo_path(item), class:"dropdown-item" %>
+                <%= link_to 'Cancelar', item, method: :delete, class:"dropdown-item",data: { confirm: '¿Esta Seguro?' } %>
+              </div>
+            </div>
+  		</td>
+  	</tr>
+  	<%end%>
+  </tbody>
+
+</table>
+
+<br>
+

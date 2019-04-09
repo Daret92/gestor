@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Titulo:</strong>
+  <%= @cvehiculo.titulo %>
+</p>
+
+<p>
+  <strong>Descripcion:</strong>
+  <%= @cvehiculo.descripcion %>
+</p>
+
+<p>
+  <strong>Activo:</strong>
+  <%= @cvehiculo.activo %>
+</p>
+
+<%= link_to 'Edit', edit_cvehiculo_path(@cvehiculo) %> |
+<%= link_to 'Back', cvehiculos_path %>
