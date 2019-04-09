@@ -190,7 +190,7 @@ class SolicitudsController < ApplicationController
       default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
     }
     solicitud.solicitud_users.each do |item|
-      Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Se ha autorizado la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n" +"<a href='http://192.168.1.102:3000/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+      Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Se ha autorizado la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
     end
   end
 
@@ -198,14 +198,14 @@ class SolicitudsController < ApplicationController
     Telegram.bots_config = {
       default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
     }
-    Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Finalizo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://192.168.1.102:3000/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+    Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Finalizo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
   end
 
   def cancel_sol(solicitud)
     Telegram.bots_config = {
       default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
     }
-    Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Cancelo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://192.168.1.102:3000/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+    Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Cancelo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
   end
 
 
@@ -236,7 +236,7 @@ class SolicitudsController < ApplicationController
       contenido = contenido +"\n Solicitud Autorizada"
     end
     if jefe
-      Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://192.168.1.102:3000/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+      Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://35.196.76.142/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
     end
