@@ -20,6 +20,7 @@ class Solicitud < ApplicationRecord
   belongs_to :proyecto, optional: true
   belongs_to :user, optional: true
   validates :observaciones, presence: true
+  validates :proyecto_id, presence: true
 
   has_many :materials, dependent: :destroy
   accepts_nested_attributes_for :materials, allow_destroy: true, reject_if: lambda {|attributes| attributes['cantidad'].blank?}
