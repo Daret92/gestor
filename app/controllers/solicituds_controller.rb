@@ -1,6 +1,7 @@
 class SolicitudsController < ApplicationController
   before_action :set_solicitud, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
+  before_action :get_telegram,only:[:sendto_users,:fin_solicituds,:cancel_sol,:not_jefe]
   # GET /solicituds
   # GET /solicituds.json
   def index
@@ -187,33 +188,22 @@ class SolicitudsController < ApplicationController
   
 
   def sendto_users(solicitud)
-    Telegram.bots_config = {
-      default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
-    }
     solicitud.solicitud_users.each do |item|
       Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Se ha autorizado la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
     end
   end
 
   def fin_solicituds(solicitud)
-    Telegram.bots_config = {
-      default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
-    }
     Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Finalizo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
   end
 
   def cancel_sol(solicitud)
-    Telegram.bots_config = {
-      default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
-    }
     Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Cancelo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
   end
 
 
   def not_jefe(validato)
-    Telegram.bots_config = {
-      default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
-    }
+    
     if validato.user.users_id 
       jefe = User.find(validato.user.users_id)
     else
@@ -244,6 +234,11 @@ class SolicitudsController < ApplicationController
   end
 
   private
+    def get_telegram
+      Telegram.bots_config = {
+        default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
+      }
+    end
     # Use callbacks to share common setup or constraints between actions.
     def set_solicitud
       @solicitud = Solicitud.find(params[:id])
