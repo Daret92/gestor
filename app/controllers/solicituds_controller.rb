@@ -167,7 +167,6 @@ class SolicitudsController < ApplicationController
         format.html { redirect_to @solicitud, notice: 'Solicitud was successfully updated.' }
         format.json { render :show, status: :ok, location: @solicitud }
       else  
-        raise params.to_yaml
         format.html { render :edit }
         format.json { render json: @solicitud.errors, status: :unprocessable_entity }
       end
@@ -179,6 +178,7 @@ class SolicitudsController < ApplicationController
   def destroy
     @solicitud.estado="4"
     @solicitud.save
+    cancel_sol(@solicitud)
     respond_to do |format|
       format.html { redirect_to solicituds_url, notice: 'Solicitud was successfully destroyed.' }
       format.json { head :no_content }
