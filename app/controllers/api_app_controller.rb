@@ -1,0 +1,237 @@
+class ApiAppController < ApplicationController
+  def login
+		if !params[:email].empty? and !params[:pass].empty?
+			user = User.find_by_email(params[:email])
+			if user.valid_password?(params[:pass])
+				result = true
+				if user.rol
+					rols = user.rol.nombre
+				else
+					rols = "sin rol"
+				end
+				apps = {response:[ 'email': user.email,'password': params[:pass],'superUser': user.super_user, 'rol': rols],success: ['success':result] }
+
+	  		render json: {users:apps} 
+
+		  else
+		  	result = false
+				apps = {success:['success': result] }
+				render json: { users:apps,status: :unprocessable_entity }
+			end
+		else
+			result = false
+			apps = {success:['success': result] }
+			render json: { users:apps,status: :unprocessable_entity }
+		end
+  end
+
+  def get_users
+  	users = User.where(super_user:false)
+  	proyecto = Proyecto.where(estado:"1")
+  	apps = []
+  	pro_arr = []
+  	users.each do |item|
+  		EquipoUser(item)
+  		apps.push({id:item.id,email: item.email, rol: item.rol.nombre, equipo:EquipoUser(item)})
+  	end
+  	proyecto.each do |item|
+  		pro_arr.push({id:item.id,titulo:item.titulo})
+  	end
+  	render json: {users:apps,proyecto:pro_arr}
+  end
+
+  def gps_save
+  	if !params[:email].empty? and !params[:password].empty?
+			user = User.find_by_email(params[:email])
+			if user.valid_password?(params[:password])
+				proyecto = Proyecto.find(params['proyecto'][0])
+				@gps = GpsSave.new
+				@gps.latitud = params[:latitud]
+				@gps.longitud = params[:longitud]
+				@gps.proyecto = proyecto
+				@gps.user = user
+				if @gps.save
+					result = true
+					apps = {response:[ 'Folio': @gps.id,'success':result] }
+	  			render json: {result:apps} 
+				else
+					result = false
+					apps = {response:['success': result] }
+					render json: { result:apps,status: :unprocessable_entity }
+				end
+				
+			else
+				result = false
+				apps = {response:['success': result] }
+				render json: { result:apps,status: :unprocessable_entity }
+			end
+		else
+			result = false
+			apps = {response:['success': result] }
+			render json: { result:apps,status: :unprocessable_entity }
+		end
+  end
+
+
+  def EquipoUser(users)
+		@teams = Equipo.where(user:users)
+		@deps  = EquipoUsuario.where(user:users)
+		if @teams.size > 0
+			tmp = ""
+			@teams.each do |item|
+				tmp = "Encargado de: "+item.nombre
+			end
+			return tmp.html_safe
+		else
+			tmp = ""
+			if @deps.size > 0
+				@deps.each do |item|
+					tmp = "Pertenece a "+item.equipo.nombre 
+				end
+				return tmp.html_safe
+			else
+				return "Sin Equipo de Trabajo"
+			end
+		end
+	end
+
+	def save_sold
+		user = User.find_by_email(params[:user])
+		if user.valid_password?(params[:password])
+			proyecto = Proyecto.find(params['proyecto'][0])
+			
+			@solicitud = Solicitud.new
+			
+			@solicitud.user = user
+			@solicitud.proyecto = proyecto
+			@solicitud.estado =	"1"
+			@solicitud.observaciones = params[:observa]
+
+			materiales = ActiveSupport::JSON.decode(params[:material])
+			involucrados = ActiveSupport::JSON.decode(params[:involucrados])
+			if @solicitud.save
+				if materiales.length > 0
+					materiales.each do |item|
+						@material = Material.new
+						@material.cantidad = item['cantidad']
+						@material.material = item['material']
+						@material.descripcion = item['detalles']
+						@material.solicitud = @solicitud
+						@material.save
+					end
+				end
+
+				if params[:otro] != ""
+					@otro = Otro.new
+					@otro.descripcion = params[:otro]
+					@otro.solicitud = @solicitud
+					@otro.save
+				end
+
+				if params[:vehiculo] != "" && params[:Ovehiculo] != ""
+					@vehiculo = Vehiculo.new
+					@vehiculo.solicitud = @solicitud
+					@vehiculo.vehiculo = params[:vehiculo]
+					@vehiculo.descripcion = params[:Ovehiculo]
+					@vehiculo.save
+				end
+
+				if params[:cViatico] != "" && params[:dViatico] != ""
+					@viatico = Viatico.new
+					@viatico.cantidad = params[:cViatico]
+					@viatico.descripcion = params[:dViatico]
+					@viatico.solicitud = @solicitud
+					@viatico.save
+				end
+
+				if involucrados.length > 0
+					involucrados.each do |item|
+						@involucrado = SolicitudUser.new
+						@involucrado.solicitud = @solicitud
+						@involucrado.user = User.find_by_email(item)
+						@involucrado.save
+					end
+					@involucrado = SolicitudUser.new
+					@involucrado.solicitud = @solicitud
+					@involucrado.user = user
+					@involucrado.save
+				end
+				not_jefe(@solicitud)
+				result = true
+				apps = {solicitud:[ 'Folio': @solicitud.id,success: result]}
+  			render json: {response:apps} 
+			else
+				result = false
+				apps = {solicitud:[success: result]}
+  			render json: {response:apps} 
+			end
+		else
+			result = false
+			apps = {solicitud:[success: result]}
+			render json: {response:apps} 
+		end
+	end
+
+
+  def not_jefe(validato)
+    Telegram.bots_config = {
+        default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
+      }
+    if validato.user.users_id 
+      jefe = User.find(validato.user.users_id)
+    else
+      jefe = false
+    end
+
+    contenido = ""
+    if validato.materials.count > 0
+     contenido = contenido + "Materiales : "+validato.materials.count.to_s+ "\n"
+    end
+    if validato.vehiculos.count >0 
+      contenido = contenido+ "Vehiculo : "+validato.vehiculos.count.to_s + "\n"
+    end
+    if validato.viaticos.count >0 
+      contenido = contenido+ "Viaticos : "+validato.viaticos.count.to_s + "\n"
+    end
+    if validato.otro.count >0 
+      contenido = contenido+ "Otros : "+validato.otro.count.to_s + "\n"
+    end
+    if validato.estado == "2"
+      contenido = contenido +"\n Solicitud Autorizada"
+    end
+    if jefe
+      Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://35.196.76.142/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+    else
+      Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
+    end
+  end
+
+  def save_registre
+  	user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			proyecto = Proyecto.find(params['proyecto'][0])
+
+		  	@registro = Registry.new
+		  	@registro.proyecto = proyecto
+		  	@registro.user = user
+		  	@registro.titulo = params[:titulo]
+		  	@registro.descripcion = params[:detalles]
+		  	@registro.resultado = params[:resultado]
+		  	@registro.finalizado = true
+		  	if @registro.save
+				result = true
+				apps = {registro:[ 'Folio': @registro.id,success: result]}
+				render json: {response:apps} 
+			else
+				result = false
+				apps = {registro:[success: result]}
+				render json: {response:apps} 
+			end
+		else
+			result = false
+			apps = {registro:[success: result]}
+			render json: {response:apps} 
+		end
+	end
+
+end

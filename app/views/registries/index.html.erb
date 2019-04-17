@@ -3,41 +3,42 @@
 <div class="float-right">
 <%= link_to 'Nuevo Registro', new_registry_path, class: "btn btn-primary" %>
 </div>
-<table class="responsive nowrap table table-hover" id="dttb-registries" data-sort="true">
-  <thead>
-    <tr>
-      <th>Proyecto</th>
-      <th>User</th>
-      <th>Titulo</th>
-      <th>Descripcion</th>
-      <th>Resultado</th>
-      <th>Finalizado</th>
-      <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @registries.each do |item|%>
+<div class="table-responsive">
+  <table class="responsive nowrap table table-hover" id="dttb-registries" data-sort="true" style="font-size: 80%">
+    <thead>
       <tr>
-        <td><%=item.proyecto.titulo%></td>
-        <td><%=item.user.email%></td>
-        <td><%=item.titulo%></td>
-        <td><%=item.descripcion%></td>
-        <td><%=item.resultado%></td>
-        <td class="text-center"><% if item.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%></td>
-        <td style="padding: 2px">
-            <div class="dropdown">
-              <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Acciones
-              </button>
-              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <%= link_to 'Visualizar', item , class:"dropdown-item"%>
-                <%= link_to 'Editar', edit_registry_path(item), class:"dropdown-item" %>
-              </div>
-            </div>
-          </td>
+        <th>Proyecto</th>
+        <th>User</th>
+        <th>Titulo</th>
+        <th>Descripcion</th>
+        <th>Resultado</th>
+        <th>Finalizado</th>
+        <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"></th>
       </tr>
-    <%end%>
-  </tbody>
-</table>
-
+    </thead>
+    <tbody>
+      <% @registries.each do |item|%>
+        <tr>
+          <td><%=item.proyecto.titulo%></td>
+          <td><%=item.user.email%></td>
+          <td><%=item.titulo%></td>
+          <td><%=item.descripcion%></td>
+          <td><%=item.resultado%></td>
+          <td class="text-center"><% if item.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%></td>
+          <td style="padding: 2px">
+              <div class="dropdown">
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Acciones
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <%= link_to 'Visualizar', item , class:"dropdown-item"%>
+                  <%= link_to 'Editar', edit_registry_path(item), class:"dropdown-item" %>
+                </div>
+              </div>
+            </td>
+        </tr>
+      <%end%>
+    </tbody>
+  </table>
+</div>
 <br>

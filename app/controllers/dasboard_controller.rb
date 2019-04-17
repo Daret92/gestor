@@ -1,7 +1,7 @@
 class DasboardController < ApplicationController
   def index
   	@registry = Registry.new
-  	@lastRegistry = Registry.where(user:current_user).limit(5)
+  	@lastRegistry = Registry.where(user:current_user).limit(5).order('id DESC')
   	if current_user.super_user or current_user.rol.nombre == "Gerente"
       @solicitudes = Solicitud.where(estado:"1")
       @all_solicitudes = Solicitud.all()

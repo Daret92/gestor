@@ -6,7 +6,7 @@
 #  cantidad     :string
 #  material     :string
 #  descripcion  :string
-#  autorizado   :boolean
+#  autorizado   :boolean          default(TRUE)
 #  entregado    :boolean
 #  solicitud_id :integer
 #  created_at   :datetime         not null

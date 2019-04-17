@@ -1,0 +1,23 @@
+<table class="responsive nowrap table" id="dttb-gps_saves" data-sort="true">
+	<thead>
+		<tr>
+			<th>Usuario</th>
+			<th>Proyecto</th>
+			<th>Hora</th>
+			<th>Ver Mapa</th>
+		</tr>
+		<tbody>
+			<%@gps.each do |item|%>
+				<tr>
+					<td><%= item.user.nombre%></td>
+					<td><%= item.proyecto.titulo%></td>
+					<td><%= item.created_at.to_formatted_s(:long)%></td>
+					<td>
+							<%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=300x200&markers=size:small%7Ccolor:red%7C#{item.latitud},#{item.longitud}&key=AIzaSyBeYLxS155ixggxOBQnwdmCtUVe3h5RkeQ", alt: "Map" %>
+					</td>
+				</tr>
+			<%end%>
+		</tbody>
+	</thead>
+	
+</table>

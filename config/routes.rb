@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  
+  #apis
+  get 'api_app/login'
+  get 'api_app/get_users'
+  get 'api_app/save_sold'
+  get 'api_app/save_registre'
+  get 'api_app/gps_save'
+  
+  #scaffolds
   resources :cvehiculos
   resources :registries
   resources :solicituds
@@ -27,7 +36,7 @@ Rails.application.routes.draw do
   delete 'equipo_delete/:id', to: 'adm#equipo_delete', as: "equipo_delete"
   patch 'equipo_update', to: 'adm#equipo_update'
   
-
+  #Autorizacion cancelacion actualizacion de solicitudes via ajax
   get '/update_materials', to: 'solicituds#update_materials', :defaults => {:format => 'json'}
   get '/update_viaticos', to: 'solicituds#update_viaticos', :defaults => {:format => 'json'}
   get '/validate_materials', to: 'solicituds#validate_materials', :defaults => {:format => 'json'}
@@ -35,7 +44,8 @@ Rails.application.routes.draw do
   get '/finSolicitud', to: 'solicituds#finSolicitud'
   get '/cancSolicitud', to: 'solicituds#cancSolicitud'
 
-
+  #Commonts
+  get '/gps', to:'commont#gps'
 
   authenticated :user do
     root 'dasboard#index'
