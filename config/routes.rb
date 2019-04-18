@@ -5,8 +5,12 @@ Rails.application.routes.draw do
   get 'api_app/get_users'
   get 'api_app/save_sold'
   get 'api_app/save_registre'
+  get 'api_app/get_allR'
   get 'api_app/gps_save'
-  
+  get 'api_app/save_bitacora'
+  get 'api_app/get_bitacora'
+  get 'api_app/getSolicitudsTeam'
+
   #scaffolds
   resources :cvehiculos
   resources :registries

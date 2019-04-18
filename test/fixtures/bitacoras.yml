@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: bitacoras
+#
+#  id          :integer          not null, primary key
+#  proyecto_id :integer
+#  user_id     :integer
+#  nota        :string
+#  created_at  :datetime         not null
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  proyecto: one
+  user: one
+  nota: MyString
+
+two:
+  proyecto: two
+  user: two
+  nota: MyString

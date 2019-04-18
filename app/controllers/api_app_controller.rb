@@ -31,7 +31,7 @@ class ApiAppController < ApplicationController
   	apps = []
   	pro_arr = []
   	users.each do |item|
-  		EquipoUser(item)
+  		
   		apps.push({id:item.id,email: item.email, rol: item.rol.nombre, equipo:EquipoUser(item)})
   	end
   	proyecto.each do |item|
@@ -231,6 +231,153 @@ class ApiAppController < ApplicationController
 			result = false
 			apps = {registro:[success: result]}
 			render json: {response:apps} 
+		end
+	end
+
+	def get_allR
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			@registro = Registry.where(user:user)
+			apps =[]
+			@registro.each do |item|
+				apps.push({proyecto:item.proyecto.titulo, titulo:item.titulo, descripcion: item.descripcion,resultado:item.resultado,fecha:item.created_at.to_formatted_s(:long).to_s})
+			end
+			result = [success:true]
+				
+			render json: {response:apps,success: result} 
+		else
+			result = false
+			apps = {registro:[success: result]}
+			render json: {response:apps} 
+		end
+
+	end
+
+	def save_bitacora
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			proyecto = Proyecto.find(params['proyecto'][0])
+			@bitacora = Bitacora.new
+			@bitacora.proyecto = proyecto
+			@bitacora.user = user
+			@bitacora.nota = params['nota']
+			if @bitacora.save
+				result = true
+				apps = {registro:[ 'Folio': @bitacora.id,success: result]}
+				render json: {response:apps} 
+			else
+				result = false
+				apps = {registro:[success: result]}
+				render json: {response:apps}
+			end
+		else
+			result = false
+			apps = {registro:[success: result]}
+			render json: {response:apps}
+		end
+	end
+
+	def get_bitacora
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			proyecto = Proyecto.find(params['proyecto'][0])
+			@bitacora = Bitacora.where(proyecto:proyecto).order('id DESC')
+			apps =[]
+			@bitacora.each do |item|
+		  	apps.push({id:item.id,proyecto: item.proyecto.titulo, nota:item.nota,fecha:item.created_at.to_formatted_s(:long).to_s,usuario: item.user.nombre})
+		  end
+			result = true
+			render json: {response:apps} 
+			
+		else
+			result = false
+			apps = {registro:[success: result]}
+			render json: {response:apps}
+		end
+	end
+
+	def getSolicitudsTeam
+		user = User.find_by_email(params[:user])
+		if user.valid_password?(params[:password])
+			@equipo = EquipoUsuario.where(user:user).first()
+			if(!@equipo.nil?)
+				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
+				proyecto = Proyecto.find(params['proyecto'][0])
+
+				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
+				apps=[]
+
+				@solicitudes.each do |item|
+					materials=[]
+					if(item.materials.count > 0)
+						item.materials.each do |sitem|
+							materials.push({id:sitem.id,cantidad:sitem.cantidad,material:sitem.material,descripcion:sitem.descripcion})
+						end
+					end
+
+					viaticos=[]
+					if(item.viaticos.count > 0)
+						item.viaticos.each do |sitem|
+							viaticos.push({id:sitem.id,cantidad:sitem.cantidad,detalles:sitem.descripcion})
+						end
+					end
+
+					otro=[]
+					if(item.otro.count > 0)
+						item.otro.each do |sitem|
+							otro.push({id:sitem.id,descripcion:sitem.descripcion})
+						end
+					end
+					vehiculos=[]
+					if(item.vehiculos.count > 0)
+						item.vehiculos.each do |sitem|
+							vehiculos.push({id:sitem.id,vehiculo:sitem.vehiculo,descripcion:sitem.descripcion})
+						end
+					end
+
+					involucra=[]
+					involucrados = SolicitudUser.where(solicitud: item)
+					involucrados.each do |sitem|
+						involucra.push({id:sitem.id,usuario:sitem.user.email+" "+EquipoUser(sitem.user)})
+					end
+
+					estado = "Cancelada"
+					if(item.estado == "1")
+						estado = "Abierta"
+					elsif(item.estado == "2")
+						estado = "Validada"
+					elsif(item.estado =="3")
+						estado = "Entregada"
+					end
+			  		apps.push({
+			  			id:item.id,
+			  			proyecto: item.proyecto.titulo, 
+			  			fecha:item.created_at.to_formatted_s(:long).to_s,
+			  			usuario: item.user.nombre,
+			  			estado:estado,
+			  			material: item.materials.count,
+			  			vehiculo:item.vehiculos.count,
+			  			otro:item.otro.count,
+			  			viatico:item.viaticos.count,
+			  			materials_arr:materials,
+			  			vehiculo_arr:vehiculos,
+			  			otro_arr:otro,
+			  			viaticos_arr: viaticos,
+			  			involucrado_arr:involucra
+			  		})
+			  end
+			  result = [{result: true}]
+				render json: {response:apps,result:result} 
+			else
+				result = false
+				apps = {registro:[success: result]}
+				render json: {response:apps} 
+		 	end	
+			
+		else
+			result = false
+			apps = {registro:[success: result]}
+			render json: {response:apps}
 		end
 	end
 
