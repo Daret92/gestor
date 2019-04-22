@@ -172,6 +172,96 @@ class ApiAppController < ApplicationController
 		end
 	end
 
+	def updateMaterial
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			@material = Material.find(params[:id])
+			if @material.solicitud.user == user or user.rol.nombre == "Gerente" or @material.solicitud.user.users_id == user.users_id
+				@material.cantidad = params[:cantidad]
+				@material.descripcion = params[:descripcion]
+				@material.material = params[:material]
+				if @material.save
+					result = true
+					apps = {material:[ 'Folio': @material.id,'cantidad': @material.cantidad,'descripcion': @material.descripcion,'material': @material.material,success: result]}
+		  		render json: {response:apps} 
+				else
+					result = false
+					apps = {material:[success: result]}
+					render json: {response:apps} 
+				end
+			else
+					result = false
+					apps = {material:[success: result]}
+					render json: {response:apps} 
+				end
+		else
+			result = false
+			apps = {material:[success: result]}
+			render json: {response:apps} 
+		end
+		
+	end
+
+
+		def removeMaterial
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			@material = Material.find(params[:id])
+			@solicitud = Solicitud.find(@material.solicitud_id)
+			if @material.solicitud.user == user or user.rol.nombre == "Gerente" or @material.solicitud.user.users_id == user.users_id
+				if @material.destroy
+					result = true
+					apps = {material:[success: result]}
+		  		render json: {response:apps} 
+				else
+					result = false
+					apps = {material:[success: result]}
+					render json: {response:apps} 
+				end
+			else
+				result = false
+				apps = {material:[success: result]}
+				render json: {response:apps} 
+			end
+		else
+			result = false
+			apps = {material:[success: result]}
+			render json: {response:apps} 
+		end
+		
+	end
+
+	def saveMaterial
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			@solicitud = Solicitud.find(params[:id])
+			if @solicitud.user == user or user.rol.nombre == "Gerente" or @solicitud.user.users_id == user.users_id
+				@material = Material.new
+				@material.cantidad = params[:cantidad]
+				@material.descripcion = params[:descripcion]
+				@material.material = params[:material]
+				@material.solicitud = @solicitud
+				if @material.save
+					result = true
+					apps = {material:[ 'id': @material.id,'cantidad': @material.cantidad,'descripcion': @material.descripcion,'material': @material.material,success: result]}
+		  		render json: {response:apps} 
+				else
+					result = false
+					apps = {material:[success: result]}
+					render json: {response:apps} 
+				end
+			else
+				result = false
+				apps = {material:[success: result]}
+				render json: {response:apps} 
+			end
+		else
+			result = false
+				apps = {material:[success: result]}
+				render json: {response:apps} 
+		end
+	end
+
 
   def not_jefe(validato)
     Telegram.bots_config = {

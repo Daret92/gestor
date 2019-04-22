@@ -10,6 +10,12 @@ Rails.application.routes.draw do
   get 'api_app/save_bitacora'
   get 'api_app/get_bitacora'
   get 'api_app/getSolicitudsTeam'
+  #update material
+  get 'api_app/updateMaterial'
+  get 'api_app/removeMaterial'
+  get 'api_app/saveMaterial'
+  
+  
 
   #scaffolds
   resources :cvehiculos
