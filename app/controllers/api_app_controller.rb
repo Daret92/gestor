@@ -401,7 +401,7 @@ class ApiAppController < ApplicationController
 			
 			elsif (!user.rol.nil?)
 				if(user.rol.nombre == "Gerente")
-					@usuariosEquipo = User.where(users_id:user.id,user:user)
+					@usuariosEquipo = User.where(users_id:user.id)
 					ids =[]
 					@usuariosEquipo.each do |item| 
 						if !ids.include?(item.id)
