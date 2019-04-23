@@ -389,20 +389,24 @@ class ApiAppController < ApplicationController
 	def getSolicitudsTeam
 		user = User.find_by_email(params[:user])
 		if user.valid_password?(params[:password])
-			@equipo = EquipoUsuario.where(user:user).first()
+			
 			proyecto = Proyecto.find(params['proyecto'][0])
-			
+			@equipo = EquipoUsuario.where(user:user).first()
 			if(!@equipo.nil?)
-			
 				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
-				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
-			elsif user.rol.nombre == "Gerente" 
-			
-				@usuariosEquipo = Usuario.where(users_id:user.id)
 				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
 			elsif user.super_user == true
 			
 				@solicitudes = Solicitud.where(proyecto:proyecto)
+			
+			elsif (!user.rol.nil?)
+				if(user.rol.nombre == "Gerente")
+					@usuariosEquipo = Usuario.where(users_id:user.id)
+					@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
+				else
+					@solicitudes = Solicitud.where(user:user,proyecto:proyecto)
+				end
+			
 			else
 			
 				@solicitudes = Solicitud.where(user:user,proyecto:proyecto)
