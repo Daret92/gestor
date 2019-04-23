@@ -401,8 +401,17 @@ class ApiAppController < ApplicationController
 			
 			elsif (!user.rol.nil?)
 				if(user.rol.nombre == "Gerente")
-					@usuariosEquipo = User.where(users_id:user.id)
-					@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
+					@usuariosEquipo = User.where(users_id:user.id,user:user)
+					ids =[]
+					@usuariosEquipo.each do |item| 
+						if !ids.include?(item.id)
+							ids.append(item.id)
+						end
+					end
+					if !ids.include?(user.id)
+						ids.append(user.id)		
+					end
+					@solicitudes = Solicitud.where(user:ids,proyecto:proyecto)
 				else
 					@solicitudes = Solicitud.where(user:user,proyecto:proyecto)
 				end
