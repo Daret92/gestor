@@ -478,12 +478,12 @@ class ApiAppController < ApplicationController
 				render json: {response:apps,result:result} 
 			else
 				result = false
-				apps = {registro:[success: result]}
+				apps = {registro:[success: result,error:"size array"]}
 				render json: {response:apps}
 			end	
 		else
 			result = false
-			apps = {registro:[success: result]}
+			apps = {registro:[success: result,error:"no logeo"]}
 			render json: {response:apps}
 		end
 	end
