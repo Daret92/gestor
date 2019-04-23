@@ -390,11 +390,25 @@ class ApiAppController < ApplicationController
 		user = User.find_by_email(params[:user])
 		if user.valid_password?(params[:password])
 			@equipo = EquipoUsuario.where(user:user).first()
+			proyecto = Proyecto.find(params['proyecto'][0])
+			
 			if(!@equipo.nil?)
+			
 				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
-				proyecto = Proyecto.find(params['proyecto'][0])
-
 				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
+			elsif user.rol.nombre == "Gerente" 
+			
+				@usuariosEquipo = Usuario.where(users_id:user.id)
+				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
+			elsif user.super_user == true
+			
+				@solicitudes = Solicitud.where(proyecto:proyecto)
+			else
+			
+				@solicitudes = Solicitud.where(user:user,proyecto:proyecto)
+			end
+
+			if(@solicitudes.length > 0)
 				apps=[]
 
 				@solicitudes.each do |item|
@@ -461,9 +475,8 @@ class ApiAppController < ApplicationController
 			else
 				result = false
 				apps = {registro:[success: result]}
-				render json: {response:apps} 
-		 	end	
-			
+				render json: {response:apps}
+			end	
 		else
 			result = false
 			apps = {registro:[success: result]}
