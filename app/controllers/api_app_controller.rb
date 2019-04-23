@@ -394,10 +394,10 @@ class ApiAppController < ApplicationController
 			@equipo = EquipoUsuario.where(user:user).first()
 			if(!@equipo.nil?)
 				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
-				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto)
+				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto).order('id DESC')
 			elsif user.super_user == true
 			
-				@solicitudes = Solicitud.where(proyecto:proyecto)
+				@solicitudes = Solicitud.where(proyecto:proyecto).order('id DESC')
 			
 			elsif (!user.rol.nil?)
 				if(user.rol.nombre == "Gerente")
@@ -411,14 +411,14 @@ class ApiAppController < ApplicationController
 					if !ids.include?(user.id)
 						ids.append(user.id)		
 					end
-					@solicitudes = Solicitud.where(user:ids,proyecto:proyecto)
+					@solicitudes = Solicitud.where(user:ids,proyecto:proyecto).order('id DESC')
 				else
-					@solicitudes = Solicitud.where(user:user,proyecto:proyecto)
+					@solicitudes = Solicitud.where(user:user,proyecto:proyecto).order('id DESC')
 				end
 			
 			else
 			
-				@solicitudes = Solicitud.where(user:user,proyecto:proyecto)
+				@solicitudes = Solicitud.where(user:user,proyecto:proyecto).order('id DESC')
 			end
 
 			if(@solicitudes.length > 0)
