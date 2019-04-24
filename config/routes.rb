@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   #api de administrador
   get 'api_adm/get_users_proyecto'
   get 'api_adm/getUbicacionesAdm'
+  get 'api_adm/getRegistrosAdm'
   #scaffolds
   resources :cvehiculos
   resources :registries

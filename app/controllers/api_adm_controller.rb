@@ -47,4 +47,25 @@ class ApiAdmController < ApplicationController
 			render json: { users:apps,status: :unprocessable_entity }
 		end
 	end
+
+	def getRegistrosAdm
+		if !params[:email].empty? and !params[:password].empty?
+			user = User.find_by_email(params[:email])
+				
+				userUbicacion = User.find(params[:usuario][0].to_i)
+			  	
+		  	registro = Registry.where(user_id:userUbicacion.id)
+		 
+		  	registro_arr =[]
+		  	registro.each do |item|
+		  		registro_arr.push({id:item.id, user: item.user.nombre, proyecto: item.proyecto.titulo ,update: item.updated_at.to_formatted_s(:short).to_s, titulo: item.titulo, descripcion: item.descripcion, resultado:item.resultado})
+		  	end
+		  	result = true
+		  	render json: {registros:registro_arr,success: result}
+		else
+			result = false
+			apps = {registros:['success': result] }
+			render json: { registros:apps,status: :unprocessable_entity }
+		end
+	end
 end
