@@ -16,7 +16,9 @@ Rails.application.routes.draw do
   get 'api_app/saveMaterial'
   
   
-
+  #api de administrador
+  get 'api_adm/get_users_proyecto'
+  get 'api_adm/getUbicacionesAdm'
   #scaffolds
   resources :cvehiculos
   resources :registries

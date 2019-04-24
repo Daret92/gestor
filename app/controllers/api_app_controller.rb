@@ -203,7 +203,7 @@ class ApiAppController < ApplicationController
 	end
 
 
-		def removeMaterial
+	def removeMaterial
 		user = User.find_by_email(params[:email])
 		if user.valid_password?(params[:password])
 			@material = Material.find(params[:id])
