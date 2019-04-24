@@ -33,7 +33,7 @@ class ApiAdmController < ApplicationController
 				userProyecto = Proyecto.find(params[:proyecto][0].to_i)
 
 		  	
-		  	gps = GpsSave.where(user_id:userUbicacion.id,proyecto_id:userProyecto.id)
+		  	gps = GpsSave.where(user_id:userUbicacion.id,proyecto_id:userProyecto.id).order('id DESC')
 		 
 		  	gps_arr =[]
 		  	gps.each do |item|
@@ -54,7 +54,7 @@ class ApiAdmController < ApplicationController
 				
 				userUbicacion = User.find(params[:usuario][0].to_i)
 			  	
-		  	registro = Registry.where(user_id:userUbicacion.id)
+		  	registro = Registry.where(user_id:userUbicacion.id).order('id DESC')
 		 
 		  	registro_arr =[]
 		  	registro.each do |item|
