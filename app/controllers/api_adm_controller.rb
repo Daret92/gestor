@@ -68,4 +68,207 @@ class ApiAdmController < ApplicationController
 			render json: { registros:apps,status: :unprocessable_entity }
 		end
 	end
+
+	def searchSold
+		if !params[:email].empty? and !params[:password].empty?
+			user = User.find_by_email(params[:email])
+		  	if Solicitud.where(id:params[:folio]).length>0
+		  		solicitud = Solicitud.find(params[:folio])
+		  		gps_arr=[{folio:solicitud.id, user: solicitud.user.nombre, proyecto: solicitud.proyecto.titulo,material: solicitud.materials.count, viaticos: solicitud.viaticos.count, vehiculo: solicitud.vehiculos.count, otro: solicitud.otro.count,fecha:solicitud.updated_at.to_formatted_s(:short).to_s}]
+		  		result = true
+		  		render json: {result:gps_arr,success: result}
+		  	else
+		  		result = false
+				apps = {success: result}
+				render json: { result:apps,status: :unprocessable_entity }
+		  	end
+		else
+			result = false
+			apps = {success:['success': result] }
+			render json: { result:apps,status: :unprocessable_entity }
+		end
+	end
+
+	def getSolicitud
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			@solicitud = Solicitud.find(params[:folio])
+			
+			apps=[]
+			
+				materials=[]
+				if(@solicitud.materials.count > 0)
+					@solicitud.materials.each do |sitem|
+						materials.push({id:sitem.id,cantidad:sitem.cantidad,material:sitem.material,descripcion:sitem.descripcion})
+					end
+				end
+
+				viaticos=[]
+				if(@solicitud.viaticos.count > 0)
+					@solicitud.viaticos.each do |sitem|
+						viaticos.push({id:sitem.id,cantidad:sitem.cantidad,detalles:sitem.descripcion})
+					end
+				end
+
+				otro=[]
+				if(@solicitud.otro.count > 0)
+					@solicitud.otro.each do |sitem|
+						otro.push({id:sitem.id,descripcion:sitem.descripcion})
+					end
+				end
+				vehiculos=[]
+				if(@solicitud.vehiculos.count > 0)
+					@solicitud.vehiculos.each do |sitem|
+						vehiculos.push({id:sitem.id,vehiculo:sitem.vehiculo,descripcion:sitem.descripcion})
+					end
+				end
+
+				involucra=[]
+				involucrados = SolicitudUser.where(solicitud: @solicitud)
+				involucrados.each do |sitem|
+					involucra.push({id:sitem.id,usuario:sitem.user.email+" "+EquipoUser(sitem.user)})
+				end
+
+				estado = "Cancelada"
+				if(@solicitud.estado == "1")
+					estado = "Abierta"
+				elsif(@solicitud.estado == "2")
+					estado = "Validada"
+				elsif(@solicitud.estado =="3")
+					estado = "Entregada"
+				end
+		  		apps.push({
+		  			id:@solicitud.id,
+		  			proyecto: @solicitud.proyecto.titulo, 
+		  			fecha:@solicitud.created_at.to_formatted_s(:long).to_s,
+		  			usuario: @solicitud.user.nombre,
+		  			estado:estado,
+		  			material: @solicitud.materials.count,
+		  			vehiculo:@solicitud.vehiculos.count,
+		  			otro:@solicitud.otro.count,
+		  			viatico:@solicitud.viaticos.count,
+		  			materials_arr:materials,
+		  			vehiculo_arr:vehiculos,
+		  			otro_arr:otro,
+		  			viaticos_arr: viaticos,
+		  			involucrado_arr:involucra
+		  		})
+			  
+			result = [{result: true}]
+			render json: {response:apps,result:result} 
+		else
+			result = false
+			apps = {registro:[success: result,error:"no logeo"]}
+			render json: {response:apps}
+		end
+	end
+	def EquipoUser(users)
+		@teams = Equipo.where(user:users)
+		@deps  = EquipoUsuario.where(user:users)
+		if @teams.size > 0
+			tmp = ""
+			@teams.each do |item|
+				tmp = "Encargado de: "+item.nombre
+			end
+			return tmp.html_safe
+		else
+			tmp = ""
+			if @deps.size > 0
+				@deps.each do |item|
+					tmp = "Pertenece a "+item.equipo.nombre 
+				end
+				return tmp.html_safe
+			else
+				return "Sin Equipo de Trabajo"
+			end
+		end
+	end
+	def getSolicitudesV
+		if !params[:email].empty? and !params[:password].empty?
+			user = User.find_by_email(params[:email])
+		  	if user.super_user
+	  			@solicitudes = Solicitud.where(estado:"1").order('id DESC')
+	  		elsif user.rol?
+	  			if user.rol.nombre == "Gerente"
+	  				@solicitudes = Solicitud.where(estado:"1").order('id DESC')
+	  			end
+	  		else
+	  			users = User.where(users_id:user.id)
+	  			@solicitudes = Solicitud.where(estado:"1",user_id:users).order('id DESC')
+	  		end
+	  		if(@solicitudes.length > 0)
+				apps=[]
+
+				@solicitudes.each do |item|
+					materials=[]
+					if(item.materials.count > 0)
+						item.materials.each do |sitem|
+							materials.push({id:sitem.id,cantidad:sitem.cantidad,material:sitem.material,descripcion:sitem.descripcion})
+						end
+					end
+
+					viaticos=[]
+					if(item.viaticos.count > 0)
+						item.viaticos.each do |sitem|
+							viaticos.push({id:sitem.id,cantidad:sitem.cantidad,detalles:sitem.descripcion})
+						end
+					end
+
+					otro=[]
+					if(item.otro.count > 0)
+						item.otro.each do |sitem|
+							otro.push({id:sitem.id,descripcion:sitem.descripcion})
+						end
+					end
+					vehiculos=[]
+					if(item.vehiculos.count > 0)
+						item.vehiculos.each do |sitem|
+							vehiculos.push({id:sitem.id,vehiculo:sitem.vehiculo,descripcion:sitem.descripcion})
+						end
+					end
+
+					involucra=[]
+					involucrados = SolicitudUser.where(solicitud: item)
+					involucrados.each do |sitem|
+						involucra.push({id:sitem.id,usuario:sitem.user.email+" "+EquipoUser(sitem.user)})
+					end
+
+					estado = "Cancelada"
+					if(item.estado == "1")
+						estado = "Abierta"
+					elsif(item.estado == "2")
+						estado = "Validada"
+					elsif(item.estado =="3")
+						estado = "Entregada"
+					end
+			  		apps.push({
+			  			id:item.id,
+			  			proyecto: item.proyecto.titulo, 
+			  			fecha:item.created_at.to_formatted_s(:long).to_s,
+			  			usuario: item.user.nombre,
+			  			estado:estado,
+			  			material: item.materials.count,
+			  			vehiculo:item.vehiculos.count,
+			  			otro:item.otro.count,
+			  			viatico:item.viaticos.count,
+			  			materials_arr:materials,
+			  			vehiculo_arr:vehiculos,
+			  			otro_arr:otro,
+			  			viaticos_arr: viaticos,
+			  			involucrado_arr:involucra
+			  		})
+			  end
+			  result = [{result: true}]
+				render json: {response:apps,result:result} 
+			else
+				result = false
+				apps = {registro:[success: result,error:"size array"]}
+				render json: {response:apps}
+			end			  	
+		else
+			result = false
+			apps = {success:['success': result] }
+			render json: { result:apps,status: :unprocessable_entity }
+		end
+	end
 end

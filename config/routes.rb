@@ -20,6 +20,10 @@ Rails.application.routes.draw do
   get 'api_adm/get_users_proyecto'
   get 'api_adm/getUbicacionesAdm'
   get 'api_adm/getRegistrosAdm'
+  get 'api_adm/searchSold'
+  get 'api_adm/getSolicitud'
+  get 'api_adm/getSolicitudesV'
+  
   #scaffolds
   resources :cvehiculos
   resources :registries
