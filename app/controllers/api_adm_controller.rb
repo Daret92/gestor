@@ -337,8 +337,9 @@ class ApiAdmController < ApplicationController
 			user = User.find_by_email(params[:email])
 			if user.valid_password?(params[:password])
 				users = User.find(params[:usuario][0])
-				proyecto = Proyecto.find(params[:proyecto])
+				proyecto = Proyecto.find(params[:proyecto][0])
 			  	@solicitudes = Solicitud.where(estado:"2",user:users,proyecto:proyecto).order('id DESC')
+			  	raise params
 		  		if(@solicitudes.length > 0)
 					apps=[]
 
@@ -409,8 +410,8 @@ class ApiAdmController < ApplicationController
 					render json: {response:apps}
 				end
 			else
-					result = false
-					apps = {registro:[success: result,error:"size array"]}
+				result = false
+				apps = {registro:[success: result,error:"Error Login"]}
 					render json: {response:apps}
 				end  	
 		else
