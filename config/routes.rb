@@ -23,7 +23,8 @@ Rails.application.routes.draw do
   get 'api_adm/searchSold'
   get 'api_adm/getSolicitud'
   get 'api_adm/getSolicitudesV'
-  
+  get 'api_adm/validateSold'
+  get 'api_adm/getStatusSolds'
   #scaffolds
   resources :cvehiculos
   resources :registries
