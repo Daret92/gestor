@@ -339,7 +339,7 @@ class ApiAdmController < ApplicationController
 				users = User.find(params[:usuario][0])
 				proyecto = Proyecto.find(params[:proyecto][0])
 			  	@solicitudes = Solicitud.where(estado:"2",user:users,proyecto:proyecto).order('id DESC')
-			  	raise params
+			  	
 		  		if(@solicitudes.length > 0)
 					apps=[]
 
