@@ -108,7 +108,7 @@
                     <%end%>
                     <% if @solicitud.estado == "2" %>
                     <td class="text-center" style="width: 20%">
-                      <%if sitem.autorizado and @solicitudes_arr.include?(current_user.id)or current_user.rol.nombre == "Gerente"%>
+                      <%if sitem.autorizado and @solicitudes_arr.include?(current_user.id) or current_user.super_user or current_user.rol.nombre == "Gerente"%>
                         <input type="checkbox" class="radiosv" data-id="<%=sitem.id%>" <% if sitem.entregado%> checked <%end%>>
                       <%else%>
                         <i class="fas fa-times"></i>
