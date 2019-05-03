@@ -54,8 +54,7 @@ class AdmController < ApplicationController
  #Termina roles
  #usuarios
   def user
-    
-    @users = User.where(super_user:false)
+    @users = User.where(super_user:false).order(activo: :DESC)
   end
   
   def user_new

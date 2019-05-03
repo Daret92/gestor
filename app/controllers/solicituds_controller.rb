@@ -6,15 +6,15 @@ class SolicitudsController < ApplicationController
   # GET /solicituds.json
   def index
     if current_user.super_user or current_user.rol.nombre == "Gerente"
-      @solicituds = Solicitud.all()
+      @solicituds = Solicitud.all().order('id DESC')
     else  
       rol =  current_user.rol.nombre
       if rol == "JefeDepartamento"
         
         users = User.where(users_id:current_user.id)
-        @solicituds = Solicitud.where(user_id:users.ids)
+        @solicituds = Solicitud.where(user_id:users.ids).order('id DESC')
       else
-        @solicituds = Solicitud.where(user:current_user)
+        @solicituds = Solicitud.where(user:current_user).order('id DESC')
       end
     end
 

@@ -26,13 +26,12 @@ class ApiAppController < ApplicationController
   end
 
   def get_users
-  	users = User.where(super_user:false)
+  	users = User.where(super_user:false,activo:true).order('nombre ASC')
   	proyecto = Proyecto.where(estado:"1")
   	apps = []
   	pro_arr = []
-  	users.each do |item|
-  		
-  		apps.push({id:item.id,email: item.email, rol: item.rol.nombre, equipo:EquipoUser(item)})
+  	users.each do |item|  		
+  		apps.push({id:item.id,email: item.nombre, rol: item.rol.nombre, equipo:EquipoUser(item)})
   	end
   	proyecto.each do |item|
   		pro_arr.push({id:item.id,titulo:item.titulo})

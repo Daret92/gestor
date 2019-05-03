@@ -25,6 +25,9 @@ Rails.application.routes.draw do
   get 'api_adm/getSolicitudesV'
   get 'api_adm/validateSold'
   get 'api_adm/getStatusSolds'
+  get 'api_adm/getSolicitudesF'
+  get 'api_adm/finalizarSolicitud'
+  
   #scaffolds
   resources :cvehiculos
   resources :registries

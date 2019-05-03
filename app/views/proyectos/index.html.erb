@@ -2,7 +2,8 @@
 <div class="float-right">
 <%= link_to 'Nuevo Proyecto', new_proyecto_path, class: "btn btn-primary" %>
 </div>
-<table class="responsive nowrap table" id="dttb-proyectos" data-sort="true">
+<div class="table-responsive">
+<table class="responsive nowrap table proyectos" id="dttb-proyectos" data-sort="true" style="font-size: 80%">
   <thead>
     <tr>
       <th>Titulo</th>
@@ -36,5 +37,5 @@
     <%end%>
   </tbody>
 </table>
-
+</div>
 <br>

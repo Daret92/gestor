@@ -187,16 +187,13 @@ class ApiAdmController < ApplicationController
 		if !params[:email].empty? and !params[:password].empty?
 			user = User.find_by_email(params[:email])
 			if user.valid_password?(params[:password])
-			  	if user.super_user
+			  	if user.super_user or user.rol.nombre == "Gerente"
 		  			@solicitudes = Solicitud.where(estado:"1").order('id DESC')
-		  		elsif user.rol?
-		  			if user.rol.nombre == "Gerente"
-		  				@solicitudes = Solicitud.where(estado:"1").order('id DESC')
-		  			end
-		  		else
+		  		elsif user.rol.nombre == "JefeDepartamento"
 		  			users = User.where(users_id:user.id)
 		  			@solicitudes = Solicitud.where(estado:"1",user_id:users).order('id DESC')
 		  		end
+
 		  		if(@solicitudes.length > 0)
 					apps=[]
 
@@ -323,13 +320,7 @@ class ApiAdmController < ApplicationController
     	end
 	end
 
-    def notificacionEntrega(solicitud)
-    Telegram.bots_config = {
-        default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
-      }
-    
-   	Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue entregada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
-  end
+
 
 
   def getStatusSolds
@@ -339,7 +330,97 @@ class ApiAdmController < ApplicationController
 				users = User.find(params[:usuario][0])
 				proyecto = Proyecto.find(params[:proyecto][0])
 			  	@solicitudes = Solicitud.where(estado:"2",user:users,proyecto:proyecto).order('id DESC')
-			  	
+		  		if @solicitudes.length > 0
+					apps=[]
+
+					@solicitudes.each do |item|
+						materials=[]
+						if(item.materials.count > 0)
+							item.materials.each do |sitem|
+								materials.push({id:sitem.id,cantidad:sitem.cantidad,material:sitem.material,descripcion:sitem.descripcion})
+							end
+						end
+
+						viaticos=[]
+						if(item.viaticos.count > 0)
+							item.viaticos.each do |sitem|
+								viaticos.push({id:sitem.id,cantidad:sitem.cantidad,detalles:sitem.descripcion})
+							end
+						end
+
+						otro=[]
+						if(item.otro.count > 0)
+							item.otro.each do |sitem|
+								otro.push({id:sitem.id,descripcion:sitem.descripcion})
+							end
+						end
+						vehiculos=[]
+						if(item.vehiculos.count > 0)
+							item.vehiculos.each do |sitem|
+								vehiculos.push({id:sitem.id,vehiculo:sitem.vehiculo,descripcion:sitem.descripcion})
+							end
+						end
+
+						involucra=[]
+						involucrados = SolicitudUser.where(solicitud: item)
+						involucrados.each do |sitem|
+							involucra.push({id:sitem.id,usuario:sitem.user.email+" "+EquipoUser(sitem.user)})
+						end
+
+						estado = "Cancelada"
+						if(item.estado == "1")
+							estado = "Abierta"
+						elsif(item.estado == "2")
+							estado = "Validada"
+						elsif(item.estado =="3")
+							estado = "Entregada"
+						end
+				  		apps.push({
+				  			id:item.id,
+				  			proyecto: item.proyecto.titulo, 
+				  			fecha:item.created_at.to_formatted_s(:long).to_s,
+				  			usuario: item.user.nombre,
+				  			estado:estado,
+				  			material: item.materials.count,
+				  			vehiculo:item.vehiculos.count,
+				  			otro:item.otro.count,
+				  			viatico:item.viaticos.count,
+				  			materials_arr:materials,
+				  			vehiculo_arr:vehiculos,
+				  			otro_arr:otro,
+				  			viaticos_arr: viaticos,
+				  			involucrado_arr:involucra
+				  		})
+				  end
+				  	result = [{result: true}]
+					render json: {response:apps,result:result} 
+				else
+					result = false
+					apps = {registro:[success: result,error:"No Existen Solicitudes para este usuario y proyecto"]}
+					render json: {response:apps}
+				end
+			else
+				result = false
+				apps = {registro:[success: result,error:"Error Login"]}
+					render json: {response:apps}
+				end  	
+		else
+			result = false
+			apps = {success:['success': result] }
+			render json: { result:apps,status: :unprocessable_entity }
+		end
+	end
+	def getSolicitudesF
+		if !params[:email].empty? and !params[:password].empty?
+			user = User.find_by_email(params[:email])
+			if user.valid_password?(params[:password])
+			  	if user.super_user or user.rol.nombre == "Gerente"
+		  			@solicitudes = Solicitud.where(estado:"2").order('id DESC')
+		  		elsif user.rol.nombre == "JefeDepartamento"
+		  			users = User.where(users_id:user.id)
+		  			@solicitudes = Solicitud.where(estado:"2",user_id:users).order('id DESC')
+		  		end
+
 		  		if(@solicitudes.length > 0)
 					apps=[]
 
@@ -410,8 +491,8 @@ class ApiAdmController < ApplicationController
 					render json: {response:apps}
 				end
 			else
-				result = false
-				apps = {registro:[success: result,error:"Error Login"]}
+					result = false
+					apps = {registro:[success: result,error:"size array"]}
 					render json: {response:apps}
 				end  	
 		else
@@ -420,4 +501,27 @@ class ApiAdmController < ApplicationController
 			render json: { result:apps,status: :unprocessable_entity }
 		end
 	end
+
+	def finalizarSolicitud
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			@solicitud = Solicitud.find(params[:folio])
+			@solicitud.estado = "3"
+			@solicitud.save 
+			notificacionEntrega(@solicitud)
+			render json: {result:true} 
+		else
+			result = false
+			apps = {registro:[success: result,error:"no logeo"]}
+			render json: {response:apps}
+		end
+	end
+
+    def notificacionEntrega(solicitud)
+    Telegram.bots_config = {
+        default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
+      }
+    
+   	Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue entregada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+  end
 end
