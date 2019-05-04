@@ -486,9 +486,8 @@ class ApiAppController < ApplicationController
 			  result = [{result: true}]
 				render json: {response:apps,result:result} 
 			else
-				result = false
-				apps = {registro:[success: result,error:"size array"]}
-				render json: {response:apps}
+				result = [{result: false}]
+				render json: {result:result} 
 			end	
 		else
 			result = false
