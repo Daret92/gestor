@@ -78,18 +78,18 @@ class ApiAppController < ApplicationController
 		if @teams.size > 0
 			tmp = ""
 			@teams.each do |item|
-				tmp = "Encargado de: "+item.nombre
+				tmp = users.nombre+", Encargado de: "+item.nombre
 			end
 			return tmp.html_safe
 		else
 			tmp = ""
 			if @deps.size > 0
 				@deps.each do |item|
-					tmp = "Pertenece a "+item.equipo.nombre 
+					tmp = users.nombre+",Pertenece a "+item.equipo.nombre 
 				end
 				return tmp.html_safe
 			else
-				return "Sin Equipo de Trabajo"
+				return users.nombre+", Sin Equipo de Trabajo"
 			end
 		end
 	end
