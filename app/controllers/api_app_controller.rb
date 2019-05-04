@@ -31,7 +31,7 @@ class ApiAppController < ApplicationController
   	apps = []
   	pro_arr = []
   	users.each do |item|  		
-  		apps.push({id:item.id,email: item.nombre, rol: item.rol.nombre, equipo:EquipoUser(item)})
+  		apps.push({id:item.id,email: item.email, rol: item.rol.nombre, equipo:EquipoUser(item)})
   	end
   	proyecto.each do |item|
   		pro_arr.push({id:item.id,titulo:item.titulo})
@@ -108,6 +108,7 @@ class ApiAppController < ApplicationController
 
 			materiales = ActiveSupport::JSON.decode(params[:material])
 			involucrados = ActiveSupport::JSON.decode(params[:involucrados])
+			raise params
 			if @solicitud.save
 				if materiales.length > 0
 					materiales.each do |item|
@@ -389,7 +390,7 @@ class ApiAppController < ApplicationController
 		user = User.find_by_email(params[:user])
 		if user.valid_password?(params[:password])
 			
-			proyecto = Proyecto.find(params['proyecto'].split(",")[0])
+			proyecto = Proyecto.find(params[:proyecto].split(",")[0])
 			@equipo = EquipoUsuario.where(user:user).first()
 			if(!@equipo.nil?)
 				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
