@@ -108,7 +108,6 @@ class ApiAppController < ApplicationController
 
 			materiales = ActiveSupport::JSON.decode(params[:material])
 			involucrados = ActiveSupport::JSON.decode(params[:involucrados])
-			raise params
 			if @solicitud.save
 				if materiales.length > 0
 					materiales.each do |item|
