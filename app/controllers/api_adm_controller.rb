@@ -28,9 +28,9 @@ class ApiAdmController < ApplicationController
 		if !params[:email].empty? and !params[:password].empty?
 			user = User.find_by_email(params[:email])
 				
-				userUbicacion = User.find(params[:usuario][0].to_i)
+				userUbicacion = User.find(params[:usuario].split(",")[0].to_i)
 	
-				userProyecto = Proyecto.find(params[:proyecto][0].to_i)
+				userProyecto = Proyecto.find(params['proyecto'].split(",")[0].to_i)
 
 		  	
 		  	gps = GpsSave.where(user_id:userUbicacion.id,proyecto_id:userProyecto.id).order('id DESC')
@@ -52,7 +52,7 @@ class ApiAdmController < ApplicationController
 		if !params[:email].empty? and !params[:password].empty?
 			user = User.find_by_email(params[:email])
 				
-				userUbicacion = User.find(params[:usuario][0].to_i)
+				userUbicacion = User.find(params[:usuario].split(",")[0].to_i)
 			  	
 		  	registro = Registry.where(user_id:userUbicacion.id).order('id DESC')
 		 
@@ -327,8 +327,8 @@ class ApiAdmController < ApplicationController
 		if !params[:email].empty? and !params[:password].empty?
 			user = User.find_by_email(params[:email])
 			if user.valid_password?(params[:password])
-				users = User.find(params[:usuario][0])
-				proyecto = Proyecto.find(params[:proyecto][0])
+				users = User.find(params[:usuario].split(",")[0])
+				proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 			  	@solicitudes = Solicitud.where(estado:"2",user:users,proyecto:proyecto).order('id DESC')
 		  		if @solicitudes.length > 0
 					apps=[]
