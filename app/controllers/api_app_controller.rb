@@ -108,6 +108,7 @@ class ApiAppController < ApplicationController
 
 			materiales = ActiveSupport::JSON.decode(params[:material])
 			involucrados = ActiveSupport::JSON.decode(params[:involucrados])
+			
 			if @solicitud.save
 				if materiales.length > 0
 					materiales.each do |item|
@@ -145,15 +146,15 @@ class ApiAppController < ApplicationController
 
 				if involucrados.length > 0
 					involucrados.each do |item|
-						@involucrado = SolicitudUser.new
-						@involucrado.solicitud = @solicitud
-						@involucrado.user = User.find_by_email(item)
-						@involucrado.save
+						sols = SolicitudUser.new
+						sols.solicitud = @solicitud
+						sols.user = User.find_by_email(item)
+						sols.save
 					end
-					@involucrado = SolicitudUser.new
-					@involucrado.solicitud = @solicitud
-					@involucrado.user = user
-					@involucrado.save
+					sols = SolicitudUser.new
+					sols.solicitud = @solicitud
+					sols.user = user
+					sols.save
 				end
 				not_jefe(@solicitud)
 				result = true
