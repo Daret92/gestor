@@ -43,7 +43,7 @@ class ApiAppController < ApplicationController
   	if !params[:email].empty? and !params[:password].empty?
 			user = User.find_by_email(params[:email])
 			if user.valid_password?(params[:password])
-				proyecto = Proyecto.find(params['proyecto'][0])
+				proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 				@gps = GpsSave.new
 				@gps.latitud = params[:latitud]
 				@gps.longitud = params[:longitud]
@@ -97,7 +97,7 @@ class ApiAppController < ApplicationController
 	def save_sold
 		user = User.find_by_email(params[:user])
 		if user.valid_password?(params[:password])
-			proyecto = Proyecto.find(params['proyecto'][0])
+			proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 			
 			@solicitud = Solicitud.new
 			
@@ -298,7 +298,7 @@ class ApiAppController < ApplicationController
   def save_registre
   	user = User.find_by_email(params[:email])
 		if user.valid_password?(params[:password])
-			proyecto = Proyecto.find(params['proyecto'][0])
+			proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 
 		  	@registro = Registry.new
 		  	@registro.proyecto = proyecto
@@ -345,7 +345,7 @@ class ApiAppController < ApplicationController
 	def save_bitacora
 		user = User.find_by_email(params[:email])
 		if user.valid_password?(params[:password])
-			proyecto = Proyecto.find(params['proyecto'][0])
+			proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 			@bitacora = Bitacora.new
 			@bitacora.proyecto = proyecto
 			@bitacora.user = user
@@ -369,7 +369,7 @@ class ApiAppController < ApplicationController
 	def get_bitacora
 		user = User.find_by_email(params[:email])
 		if user.valid_password?(params[:password])
-			proyecto = Proyecto.find(params['proyecto'][0])
+			proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 			@bitacora = Bitacora.where(proyecto:proyecto).order('id DESC')
 			apps =[]
 			@bitacora.each do |item|
@@ -389,7 +389,7 @@ class ApiAppController < ApplicationController
 		user = User.find_by_email(params[:user])
 		if user.valid_password?(params[:password])
 			
-			proyecto = Proyecto.find(params['proyecto'][0])
+			proyecto = Proyecto.find(params['proyecto'].split(",")[0])
 			@equipo = EquipoUsuario.where(user:user).first()
 			if(!@equipo.nil?)
 				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
