@@ -2,19 +2,25 @@ class ApiAppController < ApplicationController
   def login
 		if !params[:email].empty? and !params[:pass].empty?
 			user = User.find_by_email(params[:email])
-			if user.valid_password?(params[:pass])
-				result = true
-				if user.rol
-					rols = user.rol.nombre
-				else
-					rols = "sin rol"
+			if !user.nil?
+				if user.valid_password?(params[:pass])
+					result = true
+					if user.rol
+						rols = user.rol.nombre
+					else
+						rols = "sin rol"
+					end
+					apps = {response:[ 'email': user.email,'password': params[:pass],'superUser': user.super_user, 'rol': rols],success: ['success':result] }
+
+		  		render json: {users:apps} 
+
+			  else
+			  	result = false
+					apps = {success:['success': result] }
+					render json: { users:apps,status: :unprocessable_entity }
 				end
-				apps = {response:[ 'email': user.email,'password': params[:pass],'superUser': user.super_user, 'rol': rols],success: ['success':result] }
-
-	  		render json: {users:apps} 
-
-		  else
-		  	result = false
+			else
+				result = false
 				apps = {success:['success': result] }
 				render json: { users:apps,status: :unprocessable_entity }
 			end
