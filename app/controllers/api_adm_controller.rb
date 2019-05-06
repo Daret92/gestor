@@ -2,7 +2,12 @@ class ApiAdmController < ApplicationController
 	def get_users_proyecto
 		if !params[:email].empty? and !params[:password].empty?
 			user = User.find_by_email(params[:email])
-			users = User.where(users_id:user.id)
+			if  user.super_user or user.rol.nombre == "Gerente"
+				users = User.where(activo:true,super_user:false)
+			else
+				users = User.where(users_id:user.id)
+			end
+
 		  	proyecto = Proyecto.where(estado:"1")
 		  	
 		  	apps = []
@@ -23,6 +28,7 @@ class ApiAdmController < ApplicationController
 			render json: { users:apps,status: :unprocessable_entity }
 		end
 	end
+
 
 	def getUbicacionesAdm
 		if !params[:email].empty? and !params[:password].empty?
