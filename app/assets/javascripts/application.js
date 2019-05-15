@@ -22,7 +22,30 @@
 //= require serviceworker-companion
 
 $( document ).on('turbolinks:load', function() {
-  
+  $('#sticky').sticky({topSpacing:0});
+    $('.navbar a[href^="#"]').click(function() {
+      var destino = $(this.hash);
+      if (destino.length == 0) {
+        destino = $('a[name="' + this.hash.substr(1) + '"]');
+      }
+      if (destino.length == 0) {
+        destino = $('html');
+      }
+      $('html, body').animate({ scrollTop: destino.offset().top - 200 }, 200);
+      return false;
+  }); 
+  $('.scrolls a[href^="#"]').click(function() {
+      var destino = $(this.hash);
+      if (destino.length == 0) {
+        destino = $('a[name="' + this.hash.substr(1) + '"]');
+      }
+      if (destino.length == 0) {
+        destino = $('html');
+      }
+      $('html, body').animate({ scrollTop: destino.offset().top - 200 }, 200);
+      return false;
+
+  }); 
 
   $('.radios').on('click',function(){
     var id = $(this).data('id')

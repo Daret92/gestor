@@ -4,7 +4,10 @@ class ApiAppController < ApplicationController
 			user = User.find_by_email(params[:email])
 			if !user.nil?
 				if user.valid_password?(params[:pass])
+					user.token_msj = params[:tokenFire]
+					user.save
 					result = true
+					
 					if user.rol
 						rols = user.rol.nombre
 					else
@@ -297,6 +300,7 @@ class ApiAppController < ApplicationController
     end
     if jefe
       Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://35.196.76.142/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+      sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.token_msj)
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
     end
@@ -500,6 +504,20 @@ class ApiAppController < ApplicationController
 			apps = {registro:[success: result,error:"no logeo"]}
 			render json: {response:apps}
 		end
+	end
+
+	def sendNotificacion(titulo,cuerpo,ids)
+		fcm = FCM.new("AAAAuSfCQSQ:APA91bG7tfzvuY0_Zf7IXDlooCI8BMESA516GsCnL5mVXkc92Yb2vr80ru3tCzmG0zUT-dZKwEm3H7OFSNSIR38ZoVUnx9sNW79fubU0sLWfIrMwJlz0DursXd0GOH01mViSvpteGTmM")
+		registration_ids= [ids]
+		options = { "notification": {
+              "title": titulo,
+              "body": cuerpo
+          },
+          "data": {"click_action": "FLUTTER_NOTIFICATION_CLICK", "id": "1", "status": "done"}
+		}
+		response = fcm.send(registration_ids, options)
+		
+		raise response
 	end
 
 end

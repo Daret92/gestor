@@ -1,4 +1,10 @@
 module ApplicationHelper
+	def mobile_device
+	  agent = request.user_agent
+	  return "tablet" if agent =~ /(tablet|ipad)|(android(?!.*mobile))/i
+	  return "mobile" if agent =~ /Mobile/
+	  return "desktop"
+	end	
 	def link_to_add_row(name,f,association,**args)
 		new_object = f.object.send(association).klass.new
 		id = new_object.object_id

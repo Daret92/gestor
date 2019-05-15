@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
 	before_action :permissions
+
 	def permissions
 		if current_user
 			if current_user.super_user == true
