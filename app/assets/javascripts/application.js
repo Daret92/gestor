@@ -22,7 +22,7 @@
 //= require serviceworker-companion
 
 $( document ).on('turbolinks:load', function() {
-  $('#sticky').sticky({topSpacing:0});
+  
     $('.navbar a[href^="#"]').click(function() {
       var destino = $(this.hash);
       if (destino.length == 0) {
@@ -155,7 +155,6 @@ $('.fin_solicitud').on('click',function(){
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'),'g');
-    console.log($(this).data('field'));
     $('.fields_users').append($(this).data('field').replace(regexp,time));
     return event.preventDefault();
   }) ;
@@ -164,7 +163,6 @@ $('.fin_solicitud').on('click',function(){
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'),'g');
-    console.log($(this).data('field'));
     $('.fields_vehiculo').append($(this).data('fieldv').replace(regexp,time));
     return event.preventDefault();
   });
@@ -173,7 +171,6 @@ $('.fin_solicitud').on('click',function(){
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'),'g');
-    console.log($(this).data('field'));
     $('.fields_viatico').append($(this).data('fieldvi').replace(regexp,time));
     return event.preventDefault();
   }) ;
@@ -182,7 +179,6 @@ $('form').on('click', '.add_otro',function(event){
     var regexp, time;
     time = new Date().getTime();
     regexp = new RegExp($(this).data('id'),'g');
-    console.log($(this).data('field'));
     $('.fields_otro').append($(this).data('fieldo').replace(regexp,time));
     return event.preventDefault();
   }) ;
