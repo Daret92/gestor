@@ -37,6 +37,9 @@
         <div class="container-fluid">
           <p class="notice"><%= notice %></p>
           <p class="alert"><%= alert %></p>
+          <% if mobile_device == "mobile" %>
+            telfono
+          <%end%>
           <%= yield %>
         </div>
         <!-- /.container-fluid -->
