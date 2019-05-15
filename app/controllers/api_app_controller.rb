@@ -29,8 +29,8 @@ class ApiAppController < ApplicationController
 			end
 		else
 			result = false
-			apps = {success:['success': result] }
-			render json: { users:apps,status: :unprocessable_entity }
+			apps = {registro:[success: result,error:"no logeo"]}
+			render json: {response:apps}
 		end
   end
 
