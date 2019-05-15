@@ -299,8 +299,11 @@ class ApiAppController < ApplicationController
       contenido = contenido +"\n Solicitud Autorizada"
     end
     if jefe
-      Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://35.196.76.142/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
-      sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.token_msj)
+    	begin
+      		Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://35.196.76.142/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+      	rescue
+      		sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.token_msj)
+      	end
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
     end
@@ -517,7 +520,6 @@ class ApiAppController < ApplicationController
 		}
 		response = fcm.send(registration_ids, options)
 		
-		raise response
 	end
 
 end

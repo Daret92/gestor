@@ -322,7 +322,11 @@ class ApiAdmController < ApplicationController
     users_arr = []
     	usuariosSolicitud.each do |item|
 	    	users_arr.append(item.user_id)
-	    	Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+	    	begin 
+	    		Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+	    	rescue
+   				sendNotificacion("Autorizada","Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n",item.user.token_msj)
+   			end
     	end
 	end
 
@@ -527,7 +531,24 @@ class ApiAdmController < ApplicationController
     Telegram.bots_config = {
         default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
       }
-    
-   	Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue entregada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+    begin
+   		Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue entregada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
+   	rescue
+   		sendNotificacion("Entregada","Solicitud con folio "+solicitud.id.to_s+", fue entregada",solicitud.user.token_msj)
+   	end
   end
+
+  def sendNotificacion(titulo,cuerpo,ids)
+		fcm = FCM.new("AAAAuSfCQSQ:APA91bG7tfzvuY0_Zf7IXDlooCI8BMESA516GsCnL5mVXkc92Yb2vr80ru3tCzmG0zUT-dZKwEm3H7OFSNSIR38ZoVUnx9sNW79fubU0sLWfIrMwJlz0DursXd0GOH01mViSvpteGTmM")
+		registration_ids= [ids]
+		options = { "notification": {
+              "title": titulo,
+              "body": cuerpo
+          },
+          "data": {"click_action": "FLUTTER_NOTIFICATION_CLICK", "id": "1", "status": "done"}
+		}
+		response = fcm.send(registration_ids, options)
+		
+	end
+
 end
