@@ -30,7 +30,7 @@
         <tr style="padding: 0px;" class="<% if items.estado == '1'%><%elsif items.estado == '2'%> bg-success <%elsif  items.estado == '3'%> bg-primary <%elsif items.estado == '4'%>bg-danger<%end%>">
           <td style="padding: 2px"><%=items.id%></td>
           <td style="padding: 2px;"><%=items.proyecto.titulo%></td>
-          <td style="padding: 2px; word-break: break-all!important;"><%=items.observaciones%></td>
+          <td style="padding: 2px;    overflow:hidden;white-space:nowrap;text-overflow: ellipsis; max-width: 500px;"><%=items.observaciones%></td>
           <td style="padding: 2px"><%=items.user.nombre%></td>
           <td class="text-center" style="padding: 2px"><%=items.materials.count%></td>
           <td class="text-center" style="padding: 2px"><%=items.viaticos.count%></td>
