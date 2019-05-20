@@ -30,12 +30,12 @@
         <tr style="padding: 0px;" class="<% if items.estado == '1'%><%elsif items.estado == '2'%> bg-success <%elsif  items.estado == '3'%> bg-primary <%elsif items.estado == '4'%>bg-danger<%end%>">
           <td style="padding: 2px"><%=items.id%></td>
           <td style="padding: 2px"><%=items.proyecto.titulo%></td>
-          <td style="padding: 2px"><%=items.observaciones%></td>
+          <td style="padding: 2px; word-wrap: break-word!important; max-width: 150px!important;"><%=items.observaciones%></td>
           <td style="padding: 2px"><%=items.user.nombre%></td>
-          <td style="padding: 2px"><%=items.materials.count%></td>
-          <td style="padding: 2px"><%=items.viaticos.count%></td>
-          <td style="padding: 2px"><%=items.vehiculos.count%></td>
-          <td style="padding: 2px"><%=items.otro.count%></td>
+          <td class="text-center" style="padding: 2px"><%=items.materials.count%></td>
+          <td class="text-center" style="padding: 2px"><%=items.viaticos.count%></td>
+          <td class="text-center" style="padding: 2px"><%=items.vehiculos.count%></td>
+          <td class="text-center" style="padding: 2px"><%=items.otro.count%></td>
           <td style="padding: 2px">
             <div class="dropdown">
               <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -58,4 +58,4 @@
   </table>
 </div>
 
-<br>
+<br> 
