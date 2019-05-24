@@ -325,7 +325,7 @@ class ApiAdmController < ApplicationController
 	    	begin 
 	    		Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
 	    	rescue
-   				sendNotificacion("Autorizada","Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n",item.user.token_msj)
+   				sendNotificacion("Autorizada","Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n",item.user.auth_token)
    			end
     	end
 	end
@@ -534,7 +534,7 @@ class ApiAdmController < ApplicationController
     begin
    		Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue entregada\n" +"<a href='http://35.196.76.142/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
    	rescue
-   		sendNotificacion("Entregada","Solicitud con folio "+solicitud.id.to_s+", fue entregada",solicitud.user.token_msj)
+   		sendNotificacion("Entregada","Solicitud con folio "+solicitud.id.to_s+", fue entregada",solicitud.user.auth_token)
    	end
   end
 
