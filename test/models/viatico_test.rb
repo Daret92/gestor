@@ -5,7 +5,7 @@
 #  id           :integer          not null, primary key
 #  cantidad     :string
 #  descripcion  :string
-#  autorizada   :boolean
+#  autorizada   :boolean          default(TRUE)
 #  entrega      :boolean
 #  solicitud_id :integer
 #  created_at   :datetime         not null

@@ -15,6 +15,9 @@ Rails.application.routes.draw do
   get 'api_app/removeMaterial'
   get 'api_app/saveMaterial'
   
+  #getNotiticaciones
+
+  get'api_app/getNotificacion'
   
   #api de administrador
   get 'api_adm/get_users_proyecto'

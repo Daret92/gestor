@@ -307,6 +307,16 @@ class ApiAppController < ApplicationController
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
     end
+    begin
+		notif = Notificacion.new
+		notif.user = jefe
+		notif.texto = "Nueva Solicitud generada con folio"+solicitud.id.to_s
+		notif.leido = false
+		notif.tipo = "1"
+		notif.save
+	rescue 
+		print("None")
+	end
   end
 
   def save_registre
@@ -507,6 +517,33 @@ class ApiAppController < ApplicationController
 			apps = {registro:[success: result,error:"no logeo"]}
 			render json: {response:apps}
 		end
+	end
+
+	def getNotificacion
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			noticiacion = Notificacion.where(user: user,leido: false)
+			if noticiacion.length > 0
+				notificaciones_arr = []
+				noticiacion.each do |item|
+					notificaciones_arr.push({
+						id: item.id,
+						texto: item.texto,
+						tipo: item.tipo
+					})
+				end
+				result = [{result: true}]
+				render json: {response:notificaciones_arr,result:result} 
+			else
+				result = [{result: false}]
+				render json: {result:result} 
+			end	
+		else
+			result = false
+			apps = {material:[success: result]}
+			render json: {response:apps} 
+		end
+		
 	end
 
 	def sendNotificacion(titulo,cuerpo,ids)

@@ -1,0 +1,26 @@
+# == Schema Information
+#
+# Table name: notificacions
+#
+#  id         :integer          not null, primary key
+#  user_id    :integer
+#  texto      :string
+#  leido      :boolean
+#  tipo       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  texto: MyString
+  leido: false
+  tipo: MyString
+
+two:
+  user: two
+  texto: MyString
+  leido: false
+  tipo: MyString

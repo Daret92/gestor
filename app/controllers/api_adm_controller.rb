@@ -327,6 +327,16 @@ class ApiAdmController < ApplicationController
 	    	rescue
    				sendNotificacion("Autorizada","Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n",item.user.auth_token)
    			end
+   			begin
+   				notif = Notificacion.new
+	   			notif.user = item
+	   			notif.texto = "Solicitud con folio"+solicitud.id.to_s+", Autorizada"
+	   			notif.leido = false
+	   			notif.tipo = "2"
+	   			notif.save
+   			rescue 
+   				print("None")
+   			end
     	end
 	end
 
@@ -519,6 +529,16 @@ class ApiAdmController < ApplicationController
 			@solicitud.estado = "3"
 			@solicitud.save 
 			notificacionEntrega(@solicitud)
+			begin
+				notif = Notificacion.new
+				notif.user = user
+				notif.texto = "Se finalizo Solicitud con folio"+@solicitud.id.to_s
+				notif.leido = false
+				notif.tipo = "3"
+				notif.save
+			rescue 
+				print("None")
+			end
 			render json: {result:true} 
 		else
 			result = false
