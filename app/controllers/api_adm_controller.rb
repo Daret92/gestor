@@ -325,12 +325,12 @@ class ApiAdmController < ApplicationController
 	    	begin 
 	    		Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n" +"<a href='http://gestor.tuperfil.com.mx/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
 	    	rescue
-   				print("None")
+   				print("No Telegram 2.0")
    			end
    			begin 	    		
 	    		sendNotificacion("Autorizada","Solicitud con folio "+solicitud.id.to_s+", fue autorizada\n",item.user.auth_token)
 	    	rescue
-   				print("None")
+   				print("No Firebase 2.0")
    			end
    			begin
    				notif = Notificacion.new
@@ -340,7 +340,7 @@ class ApiAdmController < ApplicationController
 	   			notif.tipo = "2"
 	   			notif.save
    			rescue 
-   				print("None")
+   				print("Sin Notificacion 1.0")
    			end
     	end
 	end
@@ -542,7 +542,7 @@ class ApiAdmController < ApplicationController
 				notif.tipo = "3"
 				notif.save
 			rescue 
-				print("None")
+				print("Sin Notificacion 2.0")
 			end
 			render json: {result:true} 
 		else
@@ -559,12 +559,12 @@ class ApiAdmController < ApplicationController
     begin
    		Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Solicitud con folio "+solicitud.id.to_s+", fue entregada\n" +"<a href='http://gestor.tuperfil.com.mx/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
    	rescue
-   		print("None");
+   		print("No Telegram 1.0");
    	end
    	begin
    		sendNotificacion("Entregada","Solicitud con folio "+solicitud.id.to_s+", fue entregada",solicitud.user.auth_token)
    	rescue
-   		print("None")
+   		print("No Firebase 1.0")
    	end
   end
 

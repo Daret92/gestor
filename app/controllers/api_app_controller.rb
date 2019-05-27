@@ -302,12 +302,12 @@ class ApiAppController < ApplicationController
     	begin
       		Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://gestor.tuperfil.com.mx/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
       	rescue
-      		print("none")
+      		print("SinTelegram 3.0")
       	end
       	begin
       		sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.auth_token)
       	rescue
-      		print("None")
+      		print("Sin Firebase 3.0")
       	end
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
@@ -320,7 +320,7 @@ class ApiAppController < ApplicationController
 		notif.tipo = "1"
 		notif.save
 	rescue 
-		print("None")
+		print("Sin Notificacion 3.0")
 	end
   end
 
