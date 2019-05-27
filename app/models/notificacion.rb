@@ -13,4 +13,5 @@
 
 class Notificacion < ApplicationRecord
   belongs_to :user
+  belongs_to :solicitud
 end
