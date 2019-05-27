@@ -19,7 +19,6 @@
 class Solicitud < ApplicationRecord
   belongs_to :proyecto, optional: true
   belongs_to :user, optional: true
-  belongs_to :notificacion, optional: true
   validates :observaciones, presence: true
   validates :proyecto_id, presence: true
 
