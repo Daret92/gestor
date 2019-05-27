@@ -313,7 +313,7 @@ class ApiAppController < ApplicationController
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
     end
     begin
-		Notificacion.create(user:Solicitud.find(solicitud.user.users_id),texto:"Nueva Solicitud generada con folio"+solicitud.id.to_s,solicitud:solicitud,leido: false,tipo:"1")
+		Notificacion.create(user:User.find(solicitud.user.users_id),texto:"Nueva Solicitud generada con folio"+solicitud.id.to_s,solicitud:solicitud,leido: false,tipo:"1")
 	rescue 
 		print("Sin Notificacion 3.0")
 	end
