@@ -240,7 +240,7 @@
   </div>
   <div class="col-md-6">
     <div class="row">
-        <% if @solicitud.estado == "1" and @solicitud.user.users_id == current_user.id or current_user.super_user or current_user.rol.nombre == "Gerente"%>
+        <% if (@solicitud.estado == "1" and @solicitud.user.users_id == current_user.id) or (@solicitud.estado == "1" and current_user.super_user) or (@solicitud.estado == "1" and current_user.rol.nombre == "Gerente")%>
           <div class="col-md-6 text-center">
             <span class="btn btn-success btn-lg auth_solicitud" data-solicitud='<%=@solicitud.id%>'>Autorizar Solicitud</span>
           </div>
@@ -260,7 +260,7 @@
             <h3>Solicitud Cancelada <%=@solicitud.updated_at.to_formatted_s(:long)%></h3>
           </div>
         <%end%>
-        <% if @solicitud.estado == "1" and @solicitud.user.users_id == current_user.id or current_user.super_user or current_user.rol.nombre == "Gerente"%>
+        <% if (@solicitud.estado == "1" and @solicitud.user.users_id == current_user.id) or (@solicitud.estado == "1" and current_user.super_user) or (@solicitud.estado == "1" and current_user.rol.nombre == "Gerente")%>
           <div class="col-md-6 text-center">
             <span class="btn btn-danger btn-lg auth_cancel"  data-solicitud='<%=@solicitud.id%>'>Cancelar Solicitud</span>
           </div>
