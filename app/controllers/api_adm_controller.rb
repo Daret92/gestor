@@ -333,12 +333,7 @@ class ApiAdmController < ApplicationController
    				print("No Firebase 2.0")
    			end
    			begin
-   				notif = Notificacion.new
-	   			notif.user = item
-	   			notif.texto = "Solicitud con folio"+solicitud.id.to_s+", Autorizada"
-	   			notif.leido = false
-	   			notif.tipo = "2"
-	   			notif.save
+   				Notificacion.create(user:Solicitud.find(solicitud.user.users_id,texto:"Solicitud con folio"+solicitud.id.to_s+", Autorizada",solicitud:solicitud,leido: false,tipo:"2")
    			rescue 
    				print("Sin Notificacion 1.0")
    			end
@@ -535,12 +530,7 @@ class ApiAdmController < ApplicationController
 			@solicitud.save 
 			notificacionEntrega(@solicitud)
 			begin
-				notif = Notificacion.new
-				notif.user = user
-				notif.texto = "Se finalizo Solicitud con folio"+@solicitud.id.to_s
-				notif.leido = false
-				notif.tipo = "3"
-				notif.save
+				Notificacion.create(user:Solicitud.find(@solicitud.user.users_id,texto:"Se finalizo Solicitud con folio"+@solicitud.id.to_s,solicitud:@solicitud,leido: false,tipo:"3")
 			rescue 
 				print("Sin Notificacion 2.0")
 			end
