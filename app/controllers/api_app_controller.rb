@@ -298,16 +298,17 @@ class ApiAppController < ApplicationController
     if validato.estado == "2"
       contenido = contenido +"\n Solicitud Autorizada"
     end
+
     if jefe
     	begin
       		Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://gestor.tuperfil.com.mx/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
       	rescue
-      		print("SinTelegram 3.0")
+      		puts("SinTelegram 3.0")
       	end
       	begin
       		sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.auth_token)
       	rescue
-      		print("Sin Firebase 3.0")
+      		puts("Sin Firebase 3.0")
       	end
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")
@@ -315,7 +316,7 @@ class ApiAppController < ApplicationController
     begin
 		Notificacion.create(user:User.find(validato.user.users_id),texto:"Nueva Solicitud generada con folio"+validato.id.to_s,solicitud:validato,leido: false,tipo:"1")
 	rescue 
-		print("Sin Notificacion 3.0")
+		puts("Sin Notificacion 3.0")
 	end
   end
 
@@ -556,7 +557,6 @@ class ApiAppController < ApplicationController
           "data": {"click_action": "FLUTTER_NOTIFICATION_CLICK", "id": "1", "status": "done"}
 		}
 		response = fcm.send(registration_ids, options)
-		
 	end
 
 end
