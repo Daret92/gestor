@@ -245,10 +245,14 @@
             <span class="btn btn-success btn-lg auth_solicitud" data-solicitud='<%=@solicitud.id%>'>Autorizar Solicitud</span>
           </div>
         <%end%>
-        <%if @solicitud.estado == "2" and @solicitudes_arr.include?(current_user.id)%>
-          <div class="col-md-12 text-center">            
-            <span class="btn btn-success btn-lg fin_solicitud" data-solicitud='<%=@solicitud.id%>'>Finalizar Solicitud</span>
-          </div>
+        <%if @solicitud.user != current_user %>
+          <%if @solicitud.estado == "2" and @solicitudes_arr.include?(current_user.id)%>
+            <% if @solicitud.user.users_id != current_user.id %>
+              <div class="col-md-12 text-center">            
+                <span class="btn btn-success btn-lg fin_solicitud" data-solicitud='<%=@solicitud.id%>'>Finalizar Solicitud</span>
+              </div>
+            <%end%>
+          <%end%>
         <%end%>
         <%if @solicitud.estado == "3"%>
           <div class="col-md-12 text-center">

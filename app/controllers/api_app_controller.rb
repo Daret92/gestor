@@ -523,7 +523,7 @@ class ApiAppController < ApplicationController
 	def getNotificacion
 		user = User.find_by_email(params[:email])
 		if user.valid_password?(params[:password])
-			noticiacion = Notificacion.where(user: user,leido: false)
+			noticiacion = Notificacion.where(user: user,leido: false).order('id DESC')
 			if noticiacion.length > 0
 				notificaciones_arr = []
 				noticiacion.each do |item|
@@ -545,7 +545,25 @@ class ApiAppController < ApplicationController
 			apps = {material:[success: result]}
 			render json: {response:apps} 
 		end
-		
+	end
+
+	def viewNotificacion
+		user = User.find_by_email(params[:email])
+		if user.valid_password?(params[:password])
+			noticiacion = Notificacion.find(user: params[:id])
+			notificacion.leido = true
+			if notificacion.save
+				result = [{result: true}]
+				render json: {result:result} 
+			else
+				result = [{result: false}]
+				render json: {result:result} 
+			end	
+		else
+			result = false
+			apps = {material:[success: result]}
+			render json: {response:apps} 
+		end
 	end
 
 	def sendNotificacion(titulo,cuerpo,ids)
