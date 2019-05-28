@@ -530,7 +530,8 @@ class ApiAppController < ApplicationController
 					notificaciones_arr.push({
 						id: item.id,
 						texto: item.texto,
-						tipo: item.tipo
+						tipo: item.tipo,
+						solicitud: item.solicitud.id
 					})
 				end
 				result = [{result: true}]

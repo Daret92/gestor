@@ -26,7 +26,9 @@ class SolicitudsController < ApplicationController
     @solicitudes_arr = []
     @solicitud.solicitud_users.each do |item|
       if item.user_id != @solicitud.user.id
-        @solicitudes_arr.push(item.user_id)
+        if item.user.users_id != @solicitud.user.users
+          @solicitudes_arr.push(item.user_id)
+        end
       end
     end
   end
