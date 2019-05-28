@@ -15,6 +15,14 @@
           <span>Inicio</span>
         <%end%>
       </li>
+      <% if @permissions_user.include?('GpsSave') or current_user.super_user == true%>
+      <li class="nav-item">
+        <%= link_to gps_path, class: "nav-link" do%>
+          <i class="fas fa-map-marked"></i>
+          <span>Ubicaciones</span>
+        <%end%>
+      </li>
+      <%end%>
       <% if @permissions_user.include?('User') or @permissions_user.include?('Rol') or @permissions_user.include?('Equipo') or @permissions_user == "super_user"%>
         <li class="nav-item">
           <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#adm" aria-expanded="true" aria-controls="adm">
