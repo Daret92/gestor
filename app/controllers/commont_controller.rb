@@ -4,4 +4,7 @@ class CommontController < ApplicationController
   end
   def bitacora
   end
+  def asistencia
+  	@asistencias = Assistance.all()
+  end
 end

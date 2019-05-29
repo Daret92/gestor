@@ -34,6 +34,27 @@ class ApiAppController < ApplicationController
 		end
   end
 
+  def asistencia
+  	user = User.find_by_email(params[:email])
+	if user.valid_password?(params[:password])
+		asis = Assistance.new(user: user, latitud: params[:latitud], longitud: params[:longitud])
+		asis.created_at = DateTime.now
+		if asis.save
+			result = true
+			apps = {response:['success':result] }
+				render json: {result:apps} 
+		else
+			result = false
+			apps = {response:['success': result] }
+			render json: { result:apps,status: :unprocessable_entity }
+		end			
+	else
+		result = false
+		apps = {response:['success': result] }
+		render json: { result:apps,status: :unprocessable_entity }
+	end
+  end
+
   def get_users
   	users = User.where(super_user:false,activo:true).order('nombre ASC')
   	proyecto = Proyecto.where(estado:"1")

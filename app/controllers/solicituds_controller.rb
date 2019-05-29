@@ -192,7 +192,12 @@ class SolicitudsController < ApplicationController
         begin
           Telegram.bot.send_message(chat_id: item.user.token_msj, text: "Se ha autorizado la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n" +"<a href='http://gestor.tuperfil.com.mx/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
         rescue
-          sendNotificacion("Autorizacion","Se ha autorizado la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo,item.user.token_msj)
+          puts("none")
+        end
+        begin
+          sendNotificacion("Autorizacion","Se ha autorizado la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo,item.user.auth_token)
+        rescue
+          puts("none")
         end
       end
     end
@@ -206,7 +211,12 @@ class SolicitudsController < ApplicationController
       begin
         Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Finalizo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://gestor.tuperfil.com.mx/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
         rescue
-        sendNotificacion("Entregada","Se Finalizo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo,solicitud.user.token_msj)
+        puts("None")
+      end
+      begin
+        sendNotificacion("Entregada","Se Finalizo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo,solicitud.user.auth_token)
+        rescue
+        puts("None")
       end
     end
   end
@@ -219,7 +229,12 @@ class SolicitudsController < ApplicationController
       begin
         Telegram.bot.send_message(chat_id: solicitud.user.token_msj, text: "Se Cancelo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo+"\n<a href='http://gestor.tuperfil.com.mx/solicituds/"+solicitud.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
       rescue
-        sendNotificacion("Cancelado","Se Cancelo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo,solicitud.user.token_msj)
+        puts("none")
+      end
+      begin
+        sendNotificacion("Cancelado","Se Cancelo la solicitud "+solicitud.id.to_s+", Para el proyecto "+solicitud.proyecto.titulo,solicitud.user.auth_token)
+      rescue
+        puts("none")
       end
     end
   end
@@ -255,7 +270,12 @@ class SolicitudsController < ApplicationController
       begin
         Telegram.bot.send_message(chat_id: jefe.token_msj, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"<a href='http://gestor.tuperfil.com.mx/solicituds/"+validato.id.to_s+"'>Revisar Solicitud</a>",parse_mode: "HTML")
       rescue 
-        sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", con folio: "+validato.id.to_s+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.token_msj)
+        puts("None")
+      end
+      begin
+        sendNotificacion("Genero Solicitud","Genero una solicitud "+validato.user.nombre+", con folio: "+validato.id.to_s+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido,jefe.auth_token)
+      rescue 
+        print("None")        
       end
     else
       Telegram.bot.send_message(chat_id: 340614248, text: "Genero una solicitud "+validato.user.nombre+", Para el proyecto "+validato.proyecto.titulo+"\nContenido de la solicitud:\n"+ contenido+"\n" +"No se envio a un supervisor favor de realizar el aviso a quien corresponde",parse_mode: "HTML")

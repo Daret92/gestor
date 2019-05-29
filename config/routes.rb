@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   get 'api_app/save_bitacora'
   get 'api_app/get_bitacora'
   get 'api_app/getSolicitudsTeam'
+  get 'api_app/asistencia'
   #update material
   get 'api_app/updateMaterial'
   get 'api_app/removeMaterial'
@@ -70,6 +71,7 @@ Rails.application.routes.draw do
 
   #Commonts
   get '/gps', to:'commont#gps'
+  get '/asistencias', to:'commont#asistencia'
 
   authenticated :user do
     root 'dasboard#index'
