@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   get 'api_app/get_bitacora'
   get 'api_app/getSolicitudsTeam'
   get 'api_app/asistencia'
+  get 'api_app/viewNotificacion'
   #update material
   get 'api_app/updateMaterial'
   get 'api_app/removeMaterial'

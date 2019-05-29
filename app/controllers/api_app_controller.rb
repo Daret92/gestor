@@ -61,6 +61,10 @@ class ApiAppController < ApplicationController
 	end
   end
 
+  def leidoNotificacion
+
+  end
+
   def get_users
   	users = User.where(super_user:false,activo:true).order('nombre ASC')
   	proyecto = Proyecto.where(estado:"1")
@@ -575,22 +579,15 @@ class ApiAppController < ApplicationController
 	end
 
 	def viewNotificacion
-		user = User.find_by_email(params[:email])
-		if user.valid_password?(params[:password])
-			noticiacion = Notificacion.find(user: params[:id])
-			notificacion.leido = true
-			if notificacion.save
-				result = [{result: true}]
-				render json: {result:result} 
-			else
-				result = [{result: false}]
-				render json: {result:result} 
-			end	
+		notificacion = Notificacion.find(params[:id])
+		notificacion.leido = true
+		if notificacion.save
+			result = [{result: true}]
+			render json: {result:result} 
 		else
-			result = false
-			apps = {material:[success: result]}
-			render json: {response:apps} 
-		end
+			result = [{result: false}]
+			render json: {result:result} 
+		end	
 	end
 
 	def sendNotificacion(titulo,cuerpo,ids)
