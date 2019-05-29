@@ -38,7 +38,6 @@ class ApiAppController < ApplicationController
   	user = User.find_by_email(params[:email])
 	if user.valid_password?(params[:password])
 		asis = Assistance.new(user: user, latitud: params[:latitud], longitud: params[:longitud])
-		asis.created_at = DateTime.now
 		if asis.save
 			result = true
 			apps = {response:['success':result] }
