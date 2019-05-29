@@ -37,16 +37,23 @@ class ApiAppController < ApplicationController
   def asistencia
   	user = User.find_by_email(params[:email])
 	if user.valid_password?(params[:password])
-		asis = Assistance.new(user: user, latitud: params[:latitud], longitud: params[:longitud])
-		if asis.save
+		check = Assistance.where(created_at:Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+		if check.length == 0
+			asis = Assistance.new(user: user, latitud: params[:latitud], longitud: params[:longitud])
+			if asis.save
+				result = true
+				apps = {response:['success':result] }
+				render json: {result:apps} 
+			else
+				result = false
+				apps = {response:['success': result] }
+				render json: { result:apps,status: :unprocessable_entity }
+			end
+		else
 			result = true
 			apps = {response:['success':result] }
-				render json: {result:apps} 
-		else
-			result = false
-			apps = {response:['success': result] }
-			render json: { result:apps,status: :unprocessable_entity }
-		end			
+			render json: {result:apps} 
+		end
 	else
 		result = false
 		apps = {response:['success': result] }
