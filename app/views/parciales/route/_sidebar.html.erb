@@ -17,7 +17,7 @@
       </li>
       <% if @permissions_user.include?('GpsSave') or current_user.super_user == true%>
       <li class="nav-item">
-        <%= link_to gps_path, class: "nav-link" do%>
+        <%= link_to gps_path, class: "nav-link", style: "padding-top:0px; padding-bottom:0px" do%>
           <i class="fas fa-map-marked"></i>
           <span>Ubicaciones</span>
         <%end%>
@@ -25,7 +25,7 @@
       <%end%>
       <% if @permissions_user.include?('Assistence') or current_user.super_user == true%>
         <li class="nav-item">
-          <%= link_to asistencias_path, class: "nav-link" do%>
+          <%= link_to asistencias_path, class: "nav-link", style: "padding-top:0px; padding-bottom:0px" do%>
             <i class="fas fa-list"></i>
             <span>asistencias</span>
           <%end%>
