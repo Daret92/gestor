@@ -13,7 +13,7 @@
 					<td><%= item.proyecto.titulo%></td>
 					<td><%= item.created_at.to_formatted_s(:long)%></td>
 					<td>
-							<%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=300x200&markers=size:small%7Ccolor:red%7C#{item.latitud},#{item.longitud}&key=AIzaSyBeYLxS155ixggxOBQnwdmCtUVe3h5RkeQ", alt: "Map" %>
+						<%= image_tag "https://maps.googleapis.com/maps/api/staticmap?zoom=14&size=200x100&markers=size:small%7Ccolor:red%7C#{item.latitud},#{item.longitud}&key=AIzaSyBeYLxS155ixggxOBQnwdmCtUVe3h5RkeQ", alt: "Map" %>
 					</td>
 				</tr>
 			<%end%>
