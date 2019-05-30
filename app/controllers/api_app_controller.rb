@@ -382,7 +382,7 @@ class ApiAppController < ApplicationController
 	def get_allR
 		user = User.find_by_email(params[:email])
 		if user.valid_password?(params[:password])
-			@registro = Registry.where(user:user)
+			@registro = Registry.where(user:user).order('id DESC')
 			apps =[]
 			@registro.each do |item|
 				apps.push({proyecto:item.proyecto.titulo, titulo:item.titulo, descripcion: item.descripcion,resultado:item.resultado,fecha:item.created_at.to_formatted_s(:long).to_s})
