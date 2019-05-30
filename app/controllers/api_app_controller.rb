@@ -37,7 +37,7 @@ class ApiAppController < ApplicationController
   def asistencia
   	user = User.find_by_email(params[:email])
 	if user.valid_password?(params[:password])
-		check = Assistance.where(created_at:Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
+		check = Assistance.where(user:user,created_at:Time.zone.now.beginning_of_day..Time.zone.now.end_of_day)
 		if check.length == 0
 			asis = Assistance.new(user: user, latitud: params[:latitud], longitud: params[:longitud])
 			if asis.save
