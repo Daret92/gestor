@@ -449,11 +449,16 @@ class ApiAppController < ApplicationController
 			@equipo = EquipoUsuario.where(user:user).first()
 			if(!@equipo.nil?)
 				@usuariosEquipo = EquipoUsuario.where(equipo:@equipo.equipo)
-				@solicitudes = Solicitud.where(user:@usuariosEquipo.ids,proyecto:proyecto).order('id DESC')
+				ids_users = []
+				@usuariosEquipo.each do |item|
+					ids_users.push(item.user.id)
+				end
+				@solicitudes = Solicitud.where(user:ids_users,proyecto:proyecto).order('id DESC')
+
 			elsif user.super_user == true
 			
 				@solicitudes = Solicitud.where(proyecto:proyecto).order('id DESC')
-			
+				
 			elsif (!user.rol.nil?)
 				if(user.rol.nombre == "Gerente")
 					@usuariosEquipo = User.where(users_id:user.id)
@@ -542,7 +547,7 @@ class ApiAppController < ApplicationController
 				render json: {response:apps,result:result} 
 			else
 				result = [{result: false}]
-				render json: {result:result} 
+				render json: {result:result,error:"no solicitudes"} 
 			end	
 		else
 			result = false
