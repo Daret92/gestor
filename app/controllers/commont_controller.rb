@@ -1,4 +1,5 @@
 class CommontController < ApplicationController
+	before_action :authenticate_user!
   def gps
   	@gps = GpsSave.all()
   end
