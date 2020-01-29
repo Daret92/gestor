@@ -4,18 +4,23 @@
 	<div class="col-md-2">
 		<%=link_to new_solicitud_path, class:"btn btn-primary btn-lg btnIndex" do%>
 			<span class="align-middle">
-				Generar Solicitud
+				Generar solicitud de obra
 			</span>
 		<%end%>
 	</div>
 	<div class="col-md-2 align-self-center">
 		<button type="button" class="btn btn-info btn-lg btnIndex" data-toggle="modal" data-target="#exampleModal">
   		<span class="align-middle">
-				Registro Diario
+				Bitacora de obra
 			</span>
 		</button>
 	</div>
-	<div class="col-md-2">
+	<div class="col-md-2 align-self-center">
+		<button type="button" class="btn btn-success btn-lg btnIndex" data-toggle="modal" data-target="#modalHome">
+  		<span class="align-middle">
+				Tareas
+			</span>
+		</button>
 	</div>
 	<div class="col-md-2">
 	</div>
@@ -149,6 +154,7 @@
 	</div>
 </div>
 <%=render 'modal_registro'%>
+<%=render 'modal_tarea'%>
 
 
 

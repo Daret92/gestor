@@ -1,5 +1,6 @@
 class DasboardController < ApplicationController
   def index
+    @homework = HomeWork.new
   	@registry = Registry.new
   	@lastRegistry = Registry.where(user:current_user).limit(5).order('id DESC')
   	if current_user.super_user or current_user.rol.nombre == "Gerente"

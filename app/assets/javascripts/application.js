@@ -20,6 +20,8 @@
 //= require activestorage
 //= require turbolinks
 //= require datatables
+//= require moment
+//= require daterangepicker
 //= require_tree .
 //= require serviceworker-companion
 

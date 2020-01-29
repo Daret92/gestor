@@ -86,12 +86,12 @@
       <li class="nav-item">
         <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#registro" aria-expanded="true" aria-controls="registro">
           <i class="fas fa-layer-group "></i>
-          <span>Registro / Tareas</span>
+          <span>Bitacora / Tareas</span>
         </a>
         <div id="registro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
             <%= link_to registries_path, class: "collapse-item" do%>
-              <i class="fas fa-folder-plus "></i> <span>Registros Diario</span>
+              <i class="fas fa-folder-plus "></i> <span>Registro Bitacora</span>
             <%end%>
             <% if @permissions_user.include?('GpsSave') or @permissions_user.include?("super_user")%>
                 <%= link_to cvehiculos_path, class: "collapse-item" do%>
@@ -105,14 +105,14 @@
       <hr class="sidebar-divider no_margin">
       <!-- Heading -->
       <div class="sidebar-heading">
-        Solicitudes
+        S. de Obra
       </div>
 
       <!-- Nav Item - Pages Collapse Menu -->
       <li class="nav-item">
         <a class="nav-link collapsed inners" href="#" data-toggle="collapse" data-target="#solicitudes" aria-expanded="true" aria-controls="solicitudes">
           <i class="fas fa-network-wired"></i>
-          <span>Solicitudes</span>
+          <span>Solicitudes de Obra</span>
         </a>
         <div id="solicitudes" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">

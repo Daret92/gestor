@@ -1,0 +1,67 @@
+<%= simple_form_for(@homework, remote: true) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+  <diV class="card" style="padding: 25px;">
+  <div class="form-inputs">
+    <div class="row">
+      <div class="col-md-12">
+        <%= f.label :proyecto%>
+        <%=f.select :proyecto_id,Proyecto.where(estado:'1').collect{|item| [item.titulo,item.id,{'data-tokens'=>item.titulo}] },{prompt:"Selecciona un Proyecto"},{class: "form-control selectpicker", 'data-live-search': true}%>
+      </div>
+      <div class="col-md-12">
+        <%= f.label :Usuario%>
+        <%=f.select :user_id,User.where(activo:true).collect{|item| [item.nombre,item.id,{'data-tokens'=>item.nombre}] },{prompt:"Selecciona un Usuario"},{class: "form-control selectpicker", 'data-live-search': true}%>
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-12">
+        <%= f.label :descripcion%>
+        <%= f.text_area :descripcion, class: "form-control" %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <%= f.label :periodo_de_desarrollo%>
+        <%= f.text_field :limite, class: "form-control daterange" %>
+      </div>
+      <div class="col-md-4 text-center">
+        <%= f.label :Prioritario%>
+        <%= f.check_box :limite, class: "form-control" %>
+      </div>
+    </div>
+    <br/>
+  </div>
+</diV>
+<br/>
+  <div class="form-actions w-100 text-center">
+    <%= f.submit "Asignar Tarea", class: "btn btn-primary", remote: true%>
+  </div>
+<% end %>
+<script type="text/javascript">
+  $(document).on('ready',function(){
+    $('#new_home_work').on ('ajax:complete', complete)
+
+    function complete(event, data) {
+      console.log(data);
+      location.reload(); 
+    }
+
+    $('#new_home_work').on ('ajax:error', errors)
+
+    function errors(event, data) {
+      console.log(data)
+      location.reload(); 
+    }
+
+    $('select').selectpicker();
+    $('.daterange').daterangepicker({
+      format: 'DD-MM-YYYY',
+    opens: 'left'
+      }, function(start, end, label) {
+        console.log("La Nueva Fecha sera: " + start.format('MM-DD-YYYY') + ' to ' + end.format('MM-DD-YYYY'));
+      });
+    
+  });
+  
+</script>
