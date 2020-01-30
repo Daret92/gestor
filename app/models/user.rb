@@ -27,4 +27,6 @@ class User < ApplicationRecord
   devise :database_authenticatable,:recoverable, :rememberable
   has_one_attached :avatar
   belongs_to :rol, optional: true
+  has_many :home_work, :class_name => "User", :foreign_key => "user_id"
+  has_many :home_work, :class_name => "User", :foreign_key => "user2_id"
 end

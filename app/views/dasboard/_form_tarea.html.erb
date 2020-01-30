@@ -1,4 +1,4 @@
-<%= simple_form_for(@homework, remote: true) do |f| %>
+<%= simple_form_for(@homework, remote: false) do |f| %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <diV class="card" style="padding: 25px;">

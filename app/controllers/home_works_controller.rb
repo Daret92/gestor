@@ -25,12 +25,14 @@ class HomeWorksController < ApplicationController
   # POST /home_works.json
   def create
     @home_work = HomeWork.new(home_work_params)
-
+    @home_work.user2_id = current_user.id
+    @home_work.finalizado = false
     respond_to do |format|
       if @home_work.save
         format.html { redirect_to @home_work, notice: 'Home work was successfully created.' }
         format.json { render :show, status: :created, location: @home_work }
       else
+        raise
         format.html { render :new }
         format.json { render json: @home_work.errors, status: :unprocessable_entity }
       end
@@ -69,6 +71,6 @@ class HomeWorksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def home_work_params
-      params.require(:home_work).permit(:proyecto_id, :user_id, :descripcion, :urgente, :limite)
+      params.require(:home_work).permit(:proyecto_id, :user_id, :descripcion, :urgente, :limite,:finalizado,:resultado)
     end
 end

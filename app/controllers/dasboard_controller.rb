@@ -17,8 +17,11 @@ class DasboardController < ApplicationController
           end
         end
         @solicitudes = Solicitud.where(id:ids,estado:"1")
+
+        @tareas = HomeWork.where(admin:current_user,finalizado:false)
       else
         @solicitudes = Solicitud.where(user:current_user,estado:"1")
+        @tareas = HomeWork.where(user:current_user,finalizado:false)
       end
     end
   end
