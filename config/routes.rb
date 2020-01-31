@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  #tareas
+  resources :home_works
+  get 'closeWorkHome', to: 'home_works#closeWorkHome'
   
   #apis
   get 'api_app/login'
