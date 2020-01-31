@@ -1,0 +1,31 @@
+<div class="modal fade" id="modalWork" tabindex="-1" role="dialog" aria-labelledby="modalWorkLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalWorkLabel">Finalizar Tarea</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+          <diV class="card" style="padding: 25px;">
+          <div class="form-inputs">
+            <input type="hidden" name="idWork" id="idWork" value=""/>
+            <br/>
+            <div class="row">
+              <div class="col-md-12">
+                <h2 class="text-center">Resultado</h2>
+                <%= text_area_tag :resultado,"",class: "form-control" %>
+              </div>
+            </div>
+            <br/>
+          </div>
+        </diV>
+        <br/>
+          <div class="form-actions w-100 text-center">
+            <span class= "btn btn-primary finalizarTarea">Finalizar Tarea</span>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -29,6 +29,41 @@
 </div>
 <br/>
 <div class="row card" >
+	<captation style="padding-left: 20px;padding-top: 10px"><h4>Tareas</h4></captation>
+	<div class="col-md-12">
+		<table class="table dataTable">
+			<thead>
+				<tr>
+					<th>Proyecto</th>
+					<th>descripcion</th>
+					<th>asignado a</th>
+					<th>Periodo asignado</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<%@tareas.each do |item|%>
+					<tr>
+						<td><%= item.proyecto.titulo %></td>
+						<td><%= item.descripcion %></td>
+						<td><%= item.usuario.nombre%></td>
+						<td><%= item.limite%></td>
+						<td style="padding: 2px">
+							<%= link_to 'Detalles', item , class:"btn btn-primary"%> |
+							<button type="button" class="btn btn-info homeWorkModal" data-toggle="modal" data-target="#modalWork" data-id="<%=item.id%>">
+					  		<span class="align-middle">
+									Cerrar Tarea
+								</span>
+							</button>
+			            </td>
+					</tr>
+				<%end%>
+			</tbody>
+		</table>
+	</div>
+</div>
+<hr>
+<div class="row card" >
 	<captation style="padding-left: 20px;padding-top: 10px"><h4>Ultimos 5 Registros Bitacora</h4></captation>
 	<div class="col-md-12">
 		<table class="table dataTable">
@@ -155,6 +190,8 @@
 </div>
 <%=render 'modal_registro'%>
 <%=render 'modal_tarea'%>
+<%=render 'modal_work'%>
+
 
 
 

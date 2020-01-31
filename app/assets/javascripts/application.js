@@ -26,6 +26,33 @@
 //= require serviceworker-companion
 
 $( document ).on('turbolinks:load', function() {
+  $('.homeWorkModal').on("click", function () {
+      var idwork = $(this).data('id');
+      $(".modal-body #idWork").val(idwork);
+   });
+
+  $('.finalizarTarea').on('click',function(){
+      var id = $('#idWork').val();
+      var result = $('#resultado').val()
+      $.ajax({
+        method: "GET",
+        url: '/closeWorkHome',
+        data: { ids: id,resultado:result},
+          success: function(data){
+            location.reload();            
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) { 
+              alert("Status: " + textStatus); alert("Error: " + errorThrown); 
+          } 
+      });
+    });
+
+   $('.daterange').daterangepicker({
+      format: 'DD-MM-YYYY',
+    opens: 'left'
+      }, function(start, end, label) {
+        console.log("La Nueva Fecha sera: " + start.format('MM-DD-YYYY') + ' to ' + end.format('MM-DD-YYYY'));
+      });
   
     $('.navbar a[href^="#"]').click(function() {
       var destino = $(this.hash);
@@ -243,3 +270,10 @@ $('form').on('click', '.add_otro',function(event){
   });
 
 }); // End of use strict
+
+document.addEventListener("turbolinks:before-cache", function() {
+  $('.dataTable').DataTable();
+  if (document.documentElement.hasAttribute("data-turbolinks-preview")) {
+    $('.dataTable').DataTable();
+  }
+});

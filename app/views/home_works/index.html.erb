@@ -1,19 +1,53 @@
-<h1>Home Works</h1>
-
-<table class="responsive nowrap table table-hover" id="dttb-home_works" data-sort="true" data-source="<%= url_for(format: :json)%>">
+<h1>Asignacion de Tareas</h1>
+<br/>
+<%= link_to 'Crear Nueva Tarea', new_home_work_path ,class:"btn btn-success"%>
+<br/>
+<table class="responsive nowrap table table-hover" id="dttb-home_works" data-sort="true">
   <thead>
     <tr>
       <th data-data="proyecto">Proyecto</th>
-      <th data-data="user">User</th>
+      <th data-data="user">Asignado a</th>
       <th data-data="descripcion">Descripcion</th>
       <th data-data="urgente">Urgente</th>
-      <th data-data="limite">Limite</th>
+      <th data-data="limite">Periodo Asignado</th>
       <th data-data="url" data-orderable="false" data-class-name="all" data-searchable="false" class="skip-export" width="100px"></th>
     </tr>
   </thead>
+  <tbody>
+    <% @home_works.each do |item|%>
+      <tr>
+        <td>
+          <%= item.proyecto.titulo%>
+        </td>
+        <td>
+          <%= item.usuario.nombre%>
+        </td>
+        <td>
+          <%= item.descripcion%>
+        </td>
+        <td>
+          <% if item.urgente == true%>Prioridad Alta<%else%>Prioridad Baja<%end%>
+        </td>
+        <td>
+          <%= item.limite%>
+        </td>
+        <td>
+          <%= link_to 'Detalles', item , class:"btn btn-primary"%>
+          <%if item.finalizado !=true%>
+          |
+          <button type="button" class="btn btn-info homeWorkModal" data-toggle="modal" data-target="#modalWork" data-id="<%=item.id%>">
+                <span class="align-middle">
+                  Cerrar Tarea
+                </span>
+              </button>
+          <%end%>
+        </td>
+      </tr>
+    <%end%>
+  </tbody>
 
 </table>
 
 <br>
+<%=render 'modal_work'%>
 
-<%= link_to 'New Home Work', new_home_work_path %>

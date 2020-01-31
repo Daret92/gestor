@@ -4,14 +4,44 @@
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
 
   <div class="form-inputs">
-    <%= f.association :proyecto %>
-    <%= f.association :user %>
-    <%= f.input :descripcion %>
-    <%= f.input :urgente %>
-    <%= f.input :limite %>
+      <div class="card" style="padding: 25px!important;">
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.label :proyecto%>
+            <%=f.select :proyecto_id,Proyecto.where(estado:'1').collect{|item| [item.titulo,item.id,{'data-tokens'=>item.titulo}] },{prompt:"Selecciona un Proyecto"},{class: "form-control selectpicker", 'data-live-search': true}%>
+          </div>
+          <div class="col-md-12">
+            <%= f.label :Usuario%>
+            <%=f.select :usuario_id,User.where(activo:true).collect{|item| [item.nombre,item.id,{'data-tokens'=>item.nombre}] },{prompt:"Selecciona un Usuario"},{class: "form-control selectpicker", 'data-live-search': true}%>
+          </div>
+        </div>
+        <br/>
+        <div class="row">
+          <div class="col-md-12">
+            <%= f.label :descripcion%>
+            <%= f.text_area :descripcion, class: "form-control" %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <%= f.label :periodo_de_desarrollo%>
+            <%= f.text_field :limite, class: "form-control daterange" %>
+          </div>
+          <div class="col-md-4 text-center">
+            <%= f.label :Prioritario%>
+            <%= f.check_box :urgente, class: "form-control" %>
+          </div>
+        </div>
+        <br/>
+      </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <br/>
+  <div class="form-actions text-center">
+    <%= f.button :submit, "Asignar Tarea", class: "btn btn-success" %>
   </div>
 <% end %>
+<script type="text/javascript">
+  $('select').selectpicker();
+</script>
+
+

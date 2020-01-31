@@ -90,9 +90,15 @@
         </a>
         <div id="registro" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <%= link_to registries_path, class: "collapse-item" do%>
-              <i class="fas fa-folder-plus "></i> <span>Registro Bitacora</span>
+            <% if @permissions_user.include?('HomeWork') or @permissions_user.include?("super_user")%>
+            <%= link_to home_works_path, class: "collapse-item" do%>
+              <i class="fas fa-folder-plus "></i> <span>Tareas</span>
             <%end%>
+            <%end%>
+              <%= link_to registries_path, class: "collapse-item" do%>
+                <i class="fas fa-folder-plus "></i> <span>Registro Bitacora</span>
+              <%end%>
+            
             <% if @permissions_user.include?('GpsSave') or @permissions_user.include?("super_user")%>
                 <%= link_to cvehiculos_path, class: "collapse-item" do%>
                   <i class="fas fa-car "></i> <span>Catalogo de Vehiculos</span>

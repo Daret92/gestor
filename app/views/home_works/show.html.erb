@@ -1,29 +1,38 @@
 <p id="notice"><%= notice %></p>
+<h2 class="text-center">Vista General Tarea</h2>
+<br/>
+<div class="w-100 text-center">
+<%= link_to home_works_path , class: "btn btn-warning" do%>
+  <i class="fa fa-list-ol"></i> Listado
+<%end%>
+ | 
+<%= link_to root_path , class: "btn btn-primary" do%>
+    <i class="fa fa-home"></i> Ir a Inicio
+<%end%>
+</div>
+<div class="card" style="padding: 25px;">
+  <div class="row">
+    <div class="col-6">
+      <strong>Proyecto:</strong>
+      <%= @home_work.proyecto.titulo %>
+    </div>
+    <div class="col-6">
+      <strong>Asignado a:</strong>
+      <%= @home_work.usuario.nombre %>
+    </div>
+    <div class="col-12">
+      <strong>Descripcion de la tarea:</strong>
+      <br/>
+      <%= @home_work.descripcion %>
+    </div>
+    <div class="col-6">
+      <strong>Periodo de ejecucion:</strong>
+        <h4><%= @home_work.limite %></h4>
+    </div>
+    <div class="col-6">
+      <strong>Urgente:</strong>
+        <% if @home_work.urgente == true%> <h4>Con Prioridad</h4> <%else%> <h4>Con Prioridad minima</h4><%end%>
+    </div>
+  </div>
 
-<p>
-  <strong>Proyecto:</strong>
-  <%= @home_work.proyecto %>
-</p>
-
-<p>
-  <strong>User:</strong>
-  <%= @home_work.user %>
-</p>
-
-<p>
-  <strong>Descripcion:</strong>
-  <%= @home_work.descripcion %>
-</p>
-
-<p>
-  <strong>Urgente:</strong>
-  <%= @home_work.urgente %>
-</p>
-
-<p>
-  <strong>Limite:</strong>
-  <%= @home_work.limite %>
-</p>
-
-<%= link_to 'Edit', edit_home_work_path(@home_work) %> |
-<%= link_to 'Back', home_works_path %>
+</div>

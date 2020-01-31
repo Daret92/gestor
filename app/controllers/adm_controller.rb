@@ -108,6 +108,7 @@ class AdmController < ApplicationController
       if @user.update(password)
         format.html { redirect_to user_edit_path(@user.id), notice: 'Article was successfully updated.' }
       else
+        raise
         format.html { render :user_edit }
       end
     end

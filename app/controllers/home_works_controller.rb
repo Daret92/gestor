@@ -4,7 +4,15 @@ class HomeWorksController < ApplicationController
   # GET /home_works
   # GET /home_works.json
   def index
-    @home_works = HomeWork.all
+    if current_user.super_user or current_user.rol.nombre == "Gerente"
+      @home_works = HomeWork.all().order('id DESC')
+    else 
+      if current_user.rol.nombre == "JefeDepartamento"
+        @home_works = HomeWork.where(administrador:current_user).order('id DESC')
+      else
+        @home_works = HomeWork.where(usuario:current_user).order('id DESC')
+      end
+    end
   end
 
   # GET /home_works/1
@@ -21,20 +29,32 @@ class HomeWorksController < ApplicationController
   def edit
   end
 
+  def closeWorkHome
+    @home_works = HomeWork.find(params[:ids])
+    @home_works.resultado = params[:resultado]
+    @home_works.finalizado = true;
+    if @home_works.save
+      render json:{success:true,status:200}
+    else
+      render json:{success:false,status:500}
+    end
+  end
+
   # POST /home_works
   # POST /home_works.json
   def create
     @home_work = HomeWork.new(home_work_params)
-    @home_work.user2_id = current_user.id
-    @home_work.finalizado = false
+    @home_work.administrador_id = current_user.id
+    @home_work.finalizado = false    
     respond_to do |format|
       if @home_work.save
-        format.html { redirect_to @home_work, notice: 'Home work was successfully created.' }
+        format.html { redirect_to @home_work, notice: 'Tarea guardada correctamente' }
         format.json { render :show, status: :created, location: @home_work }
+        format.js {render :show, notice: 'Ingreso Correcto'}
       else
-        raise
         format.html { render :new }
         format.json { render json: @home_work.errors, status: :unprocessable_entity }
+        format.js {render :json, status: :created, notice: 'Ocurrio un error'}
       end
     end
   end
@@ -71,6 +91,6 @@ class HomeWorksController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def home_work_params
-      params.require(:home_work).permit(:proyecto_id, :user_id, :descripcion, :urgente, :limite,:finalizado,:resultado)
+      params.require(:home_work).permit(:proyecto_id, :usuario_id, :descripcion, :urgente, :limite,:finalizado,:resultado)
     end
 end
