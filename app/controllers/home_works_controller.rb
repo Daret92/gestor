@@ -48,6 +48,7 @@ class HomeWorksController < ApplicationController
     @home_work.finalizado = false    
     respond_to do |format|
       if @home_work.save
+        sendNotificacion(@home_work)
         format.html { redirect_to @home_work, notice: 'Tarea guardada correctamente' }
         format.json { render :show, status: :created, location: @home_work }
         format.js {render :show, notice: 'Ingreso Correcto'}
@@ -80,6 +81,17 @@ class HomeWorksController < ApplicationController
     respond_to do |format|
       format.html { redirect_to home_works_url, notice: 'Home work was successfully destroyed.' }
       format.json { head :no_content }
+    end
+  end
+
+  def sendNotificacion(item)
+    Telegram.bots_config = {
+        default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
+      }
+    begin
+      Telegram.bot.send_message(chat_id: item.usuario.token_msj, text: "Se te asigno la tarea \n- "+item.descripcion+"-|nPara el proyecto "+item.proyecto.titulo+"\npara el periodo de "+item.limite+"\n<a href='http://gestor.tuperfil.com.mx/home_work/"+item.id.to_s+"'>Revisar Tarea</a>",parse_mode: "HTML")
+    rescue 
+      puts("None")
     end
   end
 
