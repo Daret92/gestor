@@ -35,6 +35,7 @@ gem 'bootstrap', '~> 4.2.1'
 gem 'font-awesome-sass', '~> 5.6.1'
 gem 'jquery-datatables'
 gem 'devise'
+gem 'seed_dump'
 #gem "paperclip", git: "git://github.com/thoughtbot/paperclip.git"
 gem 'annotate'
 gem 'simple_form'
