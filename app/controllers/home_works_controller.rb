@@ -1,6 +1,6 @@
 class HomeWorksController < ApplicationController
   before_action :set_home_work, only: [:show, :edit, :update, :destroy]
-  
+  before_action :authenticate_user!
 
   # GET /home_works
   # GET /home_works.json
