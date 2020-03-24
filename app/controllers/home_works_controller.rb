@@ -89,7 +89,7 @@ class HomeWorksController < ApplicationController
         default: "466063182:AAF8tbj997GR4P8CRNHazeYOQkNHCcr1pBs",
       }
     begin
-      Telegram.bot.send_message(chat_id: item.usuario.token_msj, text: "Se te asigno la tarea \n- "+item.descripcion+"-|nPara el proyecto "+item.proyecto.titulo+"\npara el periodo de "+item.limite+"\n<a href='http://gestor.tuperfil.com.mx/home_work/"+item.id.to_s+"'>Revisar Tarea</a>",parse_mode: "HTML")
+      Telegram.bot.send_message(chat_id: item.usuario.token_msj, text: "Se te asigno la tarea \n- "+item.descripcion+"-|nPara el proyecto "+item.proyecto.titulo+"\npara el periodo de "+item.limite+"\n<a href='http://g.tuperfil.com.mx/home_work/"+item.id.to_s+"'>Revisar Tarea</a>",parse_mode: "HTML")
     rescue 
       puts("None")
     end
