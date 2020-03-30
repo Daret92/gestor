@@ -29,9 +29,23 @@
       <strong>Periodo de ejecucion:</strong>
         <h4><%= @home_work.limite %></h4>
     </div>
+    
     <div class="col-6">
       <strong>Urgente:</strong>
         <% if @home_work.urgente == true%> <h4>Con Prioridad</h4> <%else%> <h4>Con Prioridad minima</h4><%end%>
+    </div>
+    <div class="col-12">
+      <strong>Evidencia:</strong>
+        <% if @home_work.evidencia.attachment != nil%>
+        <%if @home_work.evidencia.image?%>
+          <%=image_tag url_for(@home_work.evidencia),width:350%>
+        <%else%>
+        <%= link_to "Descargar", url_for(@home_work.evidencia), class: "btn btn-sm btn-success", target: "_blank" %>
+        <%end%>
+        
+        <%else%>
+          <h5>Sin evidencia</h5>
+        <%end%>
     </div>
   </div>
 

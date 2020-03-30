@@ -19,4 +19,5 @@ class HomeWork < ApplicationRecord
   belongs_to :proyecto
   belongs_to :usuario, class_name: "User"
   belongs_to :administrador, class_name: "User"
+  has_one_attached :evidencia
 end

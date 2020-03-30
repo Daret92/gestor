@@ -31,11 +31,16 @@ class HomeWorksController < ApplicationController
   end
 
   def closeWorkHome
-    @home_works = HomeWork.find(params[:ids])
+    @home_works = HomeWork.find(params[:idWork])
     @home_works.resultado = params[:resultado]
     @home_works.finalizado = true;
+    @home_works.evidencia=params[:file]
     if @home_works.save
-      render json:{success:true,status:200}
+      if params[:origin] == "home_work"
+        redirect_to home_works_path
+      else
+        redirect_to root_path
+      end
     else
       render json:{success:false,status:500}
     end

@@ -31,7 +31,7 @@ $( document ).on('turbolinks:load', function() {
       $(".modal-body #idWork").val(idwork);
    });
 
-  $('.finalizarTarea').on('click',function(){
+  /*$('.finalizarTarea').on('click',function(){
       var id = $('#idWork').val();
       var result = $('#resultado').val()
       $.ajax({
@@ -45,7 +45,7 @@ $( document ).on('turbolinks:load', function() {
               alert("Status: " + textStatus); alert("Error: " + errorThrown); 
           } 
       });
-    });
+    });*/
 
    $('.daterange').daterangepicker({
       format: 'DD-MM-YYYY',
