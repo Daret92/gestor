@@ -13,4 +13,5 @@
 class Bitacora < ApplicationRecord
   belongs_to :proyecto
   belongs_to :user
+  #has_one_attached :evidencia
 end

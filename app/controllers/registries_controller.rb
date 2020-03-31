@@ -82,6 +82,6 @@ class RegistriesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def registry_params
-      params.require(:registry).permit(:proyecto_id, :user_id, :titulo, :descripcion, :resultado, :finalizado)
+      params.require(:registry).permit(:proyecto_id, :user_id, :titulo, :descripcion, :resultado, :finalizado,:evidencia)
     end
 end

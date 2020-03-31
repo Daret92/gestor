@@ -8,32 +8,48 @@
 <%end%>
 </div>
 
-
-<p id="notice"><%= notice %></p>
 <div class="card" style="padding: 25px">
-  <p>
-    <strong>Proyecto:</strong>
-    <%= @registry.proyecto.titulo %>
-  </p>
+  <div class="row">
+    <div class="col-6">
+      <p>
+        <strong>Proyecto:</strong>
+        <%= @registry.proyecto.titulo %>
+      </p>
 
-  <p>
-    <strong>Titulo:</strong>
-    <%= @registry.titulo %>
-  </p>
+      <p>
+        <strong>Titulo:</strong>
+        <%= @registry.titulo %>
+      </p>
 
-  <p>
-    <strong>Descripcion:</strong>
-    <%= @registry.descripcion %>
-  </p>
+      <p>
+        <strong>Descripcion:</strong>
+        <%= @registry.descripcion %>
+      </p>
 
-  <p>
-    <strong>Resultado:</strong>
-    <%= @registry.resultado %>
-  </p>
+      <p>
+        <strong>Resultado:</strong>
+        <%= @registry.resultado %>
+      </p>
 
-  <p>
-    <strong>Finalizado:</strong>
-    <% if @registry.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%>
-  </p>
+      <p>
+        <strong>Finalizado:</strong>
+        <% if @registry.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%>
+      </p>
+    </div>
+    <div class="col-6">
+      <strong>Evidencia:</strong>
+      <% if @registry.evidencia.attachment != nil%>
+      <%if @registry.evidencia.image?%>
+        <%=image_tag url_for(@registry.evidencia),width:350%>
+      <%else%>
+      <%= link_to "Descargar", url_for(@registry.evidencia), class: "btn btn-sm btn-success", target: "_blank" %>
+      <%end%>
+      
+      <%else%>
+        <h5>Sin evidencia</h5>
+      <%end%>
+    </div>
+  </div>
+  
 </div>
 <br/>

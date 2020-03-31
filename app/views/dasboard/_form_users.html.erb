@@ -1,4 +1,5 @@
-<%= simple_form_for(@registry, remote: true) do |f| %>
+<%= simple_form_for(@registry, remote: false) do |f| %>
+  <%= csrf_meta_tags %>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <diV class="card" style="padding: 25px;">
@@ -15,10 +16,15 @@
     </div>
     <br/>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <%= f.label :descripcion%>
         <%= f.text_area :descripcion, class: "form-control" %>
       </div>
+      <div class="col-md-6">
+        <%= f.label :evidencia%>
+        <%= f.file_field :evidencia, class: "form-control" %>
+      </div>
+      
       <div class="col-md-6">
         <%= f.label :resultado%>
         <%= f.text_area :resultado, class: "form-control" %>

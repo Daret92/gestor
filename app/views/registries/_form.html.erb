@@ -16,9 +16,30 @@
     </div>
     <br/>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-12">
         <%= f.label :descripcion%>
         <%= f.text_area :descripcion, class: "form-control" %>
+      </div>
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-6">
+            <%= f.label :evidencia%>
+            <%= f.file_field :evidencia, class: "form-control" %>
+          </div>
+          
+          <div class="col-6 text-center">
+            <br/>
+            <% if f.object.evidencia.attachment != nil%>
+              <%if @registry.evidencia.image?%>
+                <%=image_tag url_for(@registry.evidencia),width:350%>
+              <%else%>
+              <%= link_to "Descargar", url_for(@registry.evidencia), class: "btn btn-sm btn-success", target: "_blank" %>
+              <%end%>
+            <%else%>
+              <h5>Sin evidencia</h5>
+            <%end%>
+          </div>
+        </div>
       </div>
       <div class="col-md-6">
         <%= f.label :resultado%>

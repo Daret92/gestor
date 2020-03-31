@@ -19,4 +19,5 @@ class Registry < ApplicationRecord
   validates :titulo, presence: true
   validates :descripcion, presence: true
   validates :resultado, presence: true
+  has_one_attached :evidencia
 end
