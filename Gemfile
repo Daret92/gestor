@@ -50,7 +50,6 @@ gem 'bootsnap', '>= 1.1.0', require: false
 
 gem 'telegram-bot'
 
-gem 'wdm', '>= 0.1.0'
 
 gem 'bootstrap-datepicker-rails'
 gem 'momentjs-rails'
