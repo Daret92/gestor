@@ -22,8 +22,8 @@
           <td><%=item.proyecto.titulo%></td>
           <td><%=item.user.email%></td>
           <td><%=item.titulo%></td>
-          <td><%=item.descripcion%></td>
-          <td><%=item.resultado%></td>
+          <td><div class="cut-text"><%=item.descripcion%></div></td>
+          <td><div class="cut-text"><%=item.resultado%></div></td>
           <td class="text-center"><% if item.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%></td>
           <td style="padding: 2px">
               <div class="dropdown">

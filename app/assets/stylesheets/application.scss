@@ -20,6 +20,12 @@
 @import "datatables";
 @import 'bootstrap-select';
 @import "daterangepicker";
+.cut-text { 
+  white-space: nowrap; 
+  width: 400px; 
+  overflow: hidden;
+  text-overflow: ellipsis;
+;}
 .btnIndex{
 	width: 100%;
 	height: 100px;
