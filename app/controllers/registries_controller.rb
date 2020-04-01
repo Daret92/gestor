@@ -5,14 +5,14 @@ class RegistriesController < ApplicationController
   # GET /registries.json
   def index
     if current_user.super_user or current_user.rol.nombre == "Gerente"
-      @registries = Registry.all().order('updated_at DESC')
+      @registries = Registry.all().order('updated_at ASC')
     else  
       rol =  current_user.rol.nombre
       if rol == "JefeDepartamento"
         usuarios = User.where(users_id:current_user.id)
-        @registries = Registry.where(user:usuarios.ids).order('updated_at DESC')
+        @registries = Registry.where(user:usuarios.ids).order('updated_at ASC')
       else
-        @registries = Registry.where(user:current_user).order('updated_at DESC')
+        @registries = Registry.where(user:current_user).order('updated_at ASC')
       end
     end
   end
