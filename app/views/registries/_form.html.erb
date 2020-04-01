@@ -1,5 +1,6 @@
 
 <%= simple_form_for(@registry) do |f| %>
+  <%= @erros%>
   <%= f.error_notification %>
   <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
   <diV class="card" style="padding: 25px;">
@@ -11,20 +12,20 @@
       </div>
       <div class="col-md-6">
         <%= f.label :titulo%>
-        <%= f.text_field :titulo, class: "form-control" %>
+        <%= f.text_field :titulo, class: "form-control",required: true %>
       </div>
     </div>
     <br/>
     <div class="row">
       <div class="col-md-12">
         <%= f.label :descripcion%>
-        <%= f.text_area :descripcion, class: "form-control" %>
+        <%= f.text_area :descripcion, class: "form-control",required: true %>
       </div>
       <div class="col-md-6">
         <div class="row">
           <div class="col-6">
             <%= f.label :evidencia%>
-            <%= f.file_field :evidencia, class: "form-control" %>
+            <%= f.file_field :evidencia, class: "form-control",required: true %>
           </div>
           
           <div class="col-6 text-center">
@@ -43,7 +44,7 @@
       </div>
       <div class="col-md-6">
         <%= f.label :resultado%>
-        <%= f.text_area :resultado, class: "form-control" %>
+        <%= f.text_area :resultado, class: "form-control",required: true %>
       </div>
     </div>
     <br/>

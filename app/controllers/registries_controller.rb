@@ -38,13 +38,20 @@ class RegistriesController < ApplicationController
     @registry.user = current_user
     @registry.finalizado = true
     respond_to do |format|
-      if @registry.save
-        format.html { redirect_to @registry, notice: 'Registry was successfully created.' }
-        format.json { render :show, status: :created, location: @registry }
-        format.js {render :show, notice: 'Ingreso Correcto'}
+      if @registry.evidencia.attached?
+        if @registry.save
+          format.html { redirect_to @registry, notice: 'Registry was successfully created.' }
+          format.json { render :show, status: :created, location: @registry }
+          format.js {render :show, notice: 'Ingreso Correcto'}
+        else
+          format.html { render :new, notice: 'Favor de no dejar campos vacios' }
+          format.json { render json: @registry.errors, status: :unprocessable_entity }
+          format.js {render :json, status: :created, notice: 'Ocurrio un error'}
+        end
       else
-        format.html { render :new }
-        format.json { render json: @registry.errors, status: :unprocessable_entity }
+        @erros = "Favor de no dejar campos vacios"
+        format.html { render :new}
+        format.json { render json: @registry.errors, status: :unprocessable_entity, notice: 'Favor de no dejar campos vacios' }
         format.js {render :json, status: :created, notice: 'Ocurrio un error'}
       end
     end
