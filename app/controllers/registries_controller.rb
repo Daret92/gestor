@@ -49,7 +49,7 @@ class RegistriesController < ApplicationController
           format.js {render :json, status: :created, notice: 'Ocurrio un error'}
         end
       else
-        @erros = "Favor de no dejar campos vacios"
+        @erros = "Se requiere evidencia"
         format.html { render :new}
         format.json { render json: @registry.errors, status: :unprocessable_entity, notice: 'Favor de no dejar campos vacios' }
         format.js {render :json, status: :created, notice: 'Ocurrio un error'}
