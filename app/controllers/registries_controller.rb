@@ -1,16 +1,18 @@
 class RegistriesController < ApplicationController
+  
   before_action :set_registry, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!
   # GET /registries
   # GET /registries.json
   def index
-    #permisions = Permission.where(rol_id:current_user.rol.id)
-    #raise
     if current_user.super_user or current_user.rol.nombre == "Gerente"
       @registries = Registry.all().order('created_at ASC')
     else  
       rol =  current_user.rol.nombre
       if rol == "JefeDepartamento"
+        usuarios = User.where(users_id:current_user.id)
+        @registries = Registry.where(user:usuarios.ids).order('created_at ASC')
+      elsif @permissions_user.include?("Bitacora")        
         usuarios = User.where(users_id:current_user.id)
         @registries = Registry.where(user:usuarios.ids).order('created_at ASC')
       else
