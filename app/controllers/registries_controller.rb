@@ -4,6 +4,8 @@ class RegistriesController < ApplicationController
   # GET /registries
   # GET /registries.json
   def index
+    #permisions = Permission.where(rol_id:current_user.rol.id)
+    #raise
     if current_user.super_user or current_user.rol.nombre == "Gerente"
       @registries = Registry.all().order('created_at ASC')
     else  
@@ -38,7 +40,7 @@ class RegistriesController < ApplicationController
     @registry.user = current_user
     @registry.finalizado = true
     respond_to do |format|
-      if @registry.evidencia.attached?
+      
         if @registry.save
           format.html { redirect_to @registry, notice: 'Registry was successfully created.' }
           format.json { render :show, status: :created, location: @registry }
@@ -48,12 +50,7 @@ class RegistriesController < ApplicationController
           format.json { render json: @registry.errors, status: :unprocessable_entity }
           format.js {render :json, status: :created, notice: 'Ocurrio un error'}
         end
-      else
-        @erros = "Se requiere evidencia"
-        format.html { render :new}
-        format.json { render json: @registry.errors, status: :unprocessable_entity, notice: 'Favor de no dejar campos vacios' }
-        format.js {render :json, status: :created, notice: 'Ocurrio un error'}
-      end
+
     end
   end
 
