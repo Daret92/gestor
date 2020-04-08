@@ -9,6 +9,7 @@
       <tr>
         <th>Proyecto</th>
         <th>User</th>
+        <th>Fecha</th>
         <th>Titulo</th>
         <th>Descripcion</th>
         <th>Resultado</th>
@@ -21,7 +22,8 @@
         <tr>
           <td><div class="cut-text" style="font-size=80%"><%=item.proyecto.titulo%></div></td>
           <td><%=item.user.nombre%> <%=item.user.apellido%></td>
-          <td><div><%=item.titulo%></div><sub><%=item.updated_at.to_formatted_s(:long)%></sub></td>
+          <td><sub><%=item.updated_at.to_formatted_s(:long)%></td>
+          <td><div><%=item.titulo%></div></sub></td>
           <td><div class="cut-text"><%=item.descripcion%></div></td>
           <td><div class="cut-text"><%=item.resultado%></div></td>
           <td class="text-center"><% if item.finalizado %><i class="fas fa-check"></i><%else%><i class="fas fa-times"></i><%end%></td>
