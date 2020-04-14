@@ -5,6 +5,7 @@ class HomeWorksController < ApplicationController
   # GET /home_works
   # GET /home_works.json
   def index
+    @permiso = true
     if current_user.super_user or current_user.rol.nombre == "Gerente"
       @home_works = HomeWork.all().order('id DESC')
     else 
@@ -13,6 +14,7 @@ class HomeWorksController < ApplicationController
       elsif @permissions_user.include?("HomeWork")        
         @home_works = HomeWork.where(administrador:current_user).order('id DESC')
       else
+        @permiso = false
         @home_works = HomeWork.where(usuario:current_user).order('id DESC')
       end
     end

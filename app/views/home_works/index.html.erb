@@ -1,6 +1,8 @@
 <h1>Asignacion de Tareas</h1>
 <br/>
-<%= link_to 'Crear Nueva Tarea', new_home_work_path ,class:"btn btn-success"%>
+<% if @permiso == true%>
+  <%= link_to 'Crear Nueva Tarea', new_home_work_path ,class:"btn btn-success"%>
+<%end%>
 <br/>
 <table class="responsive nowrap table table-hover" id="dttb-home_works" data-sort="true">
   <thead>

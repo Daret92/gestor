@@ -5,6 +5,7 @@ class RegistriesController < ApplicationController
   # GET /registries
   # GET /registries.json
   def index
+    @permiso = true
     if current_user.super_user or current_user.rol.nombre == "Gerente"
       @registries = Registry.all().order('created_at ASC')
     else  
@@ -16,6 +17,7 @@ class RegistriesController < ApplicationController
         usuarios = User.where(users_id:current_user.id)
         @registries = Registry.where(user:usuarios.ids).order('created_at ASC')
       else
+        @permiso = false
         @registries = Registry.where(user:current_user).order('created_at ASC')
       end
     end
