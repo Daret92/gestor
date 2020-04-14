@@ -20,7 +20,7 @@
     <tbody>
       <% @registries.each do |item|%>
         <tr>
-          <td><div class="cut-text" style="font-size=80%"><%=item.proyecto.titulo%></div></td>
+          <td><div class="cut-text" style="font-size:80%"><%=item.proyecto.titulo%></div></td>
           <td><%=item.user.nombre%> <%=item.user.apellido%></td>
           <td><sub><%=item.updated_at.to_formatted_s(:long)%></td>
           <td><div><%=item.titulo%></div></sub></td>

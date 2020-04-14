@@ -16,20 +16,26 @@
   <tbody>
     <% @home_works.each do |item|%>
       <tr>
-        <td>
-          <%= item.proyecto.titulo%>
+        <td >
+          <div class="cut-text" style="font-size:80%">
+            <%= item.proyecto.titulo%>
+          </div>
         </td>
         <td>
           <%= item.usuario.nombre%>
         </td>
         <td>
-          <%= item.descripcion%>
+          <div class="cut-text" style="font-size:80%">
+            <%= item.descripcion%>
+          </div>
         </td>
         <td>
           <% if item.urgente == true%>Prioridad Alta<%else%>Prioridad Baja<%end%>
         </td>
         <td>
-          <%= item.limite%>
+          <div style="font-size:80%">
+            <%= item.limite%>
+          </div>
         </td>
         <td>
           <%= link_to 'Detalles', item , class:"btn btn-primary"%>

@@ -10,6 +10,8 @@ class HomeWorksController < ApplicationController
     else 
       if current_user.rol.nombre == "JefeDepartamento"
         @home_works = HomeWork.where(administrador:current_user).order('id DESC')
+      elsif @permissions_user.include?("HomeWork")        
+        @home_works = HomeWork.where(administrador:current_user).order('id DESC')
       else
         @home_works = HomeWork.where(usuario:current_user).order('id DESC')
       end
